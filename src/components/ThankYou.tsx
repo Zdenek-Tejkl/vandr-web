@@ -5,6 +5,7 @@ import { shareUrl } from "@/lib/config";
 import { copy, formatNumber } from "@/lib/copy";
 import type { JoinResult } from "@/lib/types";
 import { CatGlobe, Logo } from "./Brand";
+import { StoriesIcon, WhatsAppIcon } from "./Icons";
 
 async function copyText(text: string) {
   try {
@@ -25,22 +26,28 @@ async function copyText(text: string) {
   }
 }
 
-export function ThankYou({ result, onBack }: { result: JoinResult; onBack: () => void }) {
+export function ThankYou({ result, total, onBack }: { result: JoinResult; total: number; onBack: () => void }) {
   const [copied, setCopied] = useState(false);
   const [answer, setAnswer] = useState("");
   const [answered, setAnswered] = useState(false);
   const [sending, setSending] = useState(false);
 
-  const pos = result.position ? formatNumber(result.position) : null;
+  const t = copy.thanks;
   const link = result.code ? shareUrl(result.code) : null;
-  const next = copy.thanks.rewards.find((r) => r.at > result.referrals) ?? copy.thanks.rewards.at(-1)!;
-  const progress = Math.min(100, Math.round((result.referrals / next.at) * 100));
+  const shortLink = link?.replace(/^https?:\/\//, "") ?? "";
+  const totalShown = Math.max(total, result.total, result.position ?? 0);
+  const refs = result.referrals;
 
-  const heading = !pos
-    ? copy.thanks.createdNoPos
-    : result.status === "exists"
-      ? copy.thanks.exists(pos)
-      : copy.thanks.created(pos);
+  // Cíl: 3 kamarádi (odznak). Pak vždy další odměna.
+  const badge = t.rewards[1];
+  const next = t.rewards.find((r) => r.at > refs);
+  const goal = refs < badge.at ? badge : next;
+  const progressText = !goal
+    ? t.allDone
+    : goal === badge
+      ? t.toBadge(badge.at - refs)
+      : t.toNext(goal.at - refs, goal.text);
+  const progress = goal ? Math.round((Math.min(refs, goal.at) / goal.at) * 100) : 100;
 
   async function onCopy() {
     if (!link) return;
@@ -50,21 +57,20 @@ export function ThankYou({ result, onBack }: { result: JoinResult; onBack: () =>
     }
   }
 
-  async function onShare() {
+  async function onStories() {
     if (!link || !result.code) return;
-    const text = `${copy.thanks.shareText} ${link}`;
+    const text = `${t.shareText} ${link}`;
     try {
       const res = await fetch(`/api/story/${result.code}`);
       if (res.ok) {
-        const blob = await res.blob();
-        const file = new File([blob], "vandr-story.png", { type: "image/png" });
+        const file = new File([await res.blob()], "vandr-story.png", { type: "image/png" });
         if (navigator.canShare?.({ files: [file] })) {
           await navigator.share({ files: [file], text });
           return;
         }
       }
       if (navigator.share) {
-        await navigator.share({ title: "Vandr", text: copy.thanks.shareText, url: link });
+        await navigator.share({ title: "Vandr", text: t.shareText, url: link });
         return;
       }
     } catch (e) {
@@ -92,89 +98,133 @@ export function ThankYou({ result, onBack }: { result: JoinResult; onBack: () =>
     setSending(false);
   }
 
+  const whatsapp = link ? `https://wa.me/?text=${encodeURIComponent(`${t.shareText} ${link}`)}` : null;
+
   return (
     <main className="thanks">
-      <div className="thanks-in">
-        <Logo id="cat-thanks-logo" className="thanks-logo" />
-        <CatGlobe id="cat-thanks" size={88} className="thanks-cat" />
-        <h1 className="thanks-title" aria-live="polite">
-          {heading}
-        </h1>
-
-        {link && (
-          <>
-            <p className="thanks-lead">
-              <b>{copy.thanks.challenge}</b> {copy.thanks.boost}
-            </p>
-
-            <div className="ref-box">
-              <label htmlFor="ref-link" className="ref-label">
-                {copy.thanks.linkLabel}
-              </label>
-              <input id="ref-link" className="ref-link" value={link} readOnly onFocus={(e) => e.currentTarget.select()} />
-              <div className="thanks-actions">
-                <button type="button" className="btn" onClick={onCopy}>
-                  {copied ? copy.thanks.copied : copy.thanks.copy}
-                </button>
-                <button type="button" className="btn btn-ghost" onClick={onShare}>
-                  {copy.thanks.share}
-                </button>
-              </div>
-            </div>
-
-            <div className="rewards">
-              <div className="rewards-top">
-                <span>{copy.thanks.invited(result.referrals)}</span>
-                <span>
-                  {Math.min(result.referrals, next.at)} / {next.at}
-                </span>
-              </div>
-              <div className="bar" role="progressbar" aria-valuemin={0} aria-valuemax={next.at} aria-valuenow={result.referrals} aria-label={copy.thanks.invited(result.referrals)}>
-                <i style={{ width: `${progress}%` }} />
-              </div>
-              <ul className="rewards-list">
-                {copy.thanks.rewards.map((r) => (
-                  <li key={r.at} className={result.referrals >= r.at ? "got" : ""}>
-                    <b>{r.at}</b> {r.text}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </>
-        )}
-
-        {result.answerToken && (
-          <div className="question">
-            {answered ? (
-              <p className="question-thanks">{copy.thanks.questionThanks}</p>
-            ) : (
-              <form onSubmit={onAnswer}>
-                <label htmlFor="next-trip" className="question-label">
-                  {copy.thanks.question}
-                </label>
-                <span className="question-hint">{copy.thanks.questionHint}</span>
-                <div className="join-row">
-                  <input
-                    id="next-trip"
-                    value={answer}
-                    maxLength={200}
-                    onChange={(e) => setAnswer(e.target.value)}
-                    placeholder={copy.thanks.questionPlaceholder}
-                    autoComplete="off"
-                  />
-                  <button type="submit" className="btn btn-ghost" disabled={sending || !answer.trim()}>
-                    {copy.thanks.questionSend}
-                  </button>
-                </div>
-              </form>
+      <section className="thanks-top">
+        <div className="wrap">
+          <Logo id="cat-thanks-logo" />
+          <div className="thanks-hero">
+            <span className="thanks-cat">
+              <CatGlobe id="cat-thanks" size={60} />
+            </span>
+            <h1 aria-live="polite">{result.status === "exists" ? t.exists : t.created}</h1>
+            {result.position && (
+              <>
+                <span className="eyebrow eyebrow-light">{t.positionLabel}</span>
+                <span className="thanks-pos">#{formatNumber(result.position)}</span>
+                <span className="thanks-of">{t.of(formatNumber(totalShown))}</span>
+              </>
             )}
           </div>
-        )}
+        </div>
+      </section>
 
-        <button type="button" className="link-btn" onClick={onBack}>
-          {copy.thanks.back}
-        </button>
-      </div>
+      <section className="thanks-body">
+        <div className="wrap thanks-in">
+          {link && (
+            <>
+              <h2>{t.inviteTitle}</h2>
+              <p className="thanks-lead">{t.inviteText}</p>
+
+              <div className="card progress-card">
+                <div className="progress-top">
+                  <span>
+                    {progressText}
+                    {goal === badge && (
+                      <>
+                        {" "}
+                        <b>{t.badge}</b>
+                      </>
+                    )}
+                  </span>
+                  {goal && (
+                    <span className="progress-n">
+                      {Math.min(refs, goal.at)}/{goal.at}
+                    </span>
+                  )}
+                </div>
+                <div
+                  className="bar"
+                  role="progressbar"
+                  aria-valuemin={0}
+                  aria-valuemax={goal?.at ?? refs}
+                  aria-valuenow={Math.min(refs, goal?.at ?? refs)}
+                  aria-label={progressText}
+                >
+                  <i style={{ width: `${progress}%` }} />
+                </div>
+              </div>
+
+              <div className="thanks-actions">
+                {whatsapp && (
+                  <a href={whatsapp} className="btn btn-block" target="_blank" rel="noopener">
+                    <WhatsAppIcon /> {t.whatsapp}
+                  </a>
+                )}
+                <button type="button" className="btn btn-block btn-forest" onClick={onStories}>
+                  <StoriesIcon /> {t.stories}
+                </button>
+                <div className="link-row">
+                  <label htmlFor="ref-link" className="sr-only">
+                    {t.linkLabel}
+                  </label>
+                  <input id="ref-link" className="ref-link" value={shortLink} readOnly onFocus={(e) => e.currentTarget.select()} />
+                  <button type="button" className="btn btn-ochre" onClick={onCopy}>
+                    {copied ? t.copied : t.copy}
+                  </button>
+                </div>
+              </div>
+
+              <div className="card rewards">
+                <div className="rewards-head">{t.rewardsTitle}</div>
+                <ol className="rewards-list">
+                  {t.rewards.map((r) => (
+                    <li key={r.at} className={refs >= r.at ? "got" : r === goal ? "next" : ""}>
+                      <b>{r.at}</b>
+                      <span>{r.text}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </>
+          )}
+
+          {result.answerToken && (
+            <div className="question">
+              {answered ? (
+                <p className="question-thanks">{t.questionThanks}</p>
+              ) : (
+                <form onSubmit={onAnswer}>
+                  <label htmlFor="next-trip" className="question-label">
+                    {t.question} <small>{t.questionOptional}</small>
+                  </label>
+                  <div className="question-row">
+                    <input
+                      id="next-trip"
+                      value={answer}
+                      maxLength={200}
+                      onChange={(e) => setAnswer(e.target.value)}
+                      placeholder={t.questionPlaceholder}
+                      autoComplete="off"
+                    />
+                    <button type="submit" className="btn btn-outline" disabled={sending || !answer.trim()}>
+                      {t.questionSend}
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
+          )}
+
+          {result.confirmation && <p className="thanks-note">{t.footnoteConfirm}</p>}
+
+          <button type="button" className="link-btn" onClick={onBack}>
+            {t.back}
+          </button>
+        </div>
+      </section>
     </main>
   );
 }

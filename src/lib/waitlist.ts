@@ -13,6 +13,7 @@ type RawJoin = {
   total?: number;
   answer_token?: string;
   unsubscribe_token?: string;
+  confirm_token?: string;
 };
 
 export type JoinInput = {
@@ -24,6 +25,7 @@ export type JoinInput = {
   utmContent: string | null;
   variant: string | null;
   ipHash: string | null;
+  requireConfirm: boolean;
 };
 
 export type ViewInput = {
@@ -69,6 +71,9 @@ type DemoRow = {
   referrals: number;
   answerToken: string;
   unsubscribeToken: string;
+  confirmToken: string;
+  referredBy?: DemoRow;
+  counted: boolean;
   answer?: string;
 };
 const demo = { rows: [] as DemoRow[], seq: 1240, views: 0 };
@@ -105,11 +110,21 @@ function demoJoin(input: JoinInput): RawJoin {
     referrals: 0,
     answerToken: randomUUID(),
     unsubscribeToken: randomUUID(),
+    confirmToken: randomUUID(),
+    counted: false,
   };
+  row.referredBy = input.ref ? demo.rows.find((r) => r.code === input.ref?.toUpperCase()) : undefined;
   demo.rows.push(row);
-  const referrer = input.ref ? demo.rows.find((r) => r.code === input.ref?.toUpperCase()) : undefined;
-  if (referrer) referrer.referrals += 1;
-  return { ...demoPayload(row, "created"), answer_token: row.answerToken, unsubscribe_token: row.unsubscribeToken };
+  if (row.referredBy && !input.requireConfirm) {
+    row.referredBy.referrals += 1;
+    row.counted = true;
+  }
+  return {
+    ...demoPayload(row, "created"),
+    answer_token: row.answerToken,
+    unsubscribe_token: row.unsubscribeToken,
+    confirm_token: row.confirmToken,
+  };
 }
 
 // ---- API ----------------------------------------------------------------
@@ -125,7 +140,21 @@ export async function joinWaitlist(input: JoinInput): Promise<RawJoin> {
     p_utm_content: input.utmContent,
     p_variant: input.variant,
     p_ip_hash: input.ipHash,
+    p_require_confirm: input.requireConfirm,
   });
+}
+
+export async function confirmEmail(code: string, token: string): Promise<RawJoin | null> {
+  if (isDemo()) {
+    const row = demo.rows.find((r) => r.code === code.toUpperCase() && r.confirmToken === token);
+    if (!row) return null;
+    if (row.referredBy && !row.counted) {
+      row.referredBy.referrals += 1;
+      row.counted = true;
+    }
+    return demoPayload(row, "exists");
+  }
+  return rpc<RawJoin | null>("waitlist_confirm", { p_code: code, p_token: token });
 }
 
 export async function waitlistCount(): Promise<number> {

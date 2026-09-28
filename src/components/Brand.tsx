@@ -46,21 +46,3 @@ export function Wanderer({ className }: { className?: string }) {
     </svg>
   );
 }
-
-export function InstagramIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="3" width="18" height="18" rx="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" />
-    </svg>
-  );
-}
-
-export function TikTokIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false" fill="currentColor">
-      <path d="M16.6 3c.3 2.2 1.6 3.7 3.9 3.9v3.1c-1.4.1-2.7-.3-3.9-1v6.1c0 3.9-3.2 6.4-6.7 5.8-2.6-.5-4.4-2.8-4.2-5.5.2-3.2 3.2-5.4 6.4-4.8v3.3c-.4-.1-.8-.2-1.2-.1-1.2.1-2.1 1.2-1.9 2.4.2 1.1 1.2 1.9 2.4 1.7 1.1-.1 1.9-1.1 1.9-2.2V3h3.3z" />
-    </svg>
-  );
-}

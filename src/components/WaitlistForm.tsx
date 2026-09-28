@@ -4,9 +4,10 @@ import { useState, type FormEvent } from "react";
 import { copy } from "@/lib/copy";
 import type { JoinError, JoinResult } from "@/lib/types";
 import { isValidEmail } from "@/lib/validate";
+import { ArrowIcon } from "./Icons";
 import { useJoin } from "./JoinProvider";
 
-export function WaitlistForm({ id }: { id: string }) {
+export function WaitlistForm({ id, arrow = false }: { id: string; arrow?: boolean }) {
   const { visit, done } = useJoin();
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
@@ -50,7 +51,7 @@ export function WaitlistForm({ id }: { id: string }) {
       <label htmlFor={id} className="sr-only">
         {copy.emailLabel}
       </label>
-      <div className="join-row">
+      <div className="join-box">
         <input
           id={id}
           name="email"
@@ -73,6 +74,7 @@ export function WaitlistForm({ id }: { id: string }) {
         />
         <button type="submit" className="btn" disabled={busy}>
           {busy ? copy.buttonBusy : copy.button}
+          {arrow && !busy && <ArrowIcon />}
         </button>
       </div>
       {/* Honeypot: lidé ho nevidí, roboti ho vyplní. */}
@@ -83,7 +85,10 @@ export function WaitlistForm({ id }: { id: string }) {
         </label>
       </div>
       <p id={errId} className="join-error" role="alert" hidden={!error}>
-        {error}
+        <span className="join-error-icon" aria-hidden="true">
+          !
+        </span>
+        <span>{error}</span>
       </p>
     </form>
   );

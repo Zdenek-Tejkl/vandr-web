@@ -1,5 +1,5 @@
 import { after, NextResponse } from "next/server";
-import { isVariant } from "@/lib/config";
+import { emailEnabled, isVariant } from "@/lib/config";
 import { sendConfirmation } from "@/lib/email";
 import { ipHash } from "@/lib/ip";
 import type { JoinError, JoinResult } from "@/lib/types";
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
   // Honeypot: skryté pole vyplní jen robot. Tváříme se, že vše prošlo.
   if (clean(body.website, 200)) {
     return NextResponse.json<JoinResult>(
-      { status: "created", position: null, code: null, referrals: 0, total: 0 },
+      { status: "created", position: null, code: null, referrals: 0, total: 0, confirmation: false },
       { headers: noStore },
     );
   }
@@ -32,6 +32,7 @@ export async function POST(request: Request) {
   const email = normalizeEmail(String(body.email ?? ""));
   if (!isValidEmail(email)) return fail("invalid", 400);
 
+  const confirmation = emailEnabled();
   try {
     const r = await joinWaitlist({
       email,
@@ -42,17 +43,18 @@ export async function POST(request: Request) {
       utmContent: clean(body.utm_content),
       variant: isVariant(body.variant) ? body.variant : null,
       ipHash: ipHash(request.headers),
+      requireConfirm: confirmation,
     });
 
     if (r.status === "invalid") return fail("invalid", 400);
     if (r.status === "rate_limited") return fail("rate_limited", 429);
     if (r.status !== "created" && r.status !== "exists") return fail("server", 500);
 
-    if (r.status === "created" && r.code && r.unsubscribe_token && r.position) {
-      const { code, unsubscribe_token: unsubscribeToken, position } = r;
+    if (confirmation && r.status === "created" && r.code && r.unsubscribe_token && r.confirm_token && r.position) {
+      const { code, unsubscribe_token: unsubscribeToken, confirm_token: confirmToken, position } = r;
       after(async () => {
         try {
-          if (await sendConfirmation(email, { position, code, unsubscribeToken })) {
+          if (await sendConfirmation(email, { position, code, unsubscribeToken, confirmToken })) {
             await markConfirmationSent(code);
           }
         } catch (e) {
@@ -69,6 +71,7 @@ export async function POST(request: Request) {
         referrals: r.referrals ?? 0,
         total: r.total ?? 0,
         answerToken: r.status === "created" ? r.answer_token : undefined,
+        confirmation,
       },
       { headers: noStore },
     );

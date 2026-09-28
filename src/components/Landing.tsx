@@ -2,9 +2,10 @@ import Link from "next/link";
 import { site, type Variant } from "@/lib/config";
 import { copy, headlines } from "@/lib/copy";
 import { waitlistCount } from "@/lib/waitlist";
-import { ArtFriendsMap, ArtGlobe, ArtTiers, GlobeSymbol, PhoneProfile } from "./Art";
-import { InstagramIcon, Logo, TikTokIcon, Wanderer } from "./Brand";
+import { PhoneGlobe } from "./Art";
+import { CatGlobe, Logo } from "./Brand";
 import { Counter } from "./Counter";
+import { GiftIcon, GlobeIcon, LockIcon, PinIcon, StarIcon } from "./Icons";
 import { JoinProvider } from "./JoinProvider";
 import { WaitlistForm } from "./WaitlistForm";
 
@@ -17,19 +18,12 @@ async function getCount() {
   }
 }
 
-function Legal() {
-  return (
-    <p className="legal">
-      {copy.noSpam} {copy.gdpr(site.controller.name)}{" "}
-      <Link href="/zasady-ochrany-osobnich-udaju">{copy.privacyLink}</Link>
-    </p>
-  );
-}
+const featureIcons = [GlobeIcon, PinIcon, StarIcon];
 
 export async function Landing({ variant }: { variant: Variant }) {
   const total = await getCount();
+  const showCount = total !== null && total >= site.counterMin;
   const h = headlines[variant];
-  const [f1, f2, f3] = copy.features;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -41,24 +35,35 @@ export async function Landing({ variant }: { variant: Variant }) {
   };
 
   return (
-    <JoinProvider variant={variant}>
-      <GlobeSymbol />
+    <JoinProvider variant={variant} total={total ?? 0}>
       <main>
         {/* 1. Hlavní blok: vše podstatné bez scrollování */}
         <section className="hero">
+          <div className="wrap">
+            <Logo id="cat-hero" />
+          </div>
           <div className="wrap hero-grid">
             <div className="hero-copy">
-              <Logo id="cat-hero" />
               <h1>
-                {h.main} <em>{h.accent}</em>
+                <span>{h.main}</span> <em>{h.accent}</em>
               </h1>
               <p className="sub">{copy.subtitle}</p>
-              <WaitlistForm id="email-top" />
-              <Legal />
-              {total !== null && total >= site.counterMin && <Counter total={total} />}
+              <WaitlistForm id="email-top" arrow />
+              <div className="hero-meta">
+                <div className="nospam">
+                  <p>
+                    <LockIcon /> {copy.noSpam}
+                  </p>
+                  <p className="gdpr">
+                    {copy.gdpr(site.controller.name)}{" "}
+                    <Link href="/zasady-ochrany-osobnich-udaju">{copy.privacyLink}</Link>
+                  </p>
+                </div>
+                {showCount ? <Counter total={total} /> : <Counter label={copy.beFirst} />}
+              </div>
             </div>
             <div className="hero-visual">
-              <PhoneProfile />
+              <PhoneGlobe />
             </div>
           </div>
         </section>
@@ -69,43 +74,61 @@ export async function Landing({ variant }: { variant: Variant }) {
             <p className="eyebrow">{copy.featuresEyebrow}</p>
             <h2 id="features-title">{copy.featuresTitle}</h2>
             <ul className="feature-list">
-              <li className="feature">
-                <ArtGlobe label={f1.alt} />
-                <h3>{f1.title}</h3>
-                <p>{f1.text}</p>
-              </li>
-              <li className="feature">
-                <ArtFriendsMap label={f2.alt} />
-                <h3>{f2.title}</h3>
-                <p>{f2.text}</p>
-              </li>
-              <li className="feature">
-                <ArtTiers label={f3.alt} />
-                <h3>{f3.title}</h3>
-                <p>{f3.text}</p>
-              </li>
+              {copy.features.map((f, i) => {
+                const Icon = featureIcons[i];
+                return (
+                  <li key={f.title} className="feature">
+                    <div className="feature-row">
+                      <span className="feature-icon">
+                        <Icon />
+                      </span>
+                      <div className="feature-text">
+                        <h3>{f.title}</h3>
+                        <p>{f.text}</p>
+                      </div>
+                    </div>
+                    {i === 2 && (
+                      <ul className="tier-chips" aria-label="Tiery">
+                        {copy.tiers.map((t, j) => (
+                          <li key={t} className={j === 2 ? "on" : j === 4 ? "top" : ""}>
+                            {t}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
+            <p className="invite">
+              <GiftIcon />
+              <span>
+                <b>{copy.inviteTitle}</b> {copy.inviteText}
+              </span>
+            </p>
           </div>
         </section>
 
         {/* 3. Druhá šance */}
         <section className="second" aria-labelledby="second-title">
           <div className="wrap second-in">
-            <Wanderer className="second-art" />
+            <CatGlobe id="cat-second" size={72} className="second-cat" />
             <h2 id="second-title">{copy.secondTitle}</h2>
             <p className="sub">{copy.secondText}</p>
             <WaitlistForm id="email-bottom" />
-            <Legal />
+            <p className="second-nospam">{copy.noSpam}</p>
           </div>
           <footer className="wrap foot">
-            <span>{copy.footer}</span>
-            <Link href="/zasady-ochrany-osobnich-udaju">{copy.privacyLink}</Link>
+            <span className="foot-copy">{copy.footer}</span>
+            <Link href="/zasady-ochrany-osobnich-udaju" className="foot-privacy">
+              {copy.privacyLink}
+            </Link>
             <span className="socials">
-              <a href={site.instagram} aria-label="Vandr na Instagramu" rel="noopener" target="_blank">
-                <InstagramIcon />
+              <a href={site.instagram} rel="noopener" target="_blank">
+                Instagram
               </a>
-              <a href={site.tiktok} aria-label="Vandr na TikToku" rel="noopener" target="_blank">
-                <TikTokIcon />
+              <a href={site.tiktok} rel="noopener" target="_blank">
+                TikTok
               </a>
             </span>
           </footer>

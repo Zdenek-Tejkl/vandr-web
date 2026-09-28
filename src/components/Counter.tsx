@@ -3,36 +3,54 @@
 import { useEffect, useState } from "react";
 import { copy, formatNumber, travelers } from "@/lib/copy";
 
-// Jediná animace na stránce: číslo krátce doběhne na skutečnou hodnotu.
-export function Counter({ total }: { total: number }) {
-  const [n, setN] = useState(total);
+function Faces() {
+  return (
+    <span className="faces" aria-hidden="true">
+      <i style={{ background: "#E3A33B" }} />
+      <i style={{ background: "#E4572E" }} />
+      <i style={{ background: "#8FD0AE" }} />
+      <i style={{ background: "#F2F4EE" }} />
+    </span>
+  );
+}
+
+// Počítadlo lidí na seznamu. Jediná animace na stránce: číslo krátce doběhne.
+// Dokud je lidí málo, ukazuje se „Buď mezi prvními 1 000“.
+export function Counter({ total, label }: { total?: number; label?: string }) {
+  const target = total ?? 0;
+  const [n, setN] = useState(target);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const from = Math.max(0, total - 40);
+    if (!target || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const from = Math.max(0, target - 40);
     const start = performance.now();
     let raf = 0;
     const tick = (t: number) => {
       const p = Math.min(1, (t - start) / 1100);
-      setN(Math.round(from + (total - from) * (1 - Math.pow(1 - p, 3))));
+      setN(Math.round(from + (target - from) * (1 - Math.pow(1 - p, 3))));
       if (p < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [total]);
+  }, [target]);
+
+  if (label || !total) {
+    return (
+      <p className="counter">
+        <Faces />
+        <span>{label ?? copy.beFirst}</span>
+      </p>
+    );
+  }
 
   const { word, verb } = travelers(total);
   const [before, after] = copy.counter("#", word, verb).split("#");
   return (
     <p className="counter" aria-label={copy.counter(formatNumber(total), word, verb)}>
-      <span className="counter-faces" aria-hidden="true">
-        <span className="av" style={{ background: "#34546E" }}>PN</span>
-        <span className="av" style={{ background: "#8A4A2F" }}>AK</span>
-        <span className="av" style={{ background: "#6B4E31" }}>KM</span>
-      </span>
+      <Faces />
       <span aria-hidden="true">
         {before}
-        <b className="counter-n">{formatNumber(n)}</b>
+        <span className="counter-n">{formatNumber(n)}</span>
         {after}
       </span>
     </p>

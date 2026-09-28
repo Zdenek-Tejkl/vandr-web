@@ -25,6 +25,10 @@ export const defaultVariant: Variant = isVariant(process.env.NEXT_PUBLIC_HEADLIN
   ? process.env.NEXT_PUBLIC_HEADLINE
   : "a";
 
+// Krátký odkaz pro kamarády: vandr.world/r/KOD
 export function shareUrl(code: string) {
-  return `${site.url}/?ref=${encodeURIComponent(code)}`;
+  return `${site.url}/r/${encodeURIComponent(code)}`;
 }
+
+// Potvrzovací e-maily se posílají jen s nastaveným Resendem (jen na serveru).
+export const emailEnabled = () => Boolean(process.env.RESEND_API_KEY);

@@ -47,7 +47,7 @@ function readVisit(variant: Variant): Visit {
 }
 
 // Obaluje celou stránku. Po zápisu ji vymění za děkovnou obrazovku (bez vlastní URL).
-export function JoinProvider({ variant, children }: { variant: Variant; children: ReactNode }) {
+export function JoinProvider({ variant, total, children }: { variant: Variant; total: number; children: ReactNode }) {
   const visit = useRef<Visit>({
     variant,
     ref: null,
@@ -80,7 +80,7 @@ export function JoinProvider({ variant, children }: { variant: Variant; children
 
   return (
     <JoinContext.Provider value={{ visit, done }}>
-      {result ? <ThankYou result={result} onBack={() => setResult(null)} /> : children}
+      {result ? <ThankYou result={result} total={total} onBack={() => setResult(null)} /> : children}
     </JoinContext.Provider>
   );
 }
