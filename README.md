@@ -4,7 +4,7 @@ Waiting list web pro **Vandr** (vandr.world). Jedna stránka, jedna akce: zadat 
 
 ## Co umí
 
-- Hlavní blok bez scrollování na mobilu: logo, nadpis, podnadpis, e-mail + tlačítko, počítadlo
+- Hlavní blok bez scrollování na mobilu: logo, nadpis, podnadpis, e-mail + tlačítko, počítadlo „Už X z Y cestovatelů“ (cíl je vždy další tisícovka)
 - Blok „Co tě čeká“ (globus, tipy kamarádů na mapě, body a tiery) a druhý formulář dole
 - Děkovná obrazovka bez vlastní URL: pořadí, WhatsApp, sdílení do stories (obrázek 1080 × 1920), kopírování odkazu, odměny, otázka „Kam jedeš příště?“
 - Pozvánky: krátký odkaz `vandr.world/r/KOD`, každý pozvaný posune o 10 míst, odměny 1 / 3 / 5 / 10 / 25 / 50

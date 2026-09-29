@@ -19,8 +19,8 @@ export const copy = {
   noSpam: "Žádný spam. Napíšeme ti jen, až spustíme.",
   gdpr: (controller: string) => `Údaje zpracovává ${controller} jen kvůli spuštění.`,
   privacyLink: "Zásady ochrany osobních údajů",
-  counter: (n: string, word: string, verb: string) => `Už ${n} ${word} ${verb}`,
-  beFirst: "Buď mezi prvními 1 000",
+  counter: (n: string, goal: string) => `Už ${n} z ${goal} cestovatelů`,
+  counterHint: (left: string) => `Ještě ${left} a otevíráme další kolo.`,
 
   phone: {
     title: "Tvůj globus",
@@ -60,7 +60,7 @@ export const copy = {
     created: "Jsi na seznamu!",
     exists: "Tenhle e-mail už na seznamu je.",
     positionLabel: "Tvoje pořadí",
-    of: (total: string) => `z ${total} čekajících`,
+    of: (total: string, goal: string) => `${total} z ${goal} čekajících`,
     inviteTitle: "Vezmi s sebou kamarády.",
     inviteText: "Každý, kdo se přidá přes tvůj odkaz, tě posune o 10 míst dopředu.",
     toBadge: (left: number) => `Ještě ${left} ${left === 1 ? "kamarád" : left <= 4 ? "kamarádi" : "kamarádů"} do odznaku`,
@@ -94,11 +94,7 @@ export const copy = {
   footer: "© 2026 Vandr · vandr.world",
 };
 
-// 1 cestovatel čeká, 2 až 4 cestovatelé čekají, 5+ cestovatelů čeká
-export function travelers(n: number): { word: string; verb: string } {
-  if (n === 1) return { word: "cestovatel", verb: "čeká" };
-  if (n >= 2 && n <= 4) return { word: "cestovatelé", verb: "čekají" };
-  return { word: "cestovatelů", verb: "čeká" };
-}
+// Cíl je vždy další tisícovka nad aktuálním počtem: 1 200 -> 2 000, 6 050 -> 7 000.
+export const goalFor = (n: number) => Math.floor(Math.max(0, n) / 1000) * 1000 + 1000;
 
 export const formatNumber = (n: number) => new Intl.NumberFormat("cs-CZ").format(n);

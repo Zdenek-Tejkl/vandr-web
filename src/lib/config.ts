@@ -10,8 +10,6 @@ export const site = {
     id: process.env.NEXT_PUBLIC_CONTROLLER_ID || "",
     address: process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS || "",
   },
-  // Počítadlo se ukáže až od tohoto počtu lidí na seznamu.
-  counterMin: Number(process.env.NEXT_PUBLIC_COUNTER_MIN || 50),
 };
 
 export const variants = ["a", "b", "c"] as const;

@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { shareUrl } from "@/lib/config";
-import { copy, formatNumber } from "@/lib/copy";
+import { copy, formatNumber, goalFor } from "@/lib/copy";
 import type { JoinResult } from "@/lib/types";
 import { CatGlobe, Logo } from "./Brand";
 import { StoriesIcon, WhatsAppIcon } from "./Icons";
@@ -114,7 +114,10 @@ export function ThankYou({ result, total, onBack }: { result: JoinResult; total:
               <>
                 <span className="eyebrow eyebrow-light">{t.positionLabel}</span>
                 <span className="thanks-pos">#{formatNumber(result.position)}</span>
-                <span className="thanks-of">{t.of(formatNumber(totalShown))}</span>
+                <span className="thanks-of">{t.of(formatNumber(totalShown), formatNumber(goalFor(totalShown)))}</span>
+                <span className="counter-bar counter-bar-dark" aria-hidden="true">
+                  <i style={{ width: `${Math.max(2, Math.round((totalShown / goalFor(totalShown)) * 100))}%` }} />
+                </span>
               </>
             )}
           </div>

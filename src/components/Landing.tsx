@@ -22,7 +22,6 @@ const featureIcons = [GlobeIcon, PinIcon, StarIcon];
 
 export async function Landing({ variant }: { variant: Variant }) {
   const total = await getCount();
-  const showCount = total !== null && total >= site.counterMin;
   const h = headlines[variant];
 
   const jsonLd = {
@@ -59,7 +58,7 @@ export async function Landing({ variant }: { variant: Variant }) {
                     <Link href="/zasady-ochrany-osobnich-udaju">{copy.privacyLink}</Link>
                   </p>
                 </div>
-                {showCount ? <Counter total={total} /> : <Counter label={copy.beFirst} />}
+                <Counter total={total ?? 0} />
               </div>
             </div>
             <div className="hero-visual">
