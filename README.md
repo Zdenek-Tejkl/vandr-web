@@ -8,12 +8,12 @@ Waiting list web pro **Vandr** (vandr.world). Jedna stránka, jedna akce: zadat 
 - Blok „Co tě čeká“ (globus, tipy kamarádů na mapě, body a tiery) a druhý formulář dole
 - Děkovná obrazovka bez vlastní URL: pořadí, WhatsApp, sdílení do stories (obrázek 1080 × 1920), kopírování odkazu, odměny, otázka „Kam jedeš příště?“
 - Pozvánky: krátký odkaz `vandr.world/r/KOD`, každý pozvaný posune o 10 míst, odměny 1 / 3 / 5 / 10 / 25 / 50
-- Kamarád se započítá až po potvrzení e-mailu (`/potvrdit`); bez Resendu se počítá hned
+- Ověření e-mailu bez potvrzovacího mailu: tvar, MX záznam domény, jednorázové schránky, časté překlepy (gmail.con, seznam.cy)
 - Duplicitní e-mail ukáže pořadí, ne chybu
 - Ochrana: honeypot + limit 10 zápisů za 10 minut z jedné IP (ukládá se jen otisk IP, maže se do 24 h)
 - UTM (`utm_source`, `utm_content`, `utm_campaign`) se ukládá k zápisu i k návštěvě
 - A/B test nadpisu bez cookies: `?h=b`, `?h=c`, nebo `AB_HEADLINE=on`
-- Potvrzovací e-mail přes Resend s odkazem pro kamarády a odhlášením jedním klikem
+- Volitelný uvítací e-mail přes Resend s odkazem pro kamarády a odhlášením jedním klikem
 - SEO minimum: title, description, Open Graph 1200 × 630, Twitter card, JSON-LD Organization, robots.txt, sitemap.xml, favicon 32 px a 180 px
 - Vercel Web Analytics (bez cookies), Microsoft Clarity až po souhlasu (malý pruh dole)
 - Zásady ochrany osobních údajů (`/zasady-ochrany-osobnich-udaju`) a odhlášení (`/odhlasit`)

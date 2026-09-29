@@ -31,8 +31,19 @@ export function WaitlistForm({ id, arrow = false }: { id: string; arrow?: boolea
       });
       const data = (await res.json()) as JoinResult | JoinError;
       if ("error" in data) {
+        const e = copy.errors;
         setError(
-          data.error === "invalid" ? copy.errors.invalid : data.error === "rate_limited" ? copy.errors.rateLimited : copy.errors.server,
+          data.error === "typo" && data.suggestion
+            ? e.typo(data.suggestion)
+            : data.error === "disposable"
+              ? e.disposable
+              : data.error === "no_mx"
+                ? e.noMx
+                : data.error === "rate_limited"
+                  ? e.rateLimited
+                  : data.error === "server"
+                    ? e.server
+                    : e.invalid,
         );
         return;
       }

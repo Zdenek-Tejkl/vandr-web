@@ -8,8 +8,9 @@ export type JoinResult = {
   referrals: number;
   total: number;
   answerToken?: string;
-  // Posíláme potvrzovací e-mail, kamarádi se počítají až po potvrzení.
-  confirmation: boolean;
 };
 
-export type JoinError = { error: "invalid" | "rate_limited" | "server" };
+export type JoinError = {
+  error: "invalid" | "disposable" | "typo" | "no_mx" | "rate_limited" | "server";
+  suggestion?: string;
+};

@@ -221,8 +221,6 @@ export function ThankYou({ result, total, onBack }: { result: JoinResult; total:
             </div>
           )}
 
-          {result.confirmation && <p className="thanks-note">{t.footnoteConfirm}</p>}
-
           <button type="button" className="link-btn" onClick={onBack}>
             {t.back}
           </button>

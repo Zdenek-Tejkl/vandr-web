@@ -1,6 +1,7 @@
 import { after, NextResponse } from "next/server";
 import { emailEnabled, isVariant } from "@/lib/config";
-import { sendConfirmation } from "@/lib/email";
+import { checkEmail } from "@/lib/email-check";
+import { sendWelcome } from "@/lib/email";
 import { ipHash } from "@/lib/ip";
 import type { JoinError, JoinResult } from "@/lib/types";
 import { clean, isValidEmail, normalizeEmail } from "@/lib/validate";
@@ -24,7 +25,7 @@ export async function POST(request: Request) {
   // Honeypot: skryté pole vyplní jen robot. Tváříme se, že vše prošlo.
   if (clean(body.website, 200)) {
     return NextResponse.json<JoinResult>(
-      { status: "created", position: null, code: null, referrals: 0, total: 0, confirmation: false },
+      { status: "created", position: null, code: null, referrals: 0, total: 0 },
       { headers: noStore },
     );
   }
@@ -32,7 +33,11 @@ export async function POST(request: Request) {
   const email = normalizeEmail(String(body.email ?? ""));
   if (!isValidEmail(email)) return fail("invalid", 400);
 
-  const confirmation = emailEnabled();
+  // Ověření domény (MX), jednorázové schránky a překlepy. Potvrzovací e-mail neposíláme.
+  const check = await checkEmail(email);
+  if (!check.ok) {
+    return NextResponse.json<JoinError>({ error: check.reason, suggestion: check.suggestion }, { status: 400, headers: noStore });
+  }
   try {
     const r = await joinWaitlist({
       email,
@@ -43,22 +48,23 @@ export async function POST(request: Request) {
       utmContent: clean(body.utm_content),
       variant: isVariant(body.variant) ? body.variant : null,
       ipHash: ipHash(request.headers),
-      requireConfirm: confirmation,
+      requireConfirm: false,
     });
 
     if (r.status === "invalid") return fail("invalid", 400);
     if (r.status === "rate_limited") return fail("rate_limited", 429);
     if (r.status !== "created" && r.status !== "exists") return fail("server", 500);
 
-    if (confirmation && r.status === "created" && r.code && r.unsubscribe_token && r.confirm_token && r.position) {
-      const { code, unsubscribe_token: unsubscribeToken, confirm_token: confirmToken, position } = r;
+    // Uvítací e-mail jen když je nastavený Resend. Odkaz pro kamarády je hned na webu.
+    if (emailEnabled() && r.status === "created" && r.code && r.unsubscribe_token && r.position) {
+      const { code, unsubscribe_token: unsubscribeToken, position } = r;
       after(async () => {
         try {
-          if (await sendConfirmation(email, { position, code, unsubscribeToken, confirmToken })) {
+          if (await sendWelcome(email, { position, code, unsubscribeToken })) {
             await markConfirmationSent(code);
           }
         } catch (e) {
-          console.error("confirmation email failed", e);
+          console.error("welcome email failed", e);
         }
       });
     }
@@ -71,7 +77,6 @@ export async function POST(request: Request) {
         referrals: r.referrals ?? 0,
         total: r.total ?? 0,
         answerToken: r.status === "created" ? r.answer_token : undefined,
-        confirmation,
       },
       { headers: noStore },
     );

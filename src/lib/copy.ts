@@ -52,6 +52,9 @@ export const copy = {
 
   errors: {
     invalid: "Tohle nevypadá jako e-mail. Zkontroluj zavináč a tečku.",
+    typo: (s: string) => `Nemyslel(a) jsi ${s}? Oprav to a zkus znovu.`,
+    disposable: "Jednorázové schránky nebereme. Zadej prosím svůj běžný e-mail.",
+    noMx: "Tahle doména nepřijímá poštu. Zkontroluj část za zavináčem.",
     server: "Nepovedlo se to uložit. Zkus to prosím znovu za chvíli.",
     rateLimited: "Moc pokusů najednou. Zkus to prosím za pár minut.",
   },
@@ -87,7 +90,6 @@ export const copy = {
     questionPlaceholder: "Třeba Gruzie",
     questionSend: "Uložit",
     questionThanks: "Díky! Připravíme tipy i pro tebe.",
-    footnoteConfirm: "Kamarád se započítá, až potvrdí svůj e-mail. Pořadí najdeš i v e-mailu, který ti právě přišel.",
     back: "Zpět na úvod",
   },
 
