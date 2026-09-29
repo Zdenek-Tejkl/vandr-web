@@ -6,6 +6,7 @@ import { copy, formatNumber, goalFor } from "@/lib/copy";
 import type { JoinResult } from "@/lib/types";
 import { CatGlobe, Logo } from "./Brand";
 import { StoriesIcon, WhatsAppIcon } from "./Icons";
+import { InstagramFollow } from "./InstagramFollow";
 
 async function copyText(text: string) {
   try {
@@ -220,6 +221,8 @@ export function ThankYou({ result, total, onBack }: { result: JoinResult; total:
               )}
             </div>
           )}
+
+          <InstagramFollow light />
 
           <button type="button" className="link-btn" onClick={onBack}>
             {t.back}

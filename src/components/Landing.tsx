@@ -6,7 +6,9 @@ import { PhoneGlobe } from "./Art";
 import { CatGlobe, Logo } from "./Brand";
 import { Counter } from "./Counter";
 import { GiftIcon, GlobeIcon, LockIcon, PinIcon, StarIcon } from "./Icons";
+import { InstagramFollow } from "./InstagramFollow";
 import { JoinProvider } from "./JoinProvider";
+import { Screens } from "./Screens";
 import { WaitlistForm } from "./WaitlistForm";
 
 async function getCount() {
@@ -72,6 +74,9 @@ export async function Landing({ variant, invite }: { variant: Variant; invite?: 
             </div>
           </div>
         </section>
+
+        {/* Obrazovky aplikace */}
+        <Screens />
 
         {/* Jen pro pozvané: co je Vandr a jak to funguje */}
         {invite && (
@@ -150,6 +155,7 @@ export async function Landing({ variant, invite }: { variant: Variant; invite?: 
             <p className="sub">{copy.secondText}</p>
             <WaitlistForm id="email-bottom" />
             <p className="second-nospam">{copy.noSpam}</p>
+            <InstagramFollow />
           </div>
           <footer className="wrap foot">
             <span className="foot-copy">{copy.footer}</span>

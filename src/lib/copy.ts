@@ -93,6 +93,25 @@ export const copy = {
     back: "Zpět na úvod",
   },
 
+  screens: {
+    eyebrow: "Podívej se dovnitř",
+    title: "Takhle vypadá Vandr.",
+    items: [
+      { name: "globus", title: "Tvůj globus", text: "Každá země, kde jsi byl, se rozsvítí." },
+      { name: "feed", title: "Tipy od kamarádů", text: "Místa, ceny a spoje od lidí, které znáš." },
+      { name: "zeme", title: "Průvodce zemí", text: "Kdo z tvých lidí tam byl a co doporučuje." },
+      { name: "body", title: "Body a úrovně", text: "Za každou cestu body. Z Turisty až na Legendu." },
+    ],
+    note: "Ukázky z vývojové verze aplikace.",
+  },
+
+  instagram: {
+    title: "Sleduj nás na Instagramu",
+    text: "Ukázky z aplikace, tipy na cesty a novinky ze startu.",
+    handle: "@vandr.world",
+    cta: "Sledovat",
+  },
+
   // Stránka pro pozvané: vandr.world/r/KOD
   invite: {
     title: "Kamarád tě zve na Vandr",

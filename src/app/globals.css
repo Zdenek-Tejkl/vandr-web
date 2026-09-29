@@ -706,6 +706,200 @@ a {
   }
 }
 
+/* ---- Obrazovky aplikace ---- */
+
+.screens {
+  padding: 40px 0 8px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.screens h2 {
+  margin: 4px 0 18px;
+  color: var(--forest);
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.screens-list {
+  display: flex;
+  gap: 16px;
+  margin: 0 -20px;
+  padding: 4px 20px 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  list-style: none;
+}
+
+.screens-list::-webkit-scrollbar {
+  display: none;
+}
+
+.screens-list li {
+  flex: none;
+  width: min(62vw, 250px);
+  scroll-snap-align: center;
+}
+
+.screens figure {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+}
+
+.screen-phone {
+  padding: 7px;
+  border-radius: 34px;
+  background: var(--ink);
+  box-shadow: 0 18px 36px rgba(28, 30, 26, 0.18);
+}
+
+.screen-phone img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 28px;
+}
+
+.screens figcaption {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.screens figcaption b {
+  display: block;
+  color: var(--ink);
+  font-size: 17px;
+}
+
+.screens-note {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.screens + .features {
+  padding-top: 32px;
+}
+
+@media (min-width: 1024px) {
+  .screens {
+    padding: 96px 0 0;
+  }
+  .screens h2 {
+    margin: 8px 0 32px;
+    font-size: 48px;
+  }
+  .screens-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 28px;
+    margin: 0;
+    padding: 0 0 16px;
+    overflow: visible;
+  }
+  .screens-list li {
+    width: auto;
+  }
+  .screen-phone {
+    padding: 9px;
+    border-radius: 40px;
+  }
+  .screen-phone img {
+    border-radius: 32px;
+  }
+  .screens + .features,
+  .screens + .about {
+    padding-top: 72px;
+  }
+}
+
+/* ---- Instagram ---- */
+
+.ig {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 14px;
+  width: 100%;
+  max-width: 580px;
+  margin-top: 12px;
+  padding: 16px;
+  border: 1px solid rgba(242, 244, 238, 0.25);
+  border-radius: 20px;
+  color: var(--paper);
+  text-align: left;
+  text-decoration: none;
+}
+
+.ig-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--ochre);
+  color: var(--ink);
+}
+
+.ig-text {
+  display: flex;
+  flex: 1 1 180px;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.ig-text b {
+  font-size: 17px;
+}
+
+.ig-text span {
+  opacity: 0.85;
+}
+
+.ig-cta {
+  flex: 1 0 100%;
+  padding: 11px 16px;
+  border-radius: 99px;
+  background: var(--paper);
+  color: var(--forest);
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.ig:hover .ig-cta {
+  background: #fff;
+}
+
+.ig-light {
+  max-width: none;
+  border-color: var(--line);
+  background: #fff;
+  color: var(--ink);
+}
+
+.ig-light .ig-cta {
+  background: var(--forest);
+  color: var(--paper);
+}
+
+.ig-light:hover .ig-cta {
+  background: var(--land);
+}
+
+@media (min-width: 640px) {
+  .ig-cta {
+    flex: none;
+  }
+}
+
 /* ---- Pozvánka: vandr.world/r/KOD ---- */
 
 .invite-badge {
