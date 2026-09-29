@@ -93,6 +93,30 @@ export const copy = {
     back: "Zpět na úvod",
   },
 
+  // Stránka pro pozvané: vandr.world/r/KOD
+  invite: {
+    title: "Kamarád tě zve na Vandr",
+    description:
+      "Vandr je sociální síť jen o cestování. Globus tvých zemí a tipy od lidí, kterým věříš. Zapiš se na waiting list.",
+    badge: "Kamarád tě zve",
+    main: "Pojď cestovat",
+    accent: "s tipy od svých lidí.",
+    subtitle:
+      "Vandr je sociální síť jen o cestování. Označíš, kde jsi byl, a uvidíš, kam jezdí tví kamarádi a co doporučují.",
+    og: { main: "Kamarád tě zve", accent: "na Vandr." },
+    ogLine: "Sociální síť jen o cestování. Přidej se na waiting list.",
+    whatEyebrow: "Co je Vandr",
+    whatTitle: "Instagram jen pro cestovatele.",
+    whatText:
+      "Žádné reklamy ani influenceři. Jen tvoje cesty a tipy od lidí, které znáš: kde se dobře najíst, jak se dostat na místo a co za to stojí.",
+    stepsTitle: "Jak to funguje",
+    steps: [
+      { title: "Zapiš se", text: "Stačí e-mail. Kamarád, který tě pozval, se díky tobě posune ve frontě." },
+      { title: "Počkej na start", text: "Až spustíme, napíšeme ti. Jednou, žádný spam." },
+      { title: "Cestuj chytřeji", text: "Rozsviť si globus, sdílej tipy a sleduj, kam jedou ostatní." },
+    ],
+  },
+
   footer: "© 2026 Vandr · vandr.world",
 };
 

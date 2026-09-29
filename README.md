@@ -7,7 +7,7 @@ Waiting list web pro **Vandr** (vandr.world). Jedna stránka, jedna akce: zadat 
 - Hlavní blok bez scrollování na mobilu: logo, nadpis, podnadpis, e-mail + tlačítko, počítadlo „Už X z Y cestovatelů“ (cíl je vždy další tisícovka)
 - Blok „Co tě čeká“ (globus, tipy kamarádů na mapě, body a tiery) a druhý formulář dole
 - Děkovná obrazovka bez vlastní URL: pořadí, WhatsApp, sdílení do stories (obrázek 1080 × 1920), kopírování odkazu, odměny, otázka „Kam jedeš příště?“
-- Pozvánky: krátký odkaz `vandr.world/r/KOD`, každý pozvaný posune o 10 míst, odměny 1 / 3 / 5 / 10 / 25 / 50
+- Pozvánky: krátký odkaz `vandr.world/r/KOD` vede na vlastní stránku pro kamarády (co je Vandr, jak to funguje, vlastní náhled odkazu). Každý pozvaný posune o 10 míst, odměny 1 / 3 / 5 / 10 / 25 / 50
 - Ověření e-mailu bez potvrzovacího mailu: tvar, MX záznam domény, jednorázové schránky, časté překlepy (gmail.con, seznam.cy)
 - Duplicitní e-mail ukáže pořadí, ne chybu
 - Ochrana: honeypot + limit 10 zápisů za 10 minut z jedné IP (ukládá se jen otisk IP, maže se do 24 h)
@@ -64,6 +64,7 @@ select * from vandr.waitlist_conversion;  -- podle zdroje, videa a varianty nadp
 
 - `src/app/page.tsx`: hlavní stránka (statická, obnova po 60 s)
 - `src/app/h/[variant]`: varianty nadpisu pro A/B test (proxy je přepíše interně)
+- `src/app/r/[code]`: stránka pro pozvané kamarády
 - `src/app/api/*`: zápis, odpověď, návštěva, odhlášení, obrázek do stories
 - `src/components/*`: formulář, děkovná obrazovka, ilustrace
 - `src/lib/copy.ts`: všechny texty na jednom místě

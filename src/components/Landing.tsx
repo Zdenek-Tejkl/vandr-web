@@ -20,9 +20,10 @@ async function getCount() {
 
 const featureIcons = [GlobeIcon, PinIcon, StarIcon];
 
-export async function Landing({ variant }: { variant: Variant }) {
+// invite: kód z odkazu vandr.world/r/KOD. Stránka pak kamaráda přivítá a víc vysvětlí, co je Vandr.
+export async function Landing({ variant, invite }: { variant: Variant; invite?: string }) {
   const total = await getCount();
-  const h = headlines[variant];
+  const h = invite ? copy.invite : headlines[variant];
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -34,7 +35,7 @@ export async function Landing({ variant }: { variant: Variant }) {
   };
 
   return (
-    <JoinProvider variant={variant} total={total ?? 0}>
+    <JoinProvider variant={variant} total={total ?? 0} refCode={invite}>
       <main>
         {/* 1. Hlavní blok: vše podstatné bez scrollování */}
         <section className="hero">
@@ -43,10 +44,15 @@ export async function Landing({ variant }: { variant: Variant }) {
           </div>
           <div className="wrap hero-grid">
             <div className="hero-copy">
+              {invite && (
+                <p className="invite-badge">
+                  <GiftIcon size={18} /> {copy.invite.badge}
+                </p>
+              )}
               <h1>
                 <span>{h.main}</span> <em>{h.accent}</em>
               </h1>
-              <p className="sub">{copy.subtitle}</p>
+              <p className="sub">{invite ? copy.invite.subtitle : copy.subtitle}</p>
               <WaitlistForm id="email-top" arrow />
               <div className="hero-meta">
                 <div className="nospam">
@@ -66,6 +72,34 @@ export async function Landing({ variant }: { variant: Variant }) {
             </div>
           </div>
         </section>
+
+        {/* Jen pro pozvané: co je Vandr a jak to funguje */}
+        {invite && (
+          <section className="about" aria-labelledby="about-title">
+            <div className="wrap about-in">
+              <div className="about-what">
+                <p className="eyebrow">{copy.invite.whatEyebrow}</p>
+                <h2 id="about-title">{copy.invite.whatTitle}</h2>
+                <p className="about-text">{copy.invite.whatText}</p>
+              </div>
+              <div className="about-how">
+                <h3>{copy.invite.stepsTitle}</h3>
+                <ol className="steps">
+                  {copy.invite.steps.map((s, i) => (
+                    <li key={s.title}>
+                      <span className="step-n" aria-hidden="true">
+                        {i + 1}
+                      </span>
+                      <span>
+                        <b>{s.title}</b> {s.text}
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* 2. Co tě čeká */}
         <section className="features" aria-labelledby="features-title">
@@ -133,7 +167,9 @@ export async function Landing({ variant }: { variant: Variant }) {
           </footer>
         </section>
       </main>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
+      {!invite && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
+      )}
     </JoinProvider>
   );
 }

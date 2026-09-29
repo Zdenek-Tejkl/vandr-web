@@ -26,10 +26,10 @@ export function useJoin() {
 
 const REF_KEY = "vandr-ref";
 
-function readVisit(variant: Variant): Visit {
+function readVisit(variant: Variant, refCode?: string): Visit {
   const q = new URLSearchParams(window.location.search);
   const get = (k: string) => q.get(k)?.slice(0, 64) || null;
-  let ref = q.get("ref")?.slice(0, 12) || null;
+  let ref = refCode || q.get("ref")?.slice(0, 12) || null;
   try {
     if (ref) sessionStorage.setItem(REF_KEY, ref);
     else ref = sessionStorage.getItem(REF_KEY);
@@ -47,7 +47,17 @@ function readVisit(variant: Variant): Visit {
 }
 
 // Obaluje celou stránku. Po zápisu ji vymění za děkovnou obrazovku (bez vlastní URL).
-export function JoinProvider({ variant, total, children }: { variant: Variant; total: number; children: ReactNode }) {
+export function JoinProvider({
+  variant,
+  total,
+  refCode,
+  children,
+}: {
+  variant: Variant;
+  total: number;
+  refCode?: string;
+  children: ReactNode;
+}) {
   const visit = useRef<Visit>({
     variant,
     ref: null,
@@ -59,7 +69,7 @@ export function JoinProvider({ variant, total, children }: { variant: Variant; t
   const [result, setResult] = useState<JoinResult | null>(null);
 
   useEffect(() => {
-    visit.current = readVisit(variant);
+    visit.current = readVisit(variant, refCode);
     // Jedna návštěva za relaci, bez cookies.
     try {
       if (sessionStorage.getItem("vandr-view")) return;
@@ -71,7 +81,7 @@ export function JoinProvider({ variant, total, children }: { variant: Variant; t
     if (!navigator.sendBeacon?.("/api/view", body)) {
       fetch("/api/view", { method: "POST", body, keepalive: true }).catch(() => {});
     }
-  }, [variant]);
+  }, [variant, refCode]);
 
   const done = useCallback((r: JoinResult) => {
     setResult(r);

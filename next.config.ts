@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
     "/api/story/[code]": ["./src/assets/fonts/**"],
     "/opengraph-image": ["./src/assets/fonts/**"],
     "/twitter-image": ["./src/assets/fonts/**"],
+    "/r/[code]/opengraph-image": ["./src/assets/fonts/**"],
+    "/r/[code]/twitter-image": ["./src/assets/fonts/**"],
   },
   async headers() {
     return [

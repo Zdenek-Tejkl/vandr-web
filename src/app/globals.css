@@ -706,6 +706,138 @@ a {
   }
 }
 
+/* ---- Pozvánka: vandr.world/r/KOD ---- */
+
+.invite-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 7px 14px 7px 10px;
+  border-radius: 99px;
+  background: var(--ochre);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.about {
+  padding: 40px 0 8px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.about-in {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.about-what {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.about h2 {
+  color: var(--forest);
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.about-text {
+  max-width: 46ch;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.about-how {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #fff;
+}
+
+.about-how h3 {
+  color: var(--forest);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.steps b {
+  display: block;
+  color: var(--ink);
+  font-size: 17px;
+}
+
+.step-n {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 99px;
+  background: var(--forest);
+  color: var(--ochre);
+  font-family: var(--display);
+  font-weight: 800;
+}
+
+.about + .features {
+  padding-top: 32px;
+}
+
+@media (min-width: 1024px) {
+  .about {
+    padding: 96px 0 0;
+  }
+  .about-in {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    align-items: center;
+    gap: 64px;
+  }
+  .about h2 {
+    font-size: 48px;
+  }
+  .about-text {
+    font-size: 19px;
+  }
+  .about-how {
+    padding: 28px;
+    border-radius: 24px;
+  }
+  .about-how h3 {
+    font-size: 24px;
+  }
+  .about + .features {
+    padding-top: 72px;
+  }
+}
+
 /* ---- 2. Co tě čeká ---- */
 
 .features {
