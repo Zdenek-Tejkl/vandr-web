@@ -20,7 +20,7 @@ export const copy = {
   gdpr: (controller: string) => `Údaje zpracovává ${controller} jen kvůli spuštění.`,
   privacyLink: "Zásady ochrany osobních údajů",
   counter: (n: string, goal: string) => `Už ${n} z ${goal} cestovatelů`,
-  counterHint: (left: string) => `Ještě ${left} a otevíráme další kolo.`,
+  counterHint: (left: string) => `Ještě ${left} potřebných.`,
 
   phone: {
     title: "Tvůj globus",
