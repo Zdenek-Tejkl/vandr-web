@@ -7,15 +7,30 @@ import { isValidEmail } from "@/lib/validate";
 import { ArrowIcon } from "./Icons";
 import { useJoin } from "./JoinProvider";
 
-export function WaitlistForm({ id, arrow = false }: { id: string; arrow?: boolean }) {
-  const { visit, done } = useJoin();
+function errorText(error: JoinError["error"], suggestion?: string) {
+  const e = copy.errors;
+  if (error === "typo") return suggestion ? e.typo(suggestion) : e.typoGeneric;
+  if (error === "disposable") return e.disposable;
+  if (error === "no_mx") return e.noMx;
+  if (error === "rate_limited") return e.rateLimited;
+  if (error === "server") return e.server;
+  return e.invalid;
+}
+
+// primary: hlavní formulář nahoře, ukáže i chybu z odeslání bez JavaScriptu.
+// Bez JavaScriptu se formulář odešle klasicky (POST) a server přesměruje zpět.
+export function WaitlistForm({ id, arrow = false, primary = false }: { id: string; arrow?: boolean; primary?: boolean }) {
+  const { visit, done, variant, refCode, urlError } = useJoin();
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [ownError, setError] = useState<string | null>(null);
+  const [urlSeen, setUrlSeen] = useState(false);
+  const error = ownError ?? (primary && urlError && !urlSeen ? errorText(urlError) : null);
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (busy) return;
+    setUrlSeen(true);
     const form = new FormData(e.currentTarget);
     if (!isValidEmail(email)) {
       setError(copy.errors.invalid);
@@ -31,20 +46,7 @@ export function WaitlistForm({ id, arrow = false }: { id: string; arrow?: boolea
       });
       const data = (await res.json()) as JoinResult | JoinError;
       if ("error" in data) {
-        const e = copy.errors;
-        setError(
-          data.error === "typo" && data.suggestion
-            ? e.typo(data.suggestion)
-            : data.error === "disposable"
-              ? e.disposable
-              : data.error === "no_mx"
-                ? e.noMx
-                : data.error === "rate_limited"
-                  ? e.rateLimited
-                  : data.error === "server"
-                    ? e.server
-                    : e.invalid,
-        );
+        setError(errorText(data.error, data.suggestion));
         return;
       }
       done(data);
@@ -58,7 +60,9 @@ export function WaitlistForm({ id, arrow = false }: { id: string; arrow?: boolea
   const errId = `${id}-error`;
 
   return (
-    <form className="join" onSubmit={submit} noValidate>
+    <form className="join" method="post" action="/api/join" onSubmit={submit} noValidate>
+      <input type="hidden" name="variant" value={variant} />
+      {refCode && <input type="hidden" name="ref" value={refCode} />}
       <label htmlFor={id} className="sr-only">
         {copy.emailLabel}
       </label>
@@ -77,7 +81,10 @@ export function WaitlistForm({ id, arrow = false }: { id: string; arrow?: boolea
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
-            if (error) setError(null);
+            if (error) {
+              setError(null);
+              setUrlSeen(true);
+            }
           }}
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? errId : undefined}

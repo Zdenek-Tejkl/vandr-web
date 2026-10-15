@@ -23,7 +23,7 @@ export default async function UnsubscribePage({ searchParams }: PageProps<"/odhl
         <h1>Odhlásit z waiting listu</h1>
         {code && token ? (
           <>
-            <p>Smažeme tě ze seznamu a už ti nic nepošleme. Kdykoli se můžeš zapsat znovu.</p>
+            <p>Smažeme tvůj záznam ze seznamu (e-mail, pořadí i odkaz pro kamarády) a už ti nic nepošleme. Kdykoli se můžeš zapsat znovu.</p>
             <UnsubscribeButton code={code} token={token} />
           </>
         ) : (

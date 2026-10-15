@@ -111,6 +111,10 @@ export function ThankYou({ result, total, onBack }: { result: JoinResult; total:
               <CatGlobe id="cat-thanks" size={60} />
             </span>
             <h1 aria-live="polite">{result.status === "exists" ? t.exists : t.created}</h1>
+            {/* Existující e-mail (nebo zápis bez JavaScriptu): odkaz pro kamarády je jen v e-mailu. */}
+            {!link && result.mailed && (
+              <p className="thanks-note">{result.status === "exists" ? t.existsMail : t.createdMail}</p>
+            )}
             {result.position && (
               <>
                 <span className="eyebrow eyebrow-light">{t.positionLabel}</span>

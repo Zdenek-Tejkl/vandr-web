@@ -4,6 +4,7 @@ import { copy, headlines } from "@/lib/copy";
 import { waitlistCount } from "@/lib/waitlist";
 import { PhoneGlobe } from "./Art";
 import { CatGlobe, Logo } from "./Brand";
+import { ConsentSettings } from "./ClarityConsent";
 import { Counter } from "./Counter";
 import { GiftIcon, GlobeIcon, LockIcon, PinIcon, StarIcon } from "./Icons";
 import { InstagramFollow } from "./InstagramFollow";
@@ -55,7 +56,7 @@ export async function Landing({ variant, invite }: { variant: Variant; invite?: 
                 <span>{h.main}</span> <em>{h.accent}</em>
               </h1>
               <p className="sub">{invite ? copy.invite.subtitle : copy.subtitle}</p>
-              <WaitlistForm id="email-top" arrow />
+              <WaitlistForm id="email-top" arrow primary />
               <div className="hero-meta">
                 <div className="nospam">
                   <p>
@@ -66,7 +67,7 @@ export async function Landing({ variant, invite }: { variant: Variant; invite?: 
                     <Link href="/zasady-ochrany-osobnich-udaju">{copy.privacyLink}</Link>
                   </p>
                 </div>
-                <Counter total={total ?? 0} />
+                {total !== null && <Counter total={total} />}
               </div>
             </div>
             <div className="hero-visual">
@@ -162,6 +163,7 @@ export async function Landing({ variant, invite }: { variant: Variant; invite?: 
             <Link href="/zasady-ochrany-osobnich-udaju" className="foot-privacy">
               {copy.privacyLink}
             </Link>
+            <ConsentSettings className="foot-cookies" />
             <span className="socials">
               <a href={site.instagram} rel="noopener" target="_blank">
                 Instagram

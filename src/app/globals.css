@@ -1253,6 +1253,19 @@ a {
   text-underline-offset: 2px;
 }
 
+.foot-cookies {
+  order: 2;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--paper-dim);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
 .socials {
   order: 1;
   display: flex;
@@ -1298,7 +1311,8 @@ a {
     order: 0;
     font-size: 15px;
   }
-  .foot-privacy {
+  .foot-privacy,
+  .foot-cookies {
     order: 0;
   }
   .socials {
@@ -1365,6 +1379,14 @@ a {
 
 .thanks-of {
   font-size: 16px;
+  color: var(--paper-muted);
+}
+
+.thanks-note {
+  max-width: 420px;
+  margin-top: 6px;
+  font-size: 17px;
+  line-height: 1.45;
   color: var(--paper-muted);
 }
 
@@ -1718,6 +1740,11 @@ a {
 .consent div {
   display: flex;
   gap: 8px;
+}
+
+.consent a {
+  color: var(--paper);
+  text-underline-offset: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {

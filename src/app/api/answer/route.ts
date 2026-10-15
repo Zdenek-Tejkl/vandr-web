@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
+import { isJson, isSameOrigin } from "@/lib/same-origin";
 import { clean } from "@/lib/validate";
 import { saveAnswer } from "@/lib/waitlist";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export async function POST(request: Request) {
+  if (!isJson(request) || !isSameOrigin(request)) {
+    return NextResponse.json({ ok: false }, { status: 403 });
+  }
   let body: Record<string, unknown>;
   try {
     body = await request.json();

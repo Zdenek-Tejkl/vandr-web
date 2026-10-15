@@ -24,11 +24,22 @@ const TYPOS: Record<string, string> = {
 
 export type EmailCheck = { ok: true } | { ok: false; reason: "invalid" | "disposable" | "typo" | "no_mx"; suggestion?: string };
 
+// Mezipaměť domén: nejvýš 1 000 položek, nejdéle nepoužitá vypadne první.
+const CACHE_MAX = 1000;
 const cache = new Map<string, { ok: boolean; until: number }>();
+
+function remember(domain: string, entry: { ok: boolean; until: number }) {
+  cache.delete(domain);
+  if (cache.size >= CACHE_MAX) cache.delete(cache.keys().next().value!);
+  cache.set(domain, entry);
+}
 
 async function domainAcceptsMail(domain: string): Promise<boolean> {
   const hit = cache.get(domain);
-  if (hit && hit.until > Date.now()) return hit.ok;
+  if (hit && hit.until > Date.now()) {
+    remember(domain, hit);
+    return hit.ok;
+  }
   let ok = false;
   try {
     const mx = await Promise.race([resolveMx(domain), new Promise<never>((_, rej) => setTimeout(() => rej(new Error("timeout")), 3000))]);
@@ -41,7 +52,7 @@ async function domainAcceptsMail(domain: string): Promise<boolean> {
       ok = false;
     }
   }
-  cache.set(domain, { ok, until: Date.now() + (ok ? 6 : 1) * 60 * 60 * 1000 });
+  remember(domain, { ok, until: Date.now() + (ok ? 6 : 1) * 60 * 60 * 1000 });
   return ok;
 }
 

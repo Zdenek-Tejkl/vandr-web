@@ -10,7 +10,7 @@ export function Screens() {
         <p className="eyebrow">{s.eyebrow}</p>
         <h2 id="screens-title">{s.title}</h2>
         <ul className="screens-list">
-          {s.items.map((item, i) => (
+          {s.items.map((item) => (
             <li key={item.name}>
               <figure>
                 <div className="screen-phone">
@@ -20,7 +20,6 @@ export function Screens() {
                     height={844}
                     sizes="(min-width: 1024px) 260px, 62vw"
                     alt={`${item.title}: ${item.text}`}
-                    priority={i === 0}
                   />
                 </div>
                 <figcaption>

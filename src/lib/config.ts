@@ -1,3 +1,6 @@
+// NEXT_PUBLIC_CONTROLLER="Název | IČO | adresa" jedním řádkem, nebo tři samostatné proměnné níže.
+const controllerLine = (process.env.NEXT_PUBLIC_CONTROLLER || "").split("|").map((s) => s.trim());
+
 export const site = {
   name: "Vandr",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "https://vandr.world").replace(/\/$/, ""),
@@ -6,9 +9,9 @@ export const site = {
   contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "ahoj@vandr.world",
   // Správce osobních údajů. Do spuštění doplnit název firmy, IČO a adresu (viz README).
   controller: {
-    name: process.env.NEXT_PUBLIC_CONTROLLER_NAME || "tým Vandr",
-    id: process.env.NEXT_PUBLIC_CONTROLLER_ID || "",
-    address: process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS || "",
+    name: controllerLine[0] || process.env.NEXT_PUBLIC_CONTROLLER_NAME || "tým Vandr",
+    id: controllerLine[1] || process.env.NEXT_PUBLIC_CONTROLLER_ID || "",
+    address: controllerLine.slice(2).join(", ") || process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS || "",
   },
 };
 

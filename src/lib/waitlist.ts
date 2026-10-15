@@ -1,9 +1,12 @@
 import "server-only";
 import { createClient } from "@supabase/supabase-js";
 import { randomUUID } from "node:crypto";
+import { isProduction } from "./env";
+import { emailKey } from "./validate";
 
 // Databáze: Supabase, schéma "vandr" (oddělené od ostatních projektů).
 // Bez SUPABASE_URL a SUPABASE_SECRET_KEY běží web v demo režimu s daty v paměti.
+// V ostrém provozu demo režim není: bez databáze zápis vrátí chybu.
 
 type RawJoin = {
   status: "created" | "exists" | "invalid" | "rate_limited" | "error";
@@ -14,6 +17,8 @@ type RawJoin = {
   answer_token?: string;
   unsubscribe_token?: string;
   confirm_token?: string;
+  // Jen pro server: nové poslání uvítacího e-mailu existujícímu zápisu.
+  resend?: { email: string; code: string; position: number; unsubscribe_token: string };
 };
 
 export type JoinInput = {
@@ -26,6 +31,7 @@ export type JoinInput = {
   variant: string | null;
   ipHash: string | null;
   requireConfirm: boolean;
+  resend: boolean;
 };
 
 export type ViewInput = {
@@ -34,6 +40,7 @@ export type ViewInput = {
   utmCampaign: string | null;
   utmContent: string | null;
   hasRef: boolean;
+  ipHash: string | null;
 };
 
 const makeClient = (url: string, key: string) =>
@@ -52,7 +59,7 @@ function db() {
   return client;
 }
 
-export const isDemo = () => db() === null;
+export const isDemo = () => db() === null && !isProduction();
 
 async function rpc<T>(fn: string, args: Record<string, unknown>): Promise<T> {
   const c = db();
@@ -101,8 +108,8 @@ function demoPayload(row: DemoRow, status: "created" | "exists"): RawJoin {
 }
 
 function demoJoin(input: JoinInput): RawJoin {
-  const existing = demo.rows.find((r) => r.email === input.email);
-  if (existing) return demoPayload(existing, "exists");
+  const key = emailKey(input.email);
+  if (demo.rows.some((r) => emailKey(r.email) === key)) return { status: "exists", total: 1240 + demo.rows.length };
   const row: DemoRow = {
     id: ++demo.seq,
     email: input.email,
@@ -141,6 +148,7 @@ export async function joinWaitlist(input: JoinInput): Promise<RawJoin> {
     p_variant: input.variant,
     p_ip_hash: input.ipHash,
     p_require_confirm: input.requireConfirm,
+    p_resend: input.resend,
   });
 }
 
@@ -182,8 +190,11 @@ export async function saveAnswer(code: string, token: string, answer: string): P
 export async function unsubscribe(code: string, token: string): Promise<boolean> {
   if (isDemo()) {
     const i = demo.rows.findIndex((r) => r.code === code.toUpperCase() && r.unsubscribeToken === token);
-    if (i >= 0) demo.rows.splice(i, 1);
-    return i >= 0;
+    if (i < 0) return false;
+    const [row] = demo.rows.splice(i, 1);
+    if (row.counted && row.referredBy) row.referredBy.referrals -= 1;
+    for (const r of demo.rows) if (r.referredBy === row) r.referredBy = undefined;
+    return true;
   }
   return rpc<boolean>("waitlist_unsubscribe", { p_code: code, p_token: token });
 }
@@ -204,5 +215,16 @@ export async function logView(input: ViewInput): Promise<void> {
     p_utm_campaign: input.utmCampaign,
     p_utm_content: input.utmContent,
     p_has_ref: input.hasRef,
+    p_ip_hash: input.ipHash,
   });
+}
+
+// Existuje pozvánkový kód? Při výpadku databáze raději ano, ať se pozvánka neztratí.
+export async function inviteExists(code: string): Promise<boolean> {
+  try {
+    return Boolean(await waitlistStatus(code));
+  } catch (e) {
+    console.error("invite check failed", e);
+    return true;
+  }
 }

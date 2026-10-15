@@ -26,7 +26,7 @@ export function welcomeEmail(params: MailParams) {
     "",
     `Tvůj odkaz: ${link}`,
     "",
-    "Napíšeme ti, až spustíme. Nic víc.",
+    "Příště ti napíšeme, až spustíme. Nic víc.",
     "Kocour Vandr",
     "",
     `Odhlásit se: ${unsubscribe}`,
@@ -40,9 +40,9 @@ export function welcomeEmail(params: MailParams) {
 <tr><td style="padding:16px 28px 0;font-size:16px;line-height:1.5">Pozvi 3 kamarády a dostaneš odznak <b>Founding Vandrák</b>. Každý kamarád tě posune o 10 míst dopředu.</td></tr>
 <tr><td style="padding:12px 28px 0;font-size:14px">Tvůj odkaz pro kamarády:</td></tr>
 <tr><td style="padding:4px 28px 0;font-size:16px;font-weight:700;word-break:break-all"><a href="${esc(link)}" style="color:#E3A33B">${esc(link.replace(/^https?:\/\//, ""))}</a></td></tr>
-<tr><td style="padding:24px 28px 28px;font-size:14px;line-height:1.5;opacity:.9">Napíšeme ti, až spustíme. Nic víc.<br>Kocour Vandr</td></tr>
+<tr><td style="padding:24px 28px 28px;font-size:14px;line-height:1.5;opacity:.9">Příště ti napíšeme, až spustíme. Nic víc.<br>Kocour Vandr</td></tr>
 </table>
-<p style="font-size:12px;color:#4F5A52;max-width:480px;line-height:1.5">Tento e-mail ti přišel, protože ses zapsal(a) na ${esc(site.url.replace(/^https?:\/\//, ""))}. <a href="${esc(unsubscribe)}" style="color:#1F4D3A">Odhlásit se</a></p>
+<p style="font-size:12px;color:#4F5A52;max-width:480px;line-height:1.5">Tento e-mail ti přišel kvůli zápisu na waiting list na ${esc(site.url.replace(/^https?:\/\//, ""))}. <a href="${esc(unsubscribe)}" style="color:#1F4D3A">Odhlásit se</a></p>
 </td></tr></table></body></html>`;
 
   return { subject, text, html, unsubscribe, oneClick };

@@ -2,7 +2,10 @@ import { NextResponse } from "next/server";
 import { clean } from "@/lib/validate";
 import { unsubscribe } from "@/lib/waitlist";
 
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 // POST z tlačítka na /odhlasit i jedním klikem z poštovního klienta (RFC 8058).
+// Záznam se smaže. Už smazaný záznam bereme jako hotovo (odkaz se dá kliknout víckrát).
 export async function POST(request: Request) {
   const url = new URL(request.url);
   let code = clean(url.searchParams.get("c"), 12);
@@ -17,12 +20,12 @@ export async function POST(request: Request) {
       // bez těla
     }
   }
-  if (!code || !token || !/^[0-9a-f-]{36}$/i.test(token)) {
+  if (!code || !token || !UUID.test(token)) {
     return NextResponse.json({ ok: false }, { status: 400 });
   }
   try {
-    const ok = await unsubscribe(code, token);
-    return NextResponse.json({ ok }, { status: ok ? 200 : 404 });
+    await unsubscribe(code, token);
+    return NextResponse.json({ ok: true });
   } catch (e) {
     console.error("unsubscribe failed", e);
     return NextResponse.json({ ok: false }, { status: 500 });

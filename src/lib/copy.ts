@@ -3,8 +3,8 @@ import type { Variant } from "./config";
 
 export const headlines: Record<Variant, { main: string; accent: string }> = {
   a: { main: "Kam jedeš?", accent: "Tvoji kamarádi už tam byli." },
-  b: { main: "Instagram jen", accent: "pro cestovatele." },
-  c: { main: "Kolik zemí", accent: "jsi už viděl?" },
+  b: { main: "Sociální síť", accent: "jen pro cestovatele." },
+  c: { main: "Kolik zemí", accent: "už máš za sebou?" },
 };
 
 export const copy = {
@@ -16,11 +16,11 @@ export const copy = {
   placeholder: "tvuj@email.cz",
   button: "Chci na Vandr",
   buttonBusy: "Zapisuju…",
-  noSpam: "Žádný spam. Napíšeme ti jen, až spustíme.",
+  noSpam: "Žádný spam. Pošleme ti uvítací e-mail a pak už jen zprávu, až spustíme.",
   gdpr: (controller: string) => `Údaje zpracovává ${controller} jen kvůli spuštění.`,
   privacyLink: "Zásady ochrany osobních údajů",
   counter: (n: string, goal: string) => `Už ${n} z ${goal} cestovatelů`,
-  counterHint: (left: string) => `Ještě ${left} potřebných.`,
+  counterHint: (left: string, goal: string) => `Do ${goal} chybí ${left}.`,
 
   phone: {
     title: "Tvůj globus",
@@ -39,7 +39,7 @@ export const copy = {
   featuresEyebrow: "Co tě čeká",
   featuresTitle: "Tvoje cesty. Tipy od tvých lidí.",
   features: [
-    { title: "Globus tvých zemí", text: "Každá země, kde jsi byl, se ti rozsvítí." },
+    { title: "Globus tvých zemí", text: "Každá navštívená země se ti rozsvítí." },
     { title: "Tipy kamarádů na mapě", text: "Hidden gems, jídlo a spoje od lidí, kterým věříš." },
     { title: "Body a tiery", text: "Za každou cestu body. Z Turisty až na Legendu." },
   ],
@@ -48,11 +48,12 @@ export const copy = {
   inviteText: "Každý, kdo se přidá přes tvůj odkaz, tě posune o 10 míst.",
 
   secondTitle: "Buď mezi prvními.",
-  secondText: "První na řadě dostanou přístup a 3 zlaté vstupenky pro kamarády.",
+  secondText: "Kdo je ve frontě dřív, dostane se do aplikace dřív. Za pozvané kamarády jsou odměny.",
 
   errors: {
     invalid: "Tohle nevypadá jako e-mail. Zkontroluj zavináč a tečku.",
-    typo: (s: string) => `Nemyslel(a) jsi ${s}? Oprav to a zkus znovu.`,
+    typo: (s: string) => `Nemáš na mysli ${s}? Oprav to a zkus znovu.`,
+    typoGeneric: "Zkontroluj prosím, jestli je e-mail napsaný správně.",
     disposable: "Jednorázové schránky nebereme. Zadej prosím svůj běžný e-mail.",
     noMx: "Tahle doména nepřijímá poštu. Zkontroluj část za zavináčem.",
     server: "Nepovedlo se to uložit. Zkus to prosím znovu za chvíli.",
@@ -62,6 +63,8 @@ export const copy = {
   thanks: {
     created: "Jsi na seznamu!",
     exists: "Tenhle e-mail už na seznamu je.",
+    existsMail: "Odkaz na pozvánky najdeš v uvítacím e-mailu.",
+    createdMail: "Odkaz pro kamarády ti posíláme e-mailem.",
     positionLabel: "Tvoje pořadí",
     of: (total: string, goal: string) => `${total} z ${goal} čekajících`,
     inviteTitle: "Vezmi s sebou kamarády.",
@@ -97,7 +100,7 @@ export const copy = {
     eyebrow: "Podívej se dovnitř",
     title: "Takhle vypadá Vandr.",
     items: [
-      { name: "globus", title: "Tvůj globus", text: "Každá země, kde jsi byl, se rozsvítí." },
+      { name: "globus", title: "Tvůj globus", text: "Každá navštívená země se rozsvítí." },
       { name: "feed", title: "Tipy od kamarádů", text: "Místa, ceny a spoje od lidí, které znáš." },
       { name: "zeme", title: "Průvodce zemí", text: "Kdo z tvých lidí tam byl a co doporučuje." },
       { name: "body", title: "Body a úrovně", text: "Za každou cestu body. Z Turisty až na Legendu." },
@@ -121,17 +124,17 @@ export const copy = {
     main: "Pojď cestovat",
     accent: "s tipy od svých lidí.",
     subtitle:
-      "Vandr je sociální síť jen o cestování. Označíš, kde jsi byl, a uvidíš, kam jezdí tví kamarádi a co doporučují.",
+      "Vandr je sociální síť jen o cestování. Označíš země, které máš za sebou, a uvidíš, kam jezdí tví kamarádi a co doporučují.",
     og: { main: "Kamarád tě zve", accent: "na Vandr." },
     ogLine: "Sociální síť jen o cestování. Přidej se na waiting list.",
     whatEyebrow: "Co je Vandr",
-    whatTitle: "Instagram jen pro cestovatele.",
+    whatTitle: "Sociální síť jen pro cestovatele.",
     whatText:
       "Žádné reklamy ani influenceři. Jen tvoje cesty a tipy od lidí, které znáš: kde se dobře najíst, jak se dostat na místo a co za to stojí.",
     stepsTitle: "Jak to funguje",
     steps: [
       { title: "Zapiš se", text: "Stačí e-mail. Kamarád, který tě pozval, se díky tobě posune ve frontě." },
-      { title: "Počkej na start", text: "Až spustíme, napíšeme ti. Jednou, žádný spam." },
+      { title: "Počkej na start", text: "Přijde ti uvítací e-mail a pak už jen zpráva, až spustíme. Žádný spam." },
       { title: "Cestuj chytřeji", text: "Rozsviť si globus, sdílej tipy a sleduj, kam jedou ostatní." },
     ],
   },
