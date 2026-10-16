@@ -35,3 +35,7 @@ jobs:
             { cat "$f"; echo; echo "insert into vandr.applied_files (file) values ('$name') on conflict do nothing;"; } \
               | psql "$DB_URL" -v ON_ERROR_STOP=1 --single-transaction -q
           done
+      - name: Stav databáze
+        env:
+          DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: psql "$DB_URL" -c "select file, applied_at from vandr.applied_files order by file"
