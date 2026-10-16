@@ -20,22 +20,46 @@ jobs:
       - uses: actions/checkout@v5
       - name: Klient Postgres
         run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client >/dev/null
-      - name: Pustit nové migrace
+      - name: Připojení
         env:
           DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        # Adresu rozebere na části, aby heslo se speciálními znaky (%, @, #) nevadilo
+        # a psql ho nikdy nevypsal do logu.
         run: |
           if [ -z "$DB_URL" ]; then echo "::error::Chybí secret SUPABASE_DB_URL"; exit 1; fi
-          psql "$DB_URL" -v ON_ERROR_STOP=1 -q -c "create table if not exists vandr.applied_files (file text primary key, applied_at timestamptz not null default now()); revoke all on vandr.applied_files from public, anon, authenticated;"
+          python3 - <<'PY'
+          import os, re, urllib.parse
+          u = os.environ['DB_URL'].strip()
+          m = re.match(r'^postgres(?:ql)?://([^:]+):(.*)@([^@:/]+)(?::(\d+))?/([^?]*)', u)
+          if not m:
+              print('::error::SUPABASE_DB_URL nemá tvar postgresql://uzivatel:heslo@host:port/databaze')
+              raise SystemExit(1)
+          user, pw, host, port, db = m.groups()
+          pw = pw.strip('[]')
+          try:
+              dec = urllib.parse.unquote(pw, errors='strict')
+          except UnicodeDecodeError:
+              dec = pw
+          if '%' in pw and not re.search(r'%[0-9A-Fa-f]{2}', pw):
+              dec = pw
+          print(f'::add-mask::{dec}')
+          with open(os.environ['GITHUB_ENV'], 'a') as f:
+              for k, v in [('PGUSER', user), ('PGPASSWORD', dec), ('PGHOST', host), ('PGPORT', port or '5432'), ('PGDATABASE', db or 'postgres'), ('PGSSLMODE', 'require')]:
+                  f.write(f'{k}<<__EOV__\n{v}\n__EOV__\n')
+          PY
+      - name: Pustit nové migrace
+        run: |
+          psql -v ON_ERROR_STOP=1 -q -c "create table if not exists vandr.applied_files (file text primary key, applied_at timestamptz not null default now()); revoke all on vandr.applied_files from public, anon, authenticated;"
           for f in $(ls supabase/migrations/*.sql | sort); do
             name=$(basename "$f")
             case "$name" in *[!A-Za-z0-9_.-]*) echo "::error::Neplatný název $name"; exit 1;; esac
-            done=$(psql "$DB_URL" -tA -c "select count(*) from vandr.applied_files where file = '$name'")
+            done=$(psql -tA -c "select count(*) from vandr.applied_files where file = '$name'")
             if [ "$done" = "1" ]; then echo "= $name"; continue; fi
             echo "+ $name"
             { cat "$f"; echo; echo "insert into vandr.applied_files (file) values ('$name') on conflict do nothing;"; } \
-              | psql "$DB_URL" -v ON_ERROR_STOP=1 --single-transaction -q
+              | psql -v ON_ERROR_STOP=1 --single-transaction -q
           done
       - name: Stav databáze
         env:
           DB_URL: ${{ secrets.SUPABASE_DB_URL }}
-        run: psql "$DB_URL" -c "select file, applied_at from vandr.applied_files order by file"
+        run: psql -c "select file, applied_at from vandr.applied_files order by file"
