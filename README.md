@@ -50,6 +50,11 @@ select * from vandr.waitlist_weekly;      -- návštěvy, zápisy, konverze po t
 select * from vandr.waitlist_conversion;  -- podle zdroje, videa a varianty nadpisu
 ```
 
+## Databáze
+
+- Nové soubory v `supabase/migrations` se po pushi samy pustí do živé databáze (GitHub Actions, `.github/workflows/db-migrate.yml`)
+- Potřebuje secret `SUPABASE_DB_URL` (Supabase > Connect > Session pooler), co už proběhlo, je v tabulce `vandr.applied_files`
+
 ## Nasazení na Vercel
 
 1. Importovat repo do Vercelu
