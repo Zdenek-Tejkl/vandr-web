@@ -5,7 +5,8 @@ name: DB migrace
 
 on:
   push:
-    branches: [main, 'claude/**']
+    # Jen hlavní větev: vývojové větve se nepouští, šetří to minuty Actions.
+    branches: [main, claude/upbeat-meitner-ktmwmm]
     paths: ['supabase/migrations/**', '.github/workflows/db-migrate.yml']
   workflow_dispatch:
 
