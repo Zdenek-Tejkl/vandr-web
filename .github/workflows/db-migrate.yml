@@ -1,0 +1,37 @@
+# Nové migrace ze supabase/migrations se samy pustí do živé databáze.
+# Co už proběhlo, je zapsané v tabulce vandr.applied_files (podle názvu souboru).
+# Potřebuje secret SUPABASE_DB_URL (Supabase > Connect > Session pooler, URI s heslem).
+name: DB migrace
+
+on:
+  push:
+    branches: [main, 'claude/**']
+    paths: ['supabase/migrations/**', '.github/workflows/db-migrate.yml']
+  workflow_dispatch:
+
+concurrency:
+  group: vandr-db-migrate
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Klient Postgres
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client >/dev/null
+      - name: Pustit nové migrace
+        env:
+          DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          if [ -z "$DB_URL" ]; then echo "::error::Chybí secret SUPABASE_DB_URL"; exit 1; fi
+          psql "$DB_URL" -v ON_ERROR_STOP=1 -q -c "create table if not exists vandr.applied_files (file text primary key, applied_at timestamptz not null default now()); revoke all on vandr.applied_files from public, anon, authenticated;"
+          for f in $(ls supabase/migrations/*.sql | sort); do
+            name=$(basename "$f")
+            case "$name" in *[!A-Za-z0-9_.-]*) echo "::error::Neplatný název $name"; exit 1;; esac
+            done=$(psql "$DB_URL" -tA -c "select count(*) from vandr.applied_files where file = '$name'")
+            if [ "$done" = "1" ]; then echo "= $name"; continue; fi
+            echo "+ $name"
+            { cat "$f"; echo; echo "insert into vandr.applied_files (file) values ('$name') on conflict do nothing;"; } \
+              | psql "$DB_URL" -v ON_ERROR_STOP=1 --single-transaction -q
+          done
