@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { clean } from "@/lib/validate";
-import { unsubscribe } from "@/lib/waitlist";
+import { unsubscribe } from "@/lib/unsubscribe";
 
 // POST z tlačítka na /odhlasit i jedním klikem z poštovního klienta (RFC 8058).
 export async function POST(request: Request) {

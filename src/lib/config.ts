@@ -4,7 +4,7 @@ export const site = {
   instagram: "https://www.instagram.com/vandr.world/",
   tiktok: "https://www.tiktok.com/@vandr.world",
   contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "ahoj@vandr.world",
-  // Správce osobních údajů. Do spuštění doplnit název firmy, IČO a adresu (viz README).
+  // Správce osobních údajů. Před spuštěním doplnit název firmy, IČO a adresu (viz README).
   controller: {
     name: process.env.NEXT_PUBLIC_CONTROLLER_NAME || "tým Vandr",
     id: process.env.NEXT_PUBLIC_CONTROLLER_ID || "",
@@ -12,21 +12,21 @@ export const site = {
   },
 };
 
-export const variants = ["a", "b", "c"] as const;
-export type Variant = (typeof variants)[number];
+const httpsUrl = (v: string | undefined) => (v && /^https:\/\/\S+$/.test(v.trim()) ? v.trim() : "");
 
-export function isVariant(v: unknown): v is Variant {
-  return typeof v === "string" && (variants as readonly string[]).includes(v);
-}
+// Odkazy na obchody. Dokud nejsou vyplněné, tlačítka ukazují "Brzy" a nikam nevedou.
+//   NEXT_PUBLIC_APP_STORE_URL    https://apps.apple.com/cz/app/vandr/id0000000000
+//   NEXT_PUBLIC_GOOGLE_PLAY_URL  https://play.google.com/store/apps/details?id=world.vandr.app
+export const stores = {
+  ios: httpsUrl(process.env.NEXT_PUBLIC_APP_STORE_URL),
+  android: httpsUrl(process.env.NEXT_PUBLIC_GOOGLE_PLAY_URL),
+};
 
-export const defaultVariant: Variant = isVariant(process.env.NEXT_PUBLIC_HEADLINE)
-  ? process.env.NEXT_PUBLIC_HEADLINE
-  : "a";
+// Číslo aplikace v App Store (z odkazu .../id0000000000) pro lištu "Otevřít v App Store" v Safari.
+export const appStoreId = (stores.ios.match(/\/id(\d+)/)?.[1] ?? "").slice(0, 20);
 
-// Krátký odkaz pro kamarády: vandr.world/r/KOD
-export function shareUrl(code: string) {
-  return `${site.url}/r/${encodeURIComponent(code)}`;
-}
+/** Aplikace jde stáhnout aspoň v jednom obchodě. */
+export const isLive = Boolean(stores.ios || stores.android);
 
-// Potvrzovací e-maily se posílají jen s nastaveným Resendem (jen na serveru).
-export const emailEnabled = () => Boolean(process.env.RESEND_API_KEY);
+// Krátký odkaz ke stažení: podle zařízení přesměruje do správného obchodu (bio, QR kód, reklamy).
+export const downloadPath = "/stahnout";

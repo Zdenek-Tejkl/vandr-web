@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Figtree } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { ClarityConsent } from "@/components/ClarityConsent";
-import { site } from "@/lib/config";
+import { appStoreId, site } from "@/lib/config";
 import { copy } from "@/lib/copy";
 import "./globals.css";
 
@@ -25,10 +25,12 @@ export const metadata: Metadata = {
   description: copy.description,
   keywords: [
     "vandr",
-    "sociální síť pro cestovatele",
+    "instagram pro cestovatele",
     "aplikace na cestování",
+    "cestovní deník",
     "mapa navštívených zemí",
-    "tipy na cestování od kamarádů",
+    "hidden gems",
+    "plánovač cest",
   ],
   applicationName: site.name,
   alternates: { canonical: "/" },
@@ -42,6 +44,8 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image", title: copy.title, description: copy.description },
   formatDetection: { email: false, telephone: false, address: false },
+  // Safari na iPhonu ukáže nahoře lištu "Otevřít v App Store" (až bude aplikace v obchodě).
+  ...(appStoreId ? { itunes: { appId: appStoreId } } : {}),
 };
 
 export const viewport: Viewport = {

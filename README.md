@@ -1,79 +1,89 @@
 # vandr-web
 
-Waiting list web pro **Vandr** (vandr.world). Jedna stránka, jedna akce: zadat e-mail.
+Web **Vandr** (vandr.world). Jedna stránka, jeden cíl: stáhnout aplikaci. Pozice: Instagram pro cestovatele.
 
 ## Co umí
 
-- Hlavní blok bez scrollování na mobilu: logo, nadpis, podnadpis, e-mail + tlačítko, počítadlo „Už X z Y cestovatelů“ (cíl je vždy další tisícovka)
-- Ukázky aplikace (`public/screens`, pro náhled odkazu `src/assets/screens`): screenshoty z demo režimu aplikace Vandr.world
-- Odkaz „Sleduj nás na Instagramu“ dole na stránce i na děkovné obrazovce
-- Blok „Co tě čeká“ (globus, tipy kamarádů na mapě, body a tiery) a druhý formulář dole
-- Děkovná obrazovka bez vlastní URL: pořadí, WhatsApp, sdílení do stories (obrázek 1080 × 1920), kopírování odkazu, odměny, otázka „Kam jedeš příště?“
-- Pozvánky: krátký odkaz `vandr.world/r/KOD` vede na vlastní stránku pro kamarády (co je Vandr, jak to funguje, vlastní náhled odkazu). Každý pozvaný posune o 10 míst, odměny 1 / 3 / 5 / 10 / 25 / 50
-- Ověření e-mailu bez potvrzovacího mailu: tvar, MX záznam domény, jednorázové schránky, časté překlepy (gmail.con, seznam.cy)
-- Duplicitní e-mail ukáže pořadí, ne chybu
-- Ochrana: honeypot + limit 10 zápisů za 10 minut z jedné IP (ukládá se jen otisk IP, maže se do 24 h)
-- UTM (`utm_source`, `utm_content`, `utm_campaign`) se ukládá k zápisu i k návštěvě
-- A/B test nadpisu bez cookies: `?h=b`, `?h=c`, nebo `AB_HEADLINE=on`
-- Volitelný uvítací e-mail přes Resend s odkazem pro kamarády a odhlášením jedním klikem
-- SEO minimum: title, description, Open Graph 1200 × 630, Twitter card, JSON-LD Organization, robots.txt, sitemap.xml, favicon 32 px a 180 px
-- Vercel Web Analytics (bez cookies), Microsoft Clarity až po souhlasu (malý pruh dole)
-- Zásady ochrany osobních údajů (`/zasady-ochrany-osobnich-udaju`) a odhlášení (`/odhlasit`)
+- Hlavní blok bez scrollování: nadpis, jedna věta, tlačítko ke stažení a obrazovka aplikace
+- Tlačítko pozná zařízení: na iPhonu vede do App Store, na Androidu na Google Play, jinak na `/stahnout`
+- `vandr.world/stahnout`: jeden odkaz do bia, QR kódu a reklam. Podle zařízení přesměruje do správného obchodu, na počítači na stránku s QR kódem
+- Tlačítko ke stažení je vidět pořád: v horní liště, v liště dole na mobilu (po odjetí hlavního tlačítka) a na konci stránky
+- Zdroj návštěvy (`utm_source`, `utm_medium`, `utm_campaign`, `utm_content`) se předá obchodu: Google Play v parametru `referrer`, App Store v `ct`
+- Měření kliknutí: Vercel Web Analytics, událost `download_click` s obchodem a místem na stránce (bez cookies)
+- Obsah: tři čísla, jak to funguje ve třech krocích, profil s planetou, obrazovky aplikace, krátké otázky a odpovědi
+- Na počítači QR kód (kreslí se na serveru), v Safari na iPhonu lišta Otevřít v App Store (až bude odkaz)
+- SEO: title, description, Open Graph 1200 × 630, Twitter card, JSON-LD `MobileApplication`, robots.txt, sitemap.xml
+- Microsoft Clarity až po souhlasu (malý pruh dole)
+- Zásady ochrany osobních údajů (`/zasady-ochrany-osobnich-udaju`)
+
+## Odkazy do obchodů
+
+Dokud nejsou vyplněné, stránka ukazuje **Už brzy v App Store a na Google Play** a hlavní tlačítko vede na Instagram.
+
+```bash
+NEXT_PUBLIC_APP_STORE_URL=https://apps.apple.com/cz/app/vandr/id0000000000
+NEXT_PUBLIC_GOOGLE_PLAY_URL=https://play.google.com/store/apps/details?id=world.vandr.app
+```
+
+- Stačí jeden z nich, druhý obchod pak ukazuje Brzy
+- Číslo aplikace pro lištu v Safari se vezme z odkazu do App Store (`id0000000000`)
+- Proměnné jsou `NEXT_PUBLIC_*`, po změně je potřeba nové nasazení
 
 ## Spuštění
 
 ```bash
 npm install
 npm run dev        # http://localhost:3000
+npm test           # logika stažení (zařízení, obchod, zdroj návštěvy)
+npm run typecheck
+npm run lint
 ```
 
-- Bez `SUPABASE_URL` a `SUPABASE_SECRET_KEY` běží **demo režim** (data jen v paměti)
-- Proměnné: viz `.env.example`
+## Ukázky aplikace
 
-## Databáze
+Obrazovky v `public/screens` (stránka) a `src/assets/screens` (náhled odkazu) jsou snímky z demo režimu aplikace.
+Po změně grafiky aplikace se vygenerují znovu:
 
-- Projekt Supabase **cesta-dobrodruha** (`xpikyrtjmueeyqrpfoox`)
-- Vše pro Vandr je ve schématu **`vandr`**, cesta-dobrodruha zůstává v `public`
-- Migrace: `supabase/migrations/*.sql` (obě už jsou nasazené)
-- Tabulky: `vandr.waitlist`, `vandr.waitlist_views`, `vandr.waitlist_attempts`
-- Prohlížeč do DB nesahá. Jen server přes funkce `vandr.waitlist_*` a secret key
-- **Jednorázově v Supabase:** Settings > Data API > Exposed schemas > přidat `vandr`
-
-Týdenní přehled (Supabase > SQL editor):
-
-```sql
-select * from vandr.waitlist_weekly;      -- návštěvy, zápisy, konverze po týdnech
-select * from vandr.waitlist_conversion;  -- podle zdroje, videa a varianty nadpisu
+```bash
+# v repu aplikace (Vandr.world)
+npx expo export --platform web && npx serve -s dist -l 4173
+# tady
+APP_URL=http://localhost:4173 npm run build:screens
 ```
+
+## Co zbylo z waiting listu
+
+Waiting list web už nesbírá. Zůstalo jen to, co musí fungovat dál:
+
+- `/odhlasit` a `POST /api/unsubscribe`: odhlášení pro lidi, kteří se zapsali dřív (odkaz v e-mailu). Potřebuje `SUPABASE_URL` a `SUPABASE_SECRET_KEY`
+- Staré odkazy `/r/KOD`, `/h/varianta` a `/potvrdit` vedou na úvod
+- Tabulky `vandr.waitlist*` v Supabase zůstaly beze změny (web je nemaže ani nečte, jen odhlašuje)
 
 ## Nasazení na Vercel
 
 1. Importovat repo do Vercelu
-2. Nastavit proměnné z `.env.example` (hlavně `SUPABASE_URL`, `SUPABASE_SECRET_KEY`, `IP_HASH_SECRET`)
+2. Nastavit proměnné z `.env.example` (hlavně odkazy do obchodů)
 3. Doména `vandr.world`
 4. Zapnout Web Analytics v projektu
 
 ## Checklist před spuštěním
 
+- [ ] Vyplnit `NEXT_PUBLIC_APP_STORE_URL` a `NEXT_PUBLIC_GOOGLE_PLAY_URL`
 - [ ] Doplnit správce údajů (`NEXT_PUBLIC_CONTROLLER_*`) a nechat zásady zkontrolovat právníkem
-- [ ] Resend: ověřit doménu (SPF, DKIM), test doručení do Gmailu a Seznamu
-- [ ] Test z odkazu v bio na iPhonu i Androidu (Instagram i TikTok)
+- [ ] Nadpis používá název Instagram jako přirovnání. Ověřit s právníkem a nepoužívat ho v názvu a popisu aplikace v obchodech
+- [ ] Vyměnit tlačítka obchodů za oficiální odznaky App Store a Google Play (podle jejich pravidel)
+- [ ] Test z odkazu v bio na iPhonu i Androidu (Instagram i TikTok): `vandr.world/stahnout?utm_source=instagram`
 - [ ] Načtení do 2,5 s na mobilních datech
 - [ ] Náhled odkazu ve WhatsAppu a Messengeru
-- [ ] UTM odkazy pro každou platformu, např. `vandr.world/?utm_source=tiktok&utm_content=hiddengem`
 
 ## Struktura
 
-- `src/app/page.tsx`: hlavní stránka (statická, obnova po 60 s)
-- `src/app/h/[variant]`: varianty nadpisu pro A/B test (proxy je přepíše interně)
-- `src/app/r/[code]`: stránka pro pozvané kamarády
-- `src/app/api/*`: zápis, odpověď, návštěva, odhlášení, obrázek do stories
-- `src/components/*`: formulář, děkovná obrazovka, ilustrace
-- `src/lib/copy.ts`: všechny texty na jednom místě
-- `scripts/build-geo.mjs`: globus a mapa Gruzie z Natural Earth (`npm run build:geo`)
-- `scripts/build-icons.mjs`: favicony a logo (`npm run build:icons`)
+- `src/app/page.tsx`: hlavní stránka (statická)
+- `src/app/stahnout/route.ts`: chytrý odkaz ke stažení
+- `src/components/Landing.tsx`: celá stránka, `Download.tsx`: tlačítka a lišta dole, `Phone.tsx`, `Qr.tsx`
+- `src/lib/copy.ts`: všechny texty, `config.ts`: adresy a odkazy do obchodů, `download.ts`: logika stažení
+- `scripts/build-screens.mjs`: ukázky aplikace, `build-icons.mjs`: favicony a logo, `test-download.mjs`: testy
 
 ## Licence podkladů
 
 - Písma Bricolage Grotesque a Figtree: SIL Open Font License (`src/assets/fonts`)
-- Mapová data: Natural Earth (volné dílo) přes `world-atlas`

@@ -20,10 +20,10 @@ export default async function UnsubscribePage({ searchParams }: PageProps<"/odhl
         <Link href="/" className="doc-home" aria-label="Zpět na vandr.world">
           <Logo id="cat-unsub" />
         </Link>
-        <h1>Odhlásit z waiting listu</h1>
+        <h1>Odhlásit z e-mailů Vandru</h1>
         {code && token ? (
           <>
-            <p>Smažeme tě ze seznamu a už ti nic nepošleme. Kdykoli se můžeš zapsat znovu.</p>
+            <p>Smažeme tvůj e-mail ze seznamu a už ti nic nepošleme.</p>
             <UnsubscribeButton code={code} token={token} />
           </>
         ) : (

@@ -1,9 +1,6 @@
 import { Landing } from "@/components/Landing";
-import { defaultVariant } from "@/lib/config";
 
-// Statická stránka, počítadlo se obnoví nejpozději po minutě.
-export const revalidate = 60;
-
+// Statická stránka: žádná data, jen obsah a odkazy ke stažení.
 export default function Home() {
-  return <Landing variant={defaultVariant} />;
+  return <Landing />;
 }

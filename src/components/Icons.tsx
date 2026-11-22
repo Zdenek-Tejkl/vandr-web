@@ -43,38 +43,37 @@ export const PinIcon = ({ size = 30, className }: P) => (
   </svg>
 );
 
-export const StarIcon = ({ size = 30, className }: P) => (
-  <svg {...base(size)} className={className}>
-    <path d="M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.8z" />
-  </svg>
-);
-
-export const GiftIcon = ({ size = 34, className }: P) => (
-  <svg {...base(size)} className={className}>
-    <rect x="3" y="8" width="18" height="13" rx="2" />
-    <path d="M12 8v13" />
-    <path d="M3 12h18" />
-    <path d="M12 8c-2-4-6-4-6-1.5S9 8 12 8c3 0 6 0 6-1.5S14 4 12 8z" />
-  </svg>
-);
-
-export const WhatsAppIcon = ({ size = 22, className }: P) => (
-  <svg {...base(size)} strokeWidth={2.2} className={className}>
-    <path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.4A9 9 0 1 1 21 12z" />
-  </svg>
-);
-
-export const StoriesIcon = ({ size = 22, className }: P) => (
-  <svg {...base(size)} className={className}>
-    <rect x="3" y="3" width="18" height="18" rx="5" />
-    <circle cx="12" cy="12" r="4" />
-  </svg>
-);
-
 export const InstagramIcon = ({ size = 22, className }: P) => (
   <svg {...base(size)} className={className}>
     <rect x="3" y="3" width="18" height="18" rx="5" />
     <circle cx="12" cy="12" r="4" />
     <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" />
+  </svg>
+);
+
+export const DownloadIcon = ({ size = 22, className }: P) => (
+  <svg {...base(size)} strokeWidth={2.4} className={className}>
+    <path d="M12 4v11" />
+    <path d="M7 11l5 5 5-5" />
+    <path d="M5 20h14" />
+  </svg>
+);
+
+export const CheckIcon = ({ size = 20, className }: P) => (
+  <svg {...base(size)} strokeWidth={2.6} className={className}>
+    <path d="M5 12.5l4.5 4.5L19 7.5" />
+  </svg>
+);
+
+export const ChevronIcon = ({ size = 20, className }: P) => (
+  <svg {...base(size)} strokeWidth={2.4} className={className}>
+    <path d="M6 9l6 6 6-6" />
+  </svg>
+);
+
+export const PhoneIcon = ({ size = 20, className }: P) => (
+  <svg {...base(size)} className={className}>
+    <rect x="7" y="3" width="10" height="18" rx="2.5" />
+    <path d="M11 17.5h2" />
   </svg>
 );

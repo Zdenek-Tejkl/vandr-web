@@ -33,7 +33,7 @@ function Phone({ src, width, style }: { src: string; width: number; style: Recor
 
 // Náhled odkazu 1200 × 630: logo, nadpis, krátký text a vpravo tři obrazovky aplikace.
 export async function ogImage({ main, accent, line }: { main: string; accent: string; line: string }) {
-  const [feed, globus, zeme] = await Promise.all([screen("feed"), screen("globus"), screen("zeme")]);
+  const [left, middle, right] = await Promise.all([screen("skupina"), screen("profil"), screen("report")]);
   return new ImageResponse(
     (
       <div
@@ -59,9 +59,9 @@ export async function ogImage({ main, accent, line }: { main: string; accent: st
           </div>
           <div style={{ fontSize: 28, lineHeight: 1.35, opacity: 0.92 }}>{line}</div>
         </div>
-        <Phone src={feed} width={200} style={{ left: 690, top: 150, transform: "rotate(-8deg)" }} />
-        <Phone src={zeme} width={200} style={{ left: 960, top: 150, transform: "rotate(8deg)" }} />
-        <Phone src={globus} width={220} style={{ left: 815, top: 70 }} />
+        <Phone src={left} width={200} style={{ left: 690, top: 150, transform: "rotate(-8deg)" }} />
+        <Phone src={right} width={200} style={{ left: 960, top: 150, transform: "rotate(8deg)" }} />
+        <Phone src={middle} width={220} style={{ left: 815, top: 70 }} />
       </div>
     ),
     { ...ogSize, fonts: await ogFonts() },
