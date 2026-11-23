@@ -53,3 +53,35 @@ test("bez zdroje je návštěva z webu", () => {
   const ref = new URLSearchParams(new URL(storeUrl("android", stores)).searchParams.get("referrer"));
   assert.equal(ref.get("utm_source"), "web");
 });
+
+// ---- Pozvánka do skupiny (src/lib/invite.ts) ----
+
+const { INVITE_ALPHABET, inviteAppLink, inviteUtm, normalizeInviteCode } = await import("../src/lib/invite.ts");
+
+test("kód pozvánky: jednotný tvar bez ohledu na to, jak přišel", () => {
+  assert.equal(normalizeInviteCode("K7M2-XQ9D"), "K7M2-XQ9D");
+  assert.equal(normalizeInviteCode("k7m2xq9d"), "K7M2-XQ9D");
+  assert.equal(normalizeInviteCode(" k7m2 xq9d "), "K7M2-XQ9D");
+});
+
+test("kód pozvánky: co kód není, vrátí null", () => {
+  assert.equal(normalizeInviteCode("K7M2-XQ9"), null, "krátký");
+  assert.equal(normalizeInviteCode("K7M2-XQ9DD"), null, "dlouhý");
+  // Zaměnitelné znaky v abecedě nejsou: 0, O, 1, I, L, U.
+  for (const ch of "0O1ILU") {
+    assert.equal(INVITE_ALPHABET.includes(ch), false, ch);
+    assert.equal(normalizeInviteCode(`K7M2XQ9${ch}`), null, ch);
+  }
+  assert.equal(normalizeInviteCode(""), null);
+  assert.equal(normalizeInviteCode(null), null);
+  assert.equal(normalizeInviteCode("<script>"), null);
+});
+
+test("pozvánka: odkaz do aplikace a zdroj návštěvy do obchodů", () => {
+  assert.equal(inviteAppLink("K7M2-XQ9D"), "vandr://p/K7M2-XQ9D");
+  const url = new URL(storeUrl("android", stores, inviteUtm("K7M2-XQ9D")));
+  const ref = new URLSearchParams(url.searchParams.get("referrer"));
+  assert.equal(ref.get("utm_source"), "invite");
+  assert.equal(ref.get("utm_campaign"), "K7M2XQ9D");
+  assert.equal(new URL(storeUrl("ios", stores, inviteUtm("K7M2-XQ9D"))).searchParams.get("ct"), "invite-K7M2XQ9D");
+});

@@ -8,8 +8,9 @@ Web **Vandr** (vandr.world). Jedna stránka, jeden cíl: stáhnout aplikaci. Poz
 - Tlačítko pozná zařízení: na iPhonu vede do App Store, na Androidu na Google Play, jinak na `/stahnout`
 - `vandr.world/stahnout`: jeden odkaz do bia, QR kódu a reklam. Podle zařízení přesměruje do správného obchodu, na počítači na stránku s QR kódem
 - Tlačítko ke stažení je vidět pořád: v horní liště, v liště dole na mobilu (po odjetí hlavního tlačítka) a na konci stránky
+- `vandr.world/p/<kód>`: pozvánka do skupiny cesty. Kdo aplikaci nemá, stáhne si ji (zdroj `invite` a kód jdou do obchodu), kdo ji má, otevře pozvánku rovnou v ní (`vandr://p/<kód>`). Ukazuje jen název cesty a kdo zve (funkce `get_invite_public` v databázi), bez databáze obecný text. Na počítači QR kód s odkazem, stránky nejsou pro vyhledávače
 - Zdroj návštěvy (`utm_source`, `utm_medium`, `utm_campaign`, `utm_content`) se předá obchodu: Google Play v parametru `referrer`, App Store v `ct`
-- Měření kliknutí: Vercel Web Analytics, událost `download_click` s obchodem a místem na stránce (bez cookies)
+- Měření kliknutí: Vercel Web Analytics, událost `download_click` s obchodem a místem na stránce, u pozvánky `invite_click` (bez cookies)
 - Obsah: tři čísla, jak to funguje ve třech krocích, profil s planetou, obrazovky aplikace, krátké otázky a odpovědi
 - Na počítači QR kód (kreslí se na serveru), v Safari na iPhonu lišta Otevřít v App Store (až bude odkaz)
 - SEO: title, description, Open Graph 1200 × 630, Twitter card, JSON-LD `MobileApplication`, robots.txt, sitemap.xml
