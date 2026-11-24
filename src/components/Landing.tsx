@@ -66,8 +66,8 @@ export function Landing() {
               </div>
             </div>
             <div className="hero-visual" aria-hidden="true">
-              <Phone screen="profil" alt="" sizes="(min-width: 1024px) 250px, 0px" className="phone-back" />
-              <Phone screen="skupina" alt="" sizes="(min-width: 1024px) 280px, 64vw" priority className="phone-front" />
+              <Phone screen="skupina" alt="" sizes="(min-width: 1024px) 250px, 0px" className="phone-back" />
+              <Phone screen="souhrn" alt="" sizes="(min-width: 1024px) 280px, 64vw" priority className="phone-front" />
             </div>
             <p className="sr-only">{copy.hero.alt}</p>
           </div>
@@ -85,21 +85,53 @@ export function Landing() {
           </ul>
         </section>
 
-        {/* 2. Jak to funguje: tři kroky, každý s obrazovkou */}
-        <section className="steps" aria-labelledby="steps-title">
+        {/* 2. Příběh: proč Vandr vznikl */}
+        <section className="story" aria-labelledby="story-title">
+          <div className="wrap story-in">
+            <div className="story-copy">
+              <p className="eyebrow">{copy.story.eyebrow}</p>
+              <h2 id="story-title">{copy.story.title}</h2>
+              {copy.story.paragraphs.map((t) => (
+                <p key={t}>{t}</p>
+              ))}
+            </div>
+            <div className="story-chat" aria-hidden="true">
+              <div className="story-photo">
+                <span>📍 Kotor, Černá Hora</span>
+              </div>
+              {copy.story.bubbles.map((b, i) => (
+                <div key={b.text} className={`bubble${i === 0 ? " bubble-me" : ""}`}>
+                  <b>{b.who}</b>
+                  {b.text}
+                </div>
+              ))}
+              <div className="story-reacts">❤️ 12 · 😍 7 · 🔥 4</div>
+            </div>
+          </div>
+        </section>
+
+        {/* 3. Tři hlavní věci: plánování, hidden gems, reporty */}
+        <section className="pillars" aria-labelledby="pillars-title">
           <div className="wrap">
-            <p className="eyebrow">{copy.steps.eyebrow}</p>
-            <h2 id="steps-title">{copy.steps.title}</h2>
-            <ol className="steps-list">
-              {copy.steps.items.map((s, i) => (
-                <li key={s.screen} className="step">
-                  <Phone screen={s.screen} alt={`${s.title}: ${s.text}`} sizes="(min-width: 1024px) 250px, 58vw" />
-                  <div className="step-text">
+            <p className="eyebrow">{copy.pillars.eyebrow}</p>
+            <h2 id="pillars-title">{copy.pillars.title}</h2>
+            <ol className="pillars-list">
+              {copy.pillars.items.map((s, i) => (
+                <li key={s.screen} className="pillar">
+                  <Phone screen={s.screen} alt={`${s.title} ${s.text}`} sizes="(min-width: 1024px) 270px, 62vw" />
+                  <div className="pillar-text">
                     <span className="step-n" aria-hidden="true">
                       {i + 1}
                     </span>
                     <h3>{s.title}</h3>
                     <p>{s.text}</p>
+                    <ul className="ticks ticks-dark">
+                      {s.points.map((pt) => (
+                        <li key={pt}>
+                          <CheckIcon size={18} /> {pt}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </li>
               ))}
@@ -107,7 +139,26 @@ export function Landing() {
           </div>
         </section>
 
-        {/* 3. Profil s planetou */}
+        {/* 4. Jak to jde: čtyři kroky bez obrázků */}
+        <section className="flow" aria-labelledby="flow-title">
+          <div className="wrap">
+            <p className="eyebrow eyebrow-light">{copy.steps.eyebrow}</p>
+            <h2 id="flow-title">{copy.steps.title}</h2>
+            <ol className="flow-list">
+              {copy.steps.items.map((s, i) => (
+                <li key={s.title}>
+                  <span className="flow-n" aria-hidden="true">
+                    {i + 1}
+                  </span>
+                  <b>{s.title}</b>
+                  <span>{s.text}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* 5. Profil s planetou */}
         <section className="planet" aria-labelledby="planet-title">
           <div className="wrap planet-in">
             <div className="planet-copy">
@@ -126,7 +177,7 @@ export function Landing() {
           </div>
         </section>
 
-        {/* 4. Další obrazovky */}
+        {/* 6. Další obrazovky */}
         <section className="screens" aria-labelledby="screens-title">
           <div className="wrap">
             <p className="eyebrow">{copy.screens.eyebrow}</p>

@@ -24,6 +24,19 @@ const SCREENS = [
   { name: 'plan', path: '/plan/plan-gruzie' },
   { name: 'gem', path: '/post/p-02' },
   { name: 'profil', path: '/profile', wait: 5000 },
+  // Skupina cesty ve fázi plánování (demo-planning-trip).
+  { name: 'hlasovani', path: '/live/demo-planning-trip?tab=chat' },
+  { name: 'souhrn', path: '/live/demo-planning-trip?tab=plan' },
+  { name: 'vydaje', path: '/live/demo-planning-trip?tab=expenses' },
+  {
+    name: 'rozvrh',
+    path: '/live/demo-planning-trip?tab=plan',
+    action: async (page) => {
+      const b = page.getByText('Navrhnout rozvrh').locator('visible=true').first();
+      await b.scrollIntoViewIfNeeded();
+      await b.click();
+    },
+  },
 ];
 
 const browser = await chromium.launch(executablePath ? { executablePath } : {});
@@ -52,6 +65,10 @@ await mkdir('src/assets/screens', { recursive: true });
 for (const s of SCREENS) {
   if (s.path !== '/') await page.goto(APP_URL + s.path);
   await page.waitForTimeout(s.wait ?? 4000);
+  if (s.action) {
+    await s.action(page);
+    await page.waitForTimeout(2000);
+  }
   const png = await page.screenshot();
   await sharp(png).webp({ quality: 82 }).toFile(`public/screens/${s.name}.webp`);
   await sharp(png).resize(390).jpeg({ quality: 80 }).toFile(`src/assets/screens/${s.name}.jpg`);
