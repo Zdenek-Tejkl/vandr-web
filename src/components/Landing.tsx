@@ -24,7 +24,13 @@ async function getCount() {
 const featureIcons = [GlobeIcon, PinIcon, StarIcon];
 
 // invite: kód z odkazu vandr.world/r/KOD. Stránka pak kamaráda přivítá a víc vysvětlí, co je Vandr.
-export async function Landing({ variant, invite }: { variant: Variant; invite?: string }) {
+export async function Landing({
+  variant,
+  invite,
+}: {
+  variant: Variant;
+  invite?: string;
+}) {
   const total = await getCount();
   const h = invite ? copy.invite : headlines[variant];
 
@@ -55,7 +61,9 @@ export async function Landing({ variant, invite }: { variant: Variant; invite?: 
               <h1>
                 <span>{h.main}</span> <em>{h.accent}</em>
               </h1>
-              <p className="sub">{invite ? copy.invite.subtitle : copy.subtitle}</p>
+              <p className="sub">
+                {invite ? copy.invite.subtitle : copy.subtitle}
+              </p>
               <WaitlistForm id="email-top" arrow primary />
               <div className="hero-meta">
                 <div className="nospam">
@@ -64,7 +72,9 @@ export async function Landing({ variant, invite }: { variant: Variant; invite?: 
                   </p>
                   <p className="gdpr">
                     {copy.gdpr(site.controller.name)}{" "}
-                    <Link href="/zasady-ochrany-osobnich-udaju">{copy.privacyLink}</Link>
+                    <Link href="/zasady-ochrany-osobnich-udaju">
+                      {copy.privacyLink}
+                    </Link>
                   </p>
                 </div>
                 {total !== null && <Counter total={total} />}
@@ -129,7 +139,10 @@ export async function Landing({ variant, invite }: { variant: Variant; invite?: 
                     {i === 2 && (
                       <ul className="tier-chips" aria-label="Tiery">
                         {copy.tiers.map((t, j) => (
-                          <li key={t} className={j === 2 ? "on" : j === 4 ? "top" : ""}>
+                          <li
+                            key={t}
+                            className={j === 2 ? "on" : j === 4 ? "top" : ""}
+                          >
                             {t}
                           </li>
                         ))}
@@ -160,8 +173,14 @@ export async function Landing({ variant, invite }: { variant: Variant; invite?: 
           </div>
           <footer className="wrap foot">
             <span className="foot-copy">{copy.footer}</span>
-            <Link href="/zasady-ochrany-osobnich-udaju" className="foot-privacy">
+            <Link
+              href="/zasady-ochrany-osobnich-udaju"
+              className="foot-privacy"
+            >
               {copy.privacyLink}
+            </Link>
+            <Link href="/smazani-uctu" className="foot-privacy">
+              Smazání účtu
             </Link>
             <ConsentSettings className="foot-cookies" />
             <span className="socials">
@@ -176,7 +195,12 @@ export async function Landing({ variant, invite }: { variant: Variant; invite?: 
         </section>
       </main>
       {!invite && (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
       )}
     </JoinProvider>
   );
