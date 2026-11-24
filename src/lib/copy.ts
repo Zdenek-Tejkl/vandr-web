@@ -32,7 +32,8 @@ export const copy = {
 
   invite: {
     metaTitle: "Pozvánka na cestu · Vandr",
-    metaDescription: "Někdo tě zve do skupiny cesty na Vandru. Stáhni si aplikaci a přidej se.",
+    metaDescription:
+      "Někdo tě zve do skupiny cesty na Vandru. Stáhni si aplikaci a přidej se.",
     eyebrow: "Pozvánka na cestu",
     titleNamed: "tě zve na cestu",
     titleGeneric: "Někdo tě zve na cestu.",
@@ -48,7 +49,11 @@ export const copy = {
     copy: "Kopírovat",
     copied: "Zkopírováno",
     stepsTitle: "Jak se přidat",
-    steps: ["Stáhni si Vandr.", "Založ si účet, zabere to minutu.", "Otevři tenhle odkaz znovu, nebo v aplikaci zadej kód."],
+    steps: [
+      "Stáhni si Vandr.",
+      "Založ si účet, zabere to minutu.",
+      "Otevři tenhle odkaz znovu, nebo v aplikaci zadej kód.",
+    ],
     qrTitle: "Otevři to na telefonu",
     qrText: "Naskenuj kód a pozvánka se ti otevře v mobilu.",
     qrAlt: "QR kód s odkazem na pozvánku",
@@ -69,9 +74,15 @@ export const copy = {
       "Vandr dělá tohle pro každého. A k tomu pomůže cestu naplánovat a po návratu z ní udělá report na profil.",
     ],
     bubbles: [
-      { who: "My", text: "Den 4. Kotor ráno bez lidí, pak 1 350 schodů na pevnost. Nohy nic, výhled všechno." },
+      {
+        who: "My",
+        text: "Den 4. Kotor ráno bez lidí, pak 1 350 schodů na pevnost. Nohy nic, výhled všechno.",
+      },
       { who: "Máma", text: "Krása! A jedli jste něco pořádného?" },
-      { who: "Tomáš", text: "Až budete v Budvě, zajděte k Jadranu. Ryba za pár eur." },
+      {
+        who: "Tomáš",
+        text: "Až budete v Budvě, zajděte k Jadranu. Ryba za pár eur.",
+      },
     ],
   },
 
@@ -83,19 +94,31 @@ export const copy = {
         screen: "souhrn",
         title: "Plánujte spolu. Chytře.",
         text: "Hlasujte o termínu i dopravě, výsledek se sám zapíše do plánu. Vandr rozdělí místa do dnů podle toho, co je blízko, a pohlídá, kdo komu kolik dluží.",
-        points: ["Hlasování o termínu, dopravě i čemkoli", "Návrh rozvrhu po nejkratší trase", "Výdaje a vyrovnání v jakékoli měně"],
+        points: [
+          "Hlasování o termínu, dopravě i čemkoli",
+          "Návrh rozvrhu po nejkratší trase",
+          "Výdaje a vyrovnání v jakékoli měně",
+        ],
       },
       {
         screen: "planovac",
         title: "Hidden gems od kamarádů.",
         text: "Místa, kam tě poslal kamarád, ne cestovka. Od přátel, jejich přátel a veřejná. Co je turistická past, lidé sami vyřadí.",
-        points: ["Gemy jako lajky, recenze s fotkou", "Hlas Turistické vyřadí přeplněná místa", "Jedním ťuknutím do plánu cesty"],
+        points: [
+          "Gemy jako lajky, recenze s fotkou",
+          "Hlas Turistické vyřadí přeplněná místa",
+          "Jedním ťuknutím do plánu cesty",
+        ],
       },
       {
         screen: "skupina",
         title: "Každý večer domů. Po návratu report.",
         text: "Posílej fotky a pár slov partě i rodině. Trasa se kreslí sama. Po návratu cestu dokončíš, Vandr vybere to nejlepší a report máš na profilu.",
-        points: ["Parta vidí plán, rodina jen to, co pošleš všem", "Fotky v plné kvalitě mezi iPhonem a Androidem", "Report z cesty i obrázek na Instagram"],
+        points: [
+          "Parta vidí plán, rodina jen to, co pošleš všem",
+          "Fotky v plné kvalitě mezi iPhonem a Androidem",
+          "Report z cesty i obrázek na Instagram",
+        ],
       },
     ],
   },
@@ -104,10 +127,22 @@ export const copy = {
     eyebrow: "Jak to jde",
     title: "Od nápadu po report za čtyři kroky.",
     items: [
-      { title: "Založ skupinu", text: "Pozvi partu i rodinu odkazem, třeba přes WhatsApp." },
-      { title: "Naplánujte to", text: "Hlasujte, přidávejte místa, Vandr navrhne rozvrh." },
-      { title: "Vyražte", text: "Každý večer fotky a pár slov. Trasa se kreslí sama." },
-      { title: "Report na profil", text: "Cestu dokončíš, zkontroluješ výběr a zveřejníš." },
+      {
+        title: "Založ skupinu",
+        text: "Pozvi partu i rodinu odkazem, třeba přes WhatsApp.",
+      },
+      {
+        title: "Naplánujte to",
+        text: "Hlasujte, přidávejte místa, Vandr navrhne rozvrh.",
+      },
+      {
+        title: "Vyražte",
+        text: "Každý večer fotky a pár slov. Trasa se kreslí sama.",
+      },
+      {
+        title: "Report na profil",
+        text: "Cestu dokončíš, zkontroluješ výběr a zveřejníš.",
+      },
     ],
   },
 
@@ -127,13 +162,41 @@ export const copy = {
     eyebrow: "Podívej se dovnitř",
     title: "Takhle vypadá Vandr.",
     items: [
-      { name: "hlasovani", title: "Hlasování", text: "Termín, doprava, cokoli. Rozhodne parta." },
-      { name: "rozvrh", title: "Návrh rozvrhu", text: "Místa do dnů po nejkratší trase." },
-      { name: "vydaje", title: "Výdaje", text: "Kdo co platil a kdo komu dluží." },
-      { name: "gem", title: "Hidden gem", text: "Gemy, recenze a hlas Turistické." },
-      { name: "kontrola", title: "Výběr do reportu", text: "To nejlepší z cesty vybere Vandr." },
-      { name: "report", title: "Report", text: "Fotky, texty a trasa z jedné cesty." },
-      { name: "chaty", title: "Chaty a cesty", text: "Plánované i běžící cesty na jednom místě." },
+      {
+        name: "hlasovani",
+        title: "Hlasování",
+        text: "Termín, doprava, cokoli. Rozhodne parta.",
+      },
+      {
+        name: "rozvrh",
+        title: "Návrh rozvrhu",
+        text: "Místa do dnů po nejkratší trase.",
+      },
+      {
+        name: "vydaje",
+        title: "Výdaje",
+        text: "Kdo co platil a kdo komu dluží.",
+      },
+      {
+        name: "gem",
+        title: "Hidden gem",
+        text: "Gemy, recenze a hlas Turistické.",
+      },
+      {
+        name: "kontrola",
+        title: "Výběr do reportu",
+        text: "To nejlepší z cesty vybere Vandr.",
+      },
+      {
+        name: "report",
+        title: "Report",
+        text: "Fotky, texty a trasa z jedné cesty.",
+      },
+      {
+        name: "chaty",
+        title: "Chaty a cesty",
+        text: "Plánované i běžící cesty na jednom místě.",
+      },
     ],
     note: "Ukázky z aplikace s demo daty.",
   },
@@ -141,7 +204,10 @@ export const copy = {
   faq: {
     title: "Krátce a jasně",
     items: [
-      { q: "Kolik to stojí?", a: "Nic. Stažení i používání je zdarma a bez reklam." },
+      {
+        q: "Kolik to stojí?",
+        a: "Nic. Stažení i používání je zdarma a bez reklam.",
+      },
       {
         q: "Musí mít Vandr i rodina, která jen sleduje?",
         a: "Ano, je zdarma. Pozveš je odkazem a uvidí jen to, co pošleš všem. Plán, hlasování a výdaje zůstanou partě.",
@@ -154,7 +220,10 @@ export const copy = {
         q: "Musím sdílet polohu?",
         a: "Ne. Aplikace ti to nabídne, protože z polohy kreslí trasu cesty. Funguje ale i bez ní.",
       },
-      { q: "Na čem Vandr běží?", a: "Na Androidu. Verze pro iPhone je na cestě." },
+      {
+        q: "Na čem Vandr běží?",
+        a: "Na Androidu. Verze pro iPhone je na cestě.",
+      },
     ],
   },
 

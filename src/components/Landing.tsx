@@ -22,7 +22,9 @@ export function Landing() {
     operatingSystem: "iOS, Android",
     offers: { "@type": "Offer", price: "0", priceCurrency: "CZK" },
     ...(isLive ? { installUrl: `${site.url}${downloadPath}` } : {}),
-    sameAs: [site.instagram, site.tiktok, stores.ios, stores.android].filter(Boolean),
+    sameAs: [site.instagram, site.tiktok, stores.ios, stores.android].filter(
+      Boolean,
+    ),
   };
 
   return (
@@ -66,8 +68,19 @@ export function Landing() {
               </div>
             </div>
             <div className="hero-visual" aria-hidden="true">
-              <Phone screen="skupina" alt="" sizes="(min-width: 1024px) 250px, 0px" className="phone-back" />
-              <Phone screen="souhrn" alt="" sizes="(min-width: 1024px) 280px, 64vw" priority className="phone-front" />
+              <Phone
+                screen="skupina"
+                alt=""
+                sizes="(min-width: 1024px) 250px, 0px"
+                className="phone-back"
+              />
+              <Phone
+                screen="souhrn"
+                alt=""
+                sizes="(min-width: 1024px) 280px, 64vw"
+                priority
+                className="phone-front"
+              />
             </div>
             <p className="sr-only">{copy.hero.alt}</p>
           </div>
@@ -100,7 +113,10 @@ export function Landing() {
                 <span>📍 Kotor, Černá Hora</span>
               </div>
               {copy.story.bubbles.map((b, i) => (
-                <div key={b.text} className={`bubble${i === 0 ? " bubble-me" : ""}`}>
+                <div
+                  key={b.text}
+                  className={`bubble${i === 0 ? " bubble-me" : ""}`}
+                >
                   <b>{b.who}</b>
                   {b.text}
                 </div>
@@ -118,7 +134,11 @@ export function Landing() {
             <ol className="pillars-list">
               {copy.pillars.items.map((s, i) => (
                 <li key={s.screen} className="pillar">
-                  <Phone screen={s.screen} alt={`${s.title} ${s.text}`} sizes="(min-width: 1024px) 270px, 62vw" />
+                  <Phone
+                    screen={s.screen}
+                    alt={`${s.title} ${s.text}`}
+                    sizes="(min-width: 1024px) 270px, 62vw"
+                  />
                   <div className="pillar-text">
                     <span className="step-n" aria-hidden="true">
                       {i + 1}
@@ -173,7 +193,12 @@ export function Landing() {
                 ))}
               </ul>
             </div>
-            <Phone screen="profil" alt={copy.planet.alt} sizes="(min-width: 1024px) 280px, 64vw" className="planet-phone" />
+            <Phone
+              screen="profil"
+              alt={copy.planet.alt}
+              sizes="(min-width: 1024px) 280px, 64vw"
+              className="planet-phone"
+            />
           </div>
         </section>
 
@@ -187,7 +212,11 @@ export function Landing() {
             {copy.screens.items.map((item) => (
               <li key={item.name}>
                 <figure>
-                  <Phone screen={item.name} alt={`${item.title}: ${item.text}`} sizes="(min-width: 1024px) 210px, 56vw" />
+                  <Phone
+                    screen={item.name}
+                    alt={`${item.title}: ${item.text}`}
+                    sizes="(min-width: 1024px) 210px, 56vw"
+                  />
                   <figcaption>
                     <b>{item.title}</b> {item.text}
                   </figcaption>
@@ -243,7 +272,10 @@ export function Landing() {
             </div>
             {isLive ? (
               <div className="qr-card">
-                <Qr value={`${site.url}${downloadPath}?utm_source=qr`} label={copy.download.qrAlt} />
+                <Qr
+                  value={`${site.url}${downloadPath}?utm_source=qr`}
+                  label={copy.download.qrAlt}
+                />
                 <p>
                   <b>{copy.download.qrTitle}</b>
                   {copy.download.qrText}
@@ -256,7 +288,10 @@ export function Landing() {
           </div>
           <footer className="wrap foot">
             <span className="foot-copy">{copy.footer}</span>
-            <Link href="/zasady-ochrany-osobnich-udaju" className="foot-privacy">
+            <Link
+              href="/zasady-ochrany-osobnich-udaju"
+              className="foot-privacy"
+            >
               {copy.privacyLink}
             </Link>
             <Link href="/smazani-uctu" className="foot-privacy">
@@ -275,7 +310,12 @@ export function Landing() {
       </main>
 
       <StickyCta watch="hero-cta" hideAt="final-cta" />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
     </>
   );
 }

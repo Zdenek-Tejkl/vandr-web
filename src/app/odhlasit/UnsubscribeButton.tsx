@@ -19,7 +19,7 @@ export function UnsubscribeButton({ code, token }: { code: string; token: string
     }
   }
 
-  if (state === "done") return <p role="status">Hotovo, jsi odhlášený(á). Díky, že jsi s námi byl(a).</p>;
+  if (state === "done") return <p role="status">Hotovo, tvůj záznam jsme smazali. Díky za zájem o Vandr.</p>;
 
   return (
     <div className="doc-actions">

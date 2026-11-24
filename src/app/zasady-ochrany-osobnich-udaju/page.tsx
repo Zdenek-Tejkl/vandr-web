@@ -98,7 +98,7 @@ export default function PrivacyPage() {
           <Link href="/smazani-uctu">Smazání účtu</Link>.
         </p>
 
-        <h2>Tenhle web</h2>
+        <h2 id="cookies">Tenhle web</h2>
         <p>
           Web vandr.world po tobě nic nechce. Nezakládáš tu účet a nezadáváš
           e-mail.
