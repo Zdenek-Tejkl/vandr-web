@@ -208,6 +208,9 @@ export function Landing() {
             <Link href="/zasady-ochrany-osobnich-udaju" className="foot-privacy">
               {copy.privacyLink}
             </Link>
+            <Link href="/smazani-uctu" className="foot-privacy">
+              Smazání účtu
+            </Link>
             <span className="socials">
               <a href={site.instagram} rel="noopener" target="_blank">
                 Instagram

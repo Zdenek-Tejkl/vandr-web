@@ -5,5 +5,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: site.url, changeFrequency: "weekly", priority: 1 },
     { url: `${site.url}/zasady-ochrany-osobnich-udaju`, changeFrequency: "yearly", priority: 0.2 },
+    { url: `${site.url}/smazani-uctu`, changeFrequency: "yearly", priority: 0.1 },
   ];
 }
