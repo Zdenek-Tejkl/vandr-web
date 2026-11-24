@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Logo } from "@/components/Brand";
+import { ConsentSettings } from "@/components/ClarityConsent";
 import { site } from "@/lib/config";
 
 export const metadata: Metadata = {
   title: "Zásady ochrany osobních údajů · Vandr",
   description:
-    "Jaké údaje zpracovává aplikace Vandr a web vandr.world, kdo je vidí a jak účet smazat.",
+    "Jak Vandr zachází s e-mailem na waiting listu a s údaji v aplikaci.",
   alternates: { canonical: "/zasady-ochrany-osobnich-udaju" },
 };
 
@@ -29,6 +30,96 @@ export default function PrivacyPage() {
           {c.address && <>, {c.address}</>}. Kontakt:{" "}
           <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>.
         </p>
+
+        <h2>Waiting list na webu: co ukládáme a proč</h2>
+        <ul>
+          <li>
+            <b>E-mail</b>: hned po zápisu ti pošleme jeden uvítací e-mail s
+            odkazem pro kamarády a pak už jen zprávu, až Vandr spustíme. Když
+            zadáš e-mail, který už na seznamu je, pošleme uvítací e-mail znovu
+            (nejvýš jednou za hodinu). K ničemu jinému ho nepoužijeme.
+          </li>
+          <li>
+            <b>Pozvánkový kód a kdo tě pozval</b>: kvůli pořadí ve frontě a
+            odměnám za pozvání.
+          </li>
+          <li>
+            <b>Odkud přicházíš (UTM parametry odkazu)</b>: abychom věděli, které
+            video funguje. Nejde o osobní profil.
+          </li>
+          <li>
+            <b>Odpověď „Kam jedeš příště?“</b>: jen pokud ji vyplníš. Pomáhá nám
+            s obsahem.
+          </li>
+          <li>
+            <b>Otisk IP adresy</b>: jednosměrný otisk, ne samotná adresa. Chrání
+            před spamem a před zneužitím pozvánek (třeba když by si někdo zval
+            sám sebe). Záznamy o pokusech mažeme do 24 hodin, otisk u zápisu po
+            30 dnech.
+          </li>
+        </ul>
+
+        <h2>Právní základ</h2>
+        <p>
+          E-mail, pozvánky, UTM a odpověď zpracováváme na základě tvého
+          souhlasu, který dáváš zapsáním e-mailu. Můžeš ho kdykoli odvolat
+          odkazem v každém e-mailu nebo napsáním na {site.contactEmail}. Otisk
+          IP adresy zpracováváme z oprávněného zájmu na ochraně webu před
+          zneužitím.
+        </p>
+        <p>Zapsat se můžeš, jen když je ti aspoň 15 let.</p>
+
+        <h2>Jak dlouho</h2>
+        <p>
+          Do spuštění Vandru a nejdéle 6 měsíců po něm, pak údaje smažeme.
+          Odhlášením se tvůj záznam smaže hned a celý (e-mail, pořadí, kód i
+          odpověď). Kamarádi, kteří se zapsali přes tvůj odkaz, na seznamu
+          zůstanou.
+        </p>
+
+        <h2>Kdo nám pomáhá</h2>
+        <ul>
+          <li>Supabase (databáze, přihlášení a úložiště souborů aplikace)</li>
+          <li>
+            Vercel (provoz webu a anonymní měření návštěvnosti bez cookies)
+          </li>
+          <li>Resend (odeslání e-mailu)</li>
+          <li>
+            Microsoft Clarity (záznam průchodu webem, jen když s tím souhlasíš)
+          </li>
+        </ul>
+        <p>
+          Vercel, Resend a Microsoft sídlí v USA, takže se údaje mohou dostat i
+          tam. Předání je chráněné rámcem EU-USA Data Privacy Framework,
+          případně standardními smluvními doložkami (SCC) schválenými Evropskou
+          komisí.
+        </p>
+        <p>Údaje nikomu neprodáváme a nepoužíváme k reklamě.</p>
+
+        <h2 id="cookies">Cookies a úložiště v prohlížeči</h2>
+        <ul>
+          <li>
+            <b>vandr-h</b> (funkční cookie, 30 dní): jen když testujeme dva
+            nadpisy, pamatuje si písmeno varianty, ať vidíš pořád stejný. Žádné
+            osobní údaje.
+          </li>
+          <li>
+            <b>Microsoft Clarity</b> (cookies _clck a _clsk a cookies
+            Microsoftu): jen po tvém souhlasu. Nahrává kliknutí a posouvání po
+            stránce, abychom web zlepšili.
+          </li>
+          <li>
+            <b>Úložiště prohlížeče</b>: tvoje volba u Clarity, kód pozvánky a
+            značka návštěvy během jedné relace. Nikam se neposílá kromě kódu
+            pozvánky při zápisu.
+          </li>
+        </ul>
+        {process.env.NEXT_PUBLIC_CLARITY_ID && (
+          <p>
+            Souhlas s Clarity můžeš kdykoli změnit nebo odvolat:{" "}
+            <ConsentSettings className="link-btn" />
+          </p>
+        )}
 
         <h2>Aplikace Vandr</h2>
         <p>
@@ -98,60 +189,13 @@ export default function PrivacyPage() {
           <Link href="/smazani-uctu">Smazání účtu</Link>.
         </p>
 
-        <h2 id="cookies">Tenhle web</h2>
-        <p>
-          Web vandr.world po tobě nic nechce. Nezakládáš tu účet a nezadáváš
-          e-mail.
-        </p>
-        <ul>
-          <li>
-            <b>Měření návštěvnosti</b>: anonymní, bez cookies (Vercel Web
-            Analytics). Počítáme návštěvy a kliknutí na tlačítka ke stažení, ne
-            lidi.
-          </li>
-          <li>
-            <b>Odkud přicházíš</b>: parametry odkazu (utm) předáme obchodu s
-            aplikacemi, abychom věděli, které video nebo příspěvek funguje.
-            Nejde o osobní profil.
-          </li>
-          <li>
-            <b>Microsoft Clarity</b>: záznam průchodu webem, jen když s tím dole
-            na stránce souhlasíš. Souhlas můžeš kdykoli vzít zpět smazáním dat
-            webu v prohlížeči.
-          </li>
-          <li>
-            <b>Pozvánka do skupiny</b>: stránka pozvánky ukáže jen název cesty,
-            jméno toho, kdo zve, a počet lidí ve skupině.
-          </li>
-        </ul>
-
-        <h2>Dřívější waiting list</h2>
-        <p>
-          Kdo se před spuštěním zapsal e-mailem na waiting list, toho e-mail
-          máme jen kvůli zprávě o spuštění. Smažeme ho nejpozději 6 měsíců po
-          spuštění, nebo hned po odhlášení odkazem v e-mailu či napsáním na{" "}
-          {site.contactEmail}. Právním základem je souhlas daný při zápisu.
-        </p>
-
-        <h2>Kdo nám pomáhá</h2>
-        <ul>
-          <li>Supabase (databáze, přihlášení a úložiště souborů aplikace)</li>
-          <li>
-            Vercel (provoz webu a anonymní měření návštěvnosti bez cookies)
-          </li>
-          <li>Microsoft Clarity (jen na webu a jen s tvým souhlasem)</li>
-        </ul>
-        <p>
-          Údaje nikomu neprodáváme a nepoužíváme k reklamě. Aplikace je pro lidi
-          od 18 let.
-        </p>
-
         <h2>Tvoje práva</h2>
         <p>
-          Můžeš chtít kopii svých údajů, přístup k nim, jejich opravu, výmaz
-          nebo omezení zpracování a můžeš odvolat souhlas. Pokud nesouhlasíš s
-          tím, jak s údaji zacházíme, můžeš podat stížnost u Úřadu pro ochranu
-          osobních údajů (uoou.gov.cz).
+          Můžeš chtít přístup ke svým údajům, jejich opravu, výmaz, omezení
+          zpracování nebo přenos k jinému správci (přenositelnost). Proti
+          zpracování z oprávněného zájmu můžeš vznést námitku. Souhlas můžeš
+          kdykoli odvolat. Pokud nesouhlasíš s tím, jak s údaji zacházíme, můžeš
+          podat stížnost u Úřadu pro ochranu osobních údajů (uoou.gov.cz).
         </p>
 
         <p className="doc-back">

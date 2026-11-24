@@ -4,16 +4,11 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   // Písma a obrázky aplikace pro generované obrázky se čtou ze souborů za běhu.
   outputFileTracingIncludes: {
+    "/api/story/[code]": ["./src/assets/fonts/**"],
     "/opengraph-image": ["./src/assets/fonts/**", "./src/assets/screens/**"],
     "/twitter-image": ["./src/assets/fonts/**", "./src/assets/screens/**"],
-  },
-  // Staré odkazy z doby waiting listu vedou na úvod (pozvánky, varianty nadpisu, potvrzení e-mailu).
-  async redirects() {
-    return [
-      { source: "/r/:code", destination: "/?utm_source=pozvanka", permanent: false },
-      { source: "/h/:variant", destination: "/", permanent: false },
-      { source: "/potvrdit", destination: "/", permanent: false },
-    ];
+    "/r/[code]/opengraph-image": ["./src/assets/fonts/**", "./src/assets/screens/**"],
+    "/r/[code]/twitter-image": ["./src/assets/fonts/**", "./src/assets/screens/**"],
   },
   async headers() {
     return [
