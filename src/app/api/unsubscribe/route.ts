@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { clean } from "@/lib/validate";
-import { unsubscribe } from "@/lib/unsubscribe";
+import { unsubscribe } from "@/lib/waitlist";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 

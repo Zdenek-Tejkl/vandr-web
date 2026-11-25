@@ -1,244 +1,148 @@
-// Všechny texty webu na jednom místě (čeština).
+// Všechny texty webu na jednom místě (čeština). Anglická verze přijde později.
+import type { Variant } from "./config";
+
+export const headlines: Record<Variant, { main: string; accent: string }> = {
+  a: { main: "Kam jedeš?", accent: "Tvoji kamarádi už tam byli." },
+  b: { main: "Sociální síť", accent: "jen pro cestovatele." },
+  c: { main: "Kolik zemí", accent: "už máš za sebou?" },
+};
 
 export const copy = {
-  title: "Vandr · Cestujte spolu. Od plánu po report.",
+  title: "Vandr · Sociální síť pro cestovatele",
   description:
-    "Naplánujte cestu s kamarády, najděte hidden gems od lidí, kterým věříte, a každý večer pošlete domů, co jste zažili. Vandr zdarma pro Android a iPhone.",
+    "Globus tvých zemí, tipy a hidden gems od kamarádů. Zapiš se na waiting list a buď mezi prvními na Vandru.",
+  subtitle: "Sociální síť jen o cestování. Globus, tipy a hidden gems od lidí, kterým věříš.",
+  emailLabel: "Tvůj e-mail",
+  placeholder: "tvuj@email.cz",
+  button: "Chci na Vandr",
+  buttonBusy: "Zapisuju…",
+  noSpam: "Žádný spam. Pošleme ti uvítací e-mail a pak už jen zprávu, až spustíme.",
+  gdpr: (controller: string) => `Údaje zpracovává ${controller} jen kvůli spuštění.`,
+  privacyLink: "Zásady ochrany osobních údajů",
+  counter: (n: string, goal: string) => `Už ${n} z ${goal} cestovatelů`,
+  counterHint: (left: string, goal: string) => `Do ${goal} chybí ${left}.`,
 
-  hero: {
-    main: "Cestujte spolu.",
-    accent: "Od plánu po report.",
-    sub: "Jedna skupina pro celou cestu. Spolu ji naplánujete, najdete místa, o kterých ví jen kamarádi, a každý večer pošlete domů, co jste zažili.",
-    alt: "Aplikace Vandr: souhrn plánované cesty a skupina cesty s trasou na mapě",
+  phone: {
+    title: "Tvůj globus",
+    tier: "Tulák",
+    stats: [
+      { n: "12", label: "zemí" },
+      { n: "3", label: "kontinenty" },
+      { n: "48", label: "tipů" },
+    ],
+    note: "tu byl v květnu: noční vlak do Batumi",
+    noteLong: "tu byl v květnu. Noční vlak do Batumi, lůžko za 35 lari.",
+    gem: "Hidden gem: Theth, Albánie",
+    alt: "Aplikace Vandr: globus navštívených zemí, statistiky a tip od kamaráda",
   },
 
-  download: {
-    primary: "Stáhnout zdarma",
-    ios: "Stáhnout pro iPhone",
-    android: "Stáhnout pro Android",
-    appStore: "App Store",
-    googlePlay: "Google Play",
-    storePrefix: "Stáhnout v",
-    storePrefixPlay: "Stáhnout na",
-    soon: "Brzy",
-    soonTitle: "Už brzy v App Store a na Google Play",
-    soonText: "Dej nám follow na Instagramu, dáme tam vědět první.",
-    note: "Zdarma a bez reklam. Účet máš za minutu.",
-    top: "Stáhnout",
-    qrTitle: "Naskenuj telefonem",
-    qrText: "Otevře se ti rovnou tvůj obchod.",
-    qrAlt: "QR kód ke stažení aplikace Vandr",
+  featuresEyebrow: "Co tě čeká",
+  featuresTitle: "Tvoje cesty. Tipy od tvých lidí.",
+  features: [
+    { title: "Globus tvých zemí", text: "Každá navštívená země se ti rozsvítí." },
+    { title: "Tipy kamarádů na mapě", text: "Hidden gems, jídlo a spoje od lidí, kterým věříš." },
+    { title: "Body a tiery", text: "Za každou cestu body. Z Turisty až na Legendu." },
+  ],
+  tiers: ["Turista", "Tulák", "Vandrák", "Průzkumník", "Legenda"],
+  inviteTitle: "Vezmi s sebou kamarády.",
+  inviteText: "Každý, kdo se přidá přes tvůj odkaz, tě posune o 10 míst.",
+
+  secondTitle: "Buď mezi prvními.",
+  secondText: "Kdo je ve frontě dřív, dostane se do aplikace dřív. Za pozvané kamarády jsou odměny.",
+
+  errors: {
+    invalid: "Tohle nevypadá jako e-mail. Zkontroluj zavináč a tečku.",
+    typo: (s: string) => `Nemáš na mysli ${s}? Oprav to a zkus znovu.`,
+    typoGeneric: "Zkontroluj prosím, jestli je e-mail napsaný správně.",
+    disposable: "Jednorázové schránky nebereme. Zadej prosím svůj běžný e-mail.",
+    noMx: "Tahle doména nepřijímá poštu. Zkontroluj část za zavináčem.",
+    server: "Nepovedlo se to uložit. Zkus to prosím znovu za chvíli.",
+    rateLimited: "Moc pokusů najednou. Zkus to prosím za pár minut.",
   },
 
-  invite: {
-    metaTitle: "Pozvánka na cestu · Vandr",
-    metaDescription:
-      "Někdo tě zve do skupiny cesty na Vandru. Stáhni si aplikaci a přidej se.",
-    eyebrow: "Pozvánka na cestu",
-    titleNamed: "tě zve na cestu",
-    titleGeneric: "Někdo tě zve na cestu.",
-    titleTrip: "Pozvánka na cestu",
-    sub: "Ve skupině na Vandru se cesta plánuje, hlasuje se, dělí se výdaje a sdílí fotky v plné kvalitě.",
-    members: "Už tam je lidí:",
-    expiredTitle: "Tahle pozvánka už neplatí.",
-    expiredText: "Popros o nový odkaz. Vandr si mezitím můžeš stáhnout.",
-    badTitle: "Tenhle odkaz nesedí.",
-    badText: "Zkontroluj, jestli je celý. Vandr si mezitím můžeš stáhnout.",
-    open: "Už Vandr mám: otevřít pozvánku",
-    codeLabel: "Kód pozvánky",
+  thanks: {
+    created: "Jsi na seznamu!",
+    exists: "Tenhle e-mail už na seznamu je.",
+    existsMail: "Odkaz na pozvánky najdeš v uvítacím e-mailu.",
+    createdMail: "Odkaz pro kamarády ti posíláme e-mailem.",
+    positionLabel: "Tvoje pořadí",
+    of: (total: string, goal: string) => `${total} z ${goal} čekajících`,
+    inviteTitle: "Vezmi s sebou kamarády.",
+    inviteText: "Každý, kdo se přidá přes tvůj odkaz, tě posune o 10 míst dopředu.",
+    toBadge: (left: number) => `Ještě ${left} ${left === 1 ? "kamarád" : left <= 4 ? "kamarádi" : "kamarádů"} do odznaku`,
+    toNext: (left: number, reward: string) => `Ještě ${left} do: ${reward}`,
+    allDone: "Máš všechny odměny. Jsi legenda.",
+    badge: "Founding Vandrák",
+    whatsapp: "Poslat přes WhatsApp",
+    stories: "Sdílet do stories",
     copy: "Kopírovat",
     copied: "Zkopírováno",
-    stepsTitle: "Jak se přidat",
-    steps: [
-      "Stáhni si Vandr.",
-      "Založ si účet, zabere to minutu.",
-      "Otevři tenhle odkaz znovu, nebo v aplikaci zadej kód.",
+    linkLabel: "Tvůj odkaz pro kamarády",
+    shareText: "Pojď se mnou na Vandr, sociální síť jen o cestování:",
+    rewardsTitle: "Odměny za kamarády",
+    rewards: [
+      { at: 1, text: "Posun ve frontě o 10 míst" },
+      { at: 3, text: "Odznak Founding Vandrák navždy" },
+      { at: 5, text: "Uzavřená beta jako první" },
+      { at: 10, text: "Start o tier výš + vlastní barva globusu" },
+      { at: 25, text: "Vandr+ zdarma navždy" },
+      { at: 50, text: "Merch + jméno mezi zakladateli" },
     ],
-    qrTitle: "Otevři to na telefonu",
-    qrText: "Naskenuj kód a pozvánka se ti otevře v mobilu.",
-    qrAlt: "QR kód s odkazem na pozvánku",
-  },
-
-  facts: [
-    { n: "1", label: "skupina od nápadu po report" },
-    { n: "70 000+", label: "míst a hidden gems po světě" },
-    { n: "0", label: "reklam" },
-  ],
-
-  story: {
-    eyebrow: "Jak to začalo",
-    title: "Balkán, jedna skupina a celá rodina u telefonu.",
-    paragraphs: [
-      "Jeli jsme s kamarádkou na Balkán. Založili jsme skupinu a přidali do ní všechny: moji rodinu, její rodinu, kamarády.",
-      "Každý večer jsme si sedli, vybrali fotky z celého dne a ke každé napsali pár slov. Doma to všichni hltali, ptali se, radili a těšili se na další večer.",
-      "Vandr dělá tohle pro každého. A k tomu pomůže cestu naplánovat a po návratu z ní udělá report na profil.",
-    ],
-    bubbles: [
-      {
-        who: "My",
-        text: "Den 4. Kotor ráno bez lidí, pak 1 350 schodů na pevnost. Nohy nic, výhled všechno.",
-      },
-      { who: "Máma", text: "Krása! A jedli jste něco pořádného?" },
-      {
-        who: "Tomáš",
-        text: "Až budete v Budvě, zajděte k Jadranu. Ryba za pár eur.",
-      },
-    ],
-  },
-
-  pillars: {
-    eyebrow: "Co Vandr umí",
-    title: "Tři věci, kvůli kterým ho budeš mít v telefonu.",
-    items: [
-      {
-        screen: "souhrn",
-        title: "Plánujte spolu. Chytře.",
-        text: "Hlasujte o termínu i dopravě, výsledek se sám zapíše do plánu. Vandr rozdělí místa do dnů podle toho, co je blízko, a pohlídá, kdo komu kolik dluží.",
-        points: [
-          "Hlasování o termínu, dopravě i čemkoli",
-          "Návrh rozvrhu po nejkratší trase",
-          "Výdaje a vyrovnání v jakékoli měně",
-        ],
-      },
-      {
-        screen: "planovac",
-        title: "Hidden gems od kamarádů.",
-        text: "Místa, kam tě poslal kamarád, ne cestovka. Od přátel, jejich přátel a veřejná. Co je turistická past, lidé sami vyřadí.",
-        points: [
-          "Gemy jako lajky, recenze s fotkou",
-          "Hlas Turistické vyřadí přeplněná místa",
-          "Jedním ťuknutím do plánu cesty",
-        ],
-      },
-      {
-        screen: "skupina",
-        title: "Každý večer domů. Po návratu report.",
-        text: "Posílej fotky a pár slov partě i rodině. Trasa se kreslí sama. Po návratu cestu dokončíš, Vandr vybere to nejlepší a report máš na profilu.",
-        points: [
-          "Parta vidí plán, rodina jen to, co pošleš všem",
-          "Fotky v plné kvalitě mezi iPhonem a Androidem",
-          "Report z cesty i obrázek na Instagram",
-        ],
-      },
-    ],
-  },
-
-  steps: {
-    eyebrow: "Jak to jde",
-    title: "Od nápadu po report za čtyři kroky.",
-    items: [
-      {
-        title: "Založ skupinu",
-        text: "Pozvi partu i rodinu odkazem, třeba přes WhatsApp.",
-      },
-      {
-        title: "Naplánujte to",
-        text: "Hlasujte, přidávejte místa, Vandr navrhne rozvrh.",
-      },
-      {
-        title: "Vyražte",
-        text: "Každý večer fotky a pár slov. Trasa se kreslí sama.",
-      },
-      {
-        title: "Report na profil",
-        text: "Cestu dokončíš, zkontroluješ výběr a zveřejníš.",
-      },
-    ],
-  },
-
-  planet: {
-    eyebrow: "Po cestě",
-    title: "Celý tvůj svět na jedné planetě.",
-    text: "Každá dokončená cesta se přidá na profil. Země se rozsvítí, přibudou kilometry, statistiky a achievementy.",
-    points: [
-      "Planeta, kilometry a procenta světa",
-      "Achievementy za země, cesty a hidden gems",
-      "Profil soukromý, nebo pro všechny. Rozhoduješ ty",
-    ],
-    alt: "Profil ve Vandru: planeta s navštívenými zeměmi, statistiky a achievementy",
+    question: "Kam jedeš příště?",
+    questionOptional: "(nepovinné)",
+    questionPlaceholder: "Třeba Gruzie",
+    questionSend: "Uložit",
+    questionThanks: "Díky! Připravíme tipy i pro tebe.",
+    back: "Zpět na úvod",
   },
 
   screens: {
     eyebrow: "Podívej se dovnitř",
     title: "Takhle vypadá Vandr.",
     items: [
-      {
-        name: "hlasovani",
-        title: "Hlasování",
-        text: "Termín, doprava, cokoli. Rozhodne parta.",
-      },
-      {
-        name: "rozvrh",
-        title: "Návrh rozvrhu",
-        text: "Místa do dnů po nejkratší trase.",
-      },
-      {
-        name: "vydaje",
-        title: "Výdaje",
-        text: "Kdo co platil a kdo komu dluží.",
-      },
-      {
-        name: "gem",
-        title: "Hidden gem",
-        text: "Gemy, recenze a hlas Turistické.",
-      },
-      {
-        name: "kontrola",
-        title: "Výběr do reportu",
-        text: "To nejlepší z cesty vybere Vandr.",
-      },
-      {
-        name: "report",
-        title: "Report",
-        text: "Fotky, texty a trasa z jedné cesty.",
-      },
-      {
-        name: "chaty",
-        title: "Chaty a cesty",
-        text: "Plánované i běžící cesty na jednom místě.",
-      },
+      { name: "globus", title: "Tvůj globus", text: "Každá navštívená země se rozsvítí." },
+      { name: "feed", title: "Tipy od kamarádů", text: "Místa, ceny a spoje od lidí, které znáš." },
+      { name: "zeme", title: "Průvodce zemí", text: "Kdo z tvých lidí tam byl a co doporučuje." },
+      { name: "body", title: "Body a úrovně", text: "Za každou cestu body. Z Turisty až na Legendu." },
     ],
-    note: "Ukázky z aplikace s demo daty.",
-  },
-
-  faq: {
-    title: "Krátce a jasně",
-    items: [
-      {
-        q: "Kolik to stojí?",
-        a: "Nic. Stažení i používání je zdarma a bez reklam.",
-      },
-      {
-        q: "Musí mít Vandr i rodina, která jen sleduje?",
-        a: "Ano, je zdarma. Pozveš je odkazem a uvidí jen to, co pošleš všem. Plán, hlasování a výdaje zůstanou partě.",
-      },
-      {
-        q: "Kdo uvidí moje fotky z cesty?",
-        a: "Jen lidé, které do skupiny přizveš. Report je na profilu, až ho sám zveřejníš. Soukromý profil vidí jen přátelé.",
-      },
-      {
-        q: "Musím sdílet polohu?",
-        a: "Ne. Aplikace ti to nabídne, protože z polohy kreslí trasu cesty. Funguje ale i bez ní.",
-      },
-      {
-        q: "Na čem Vandr běží?",
-        a: "Na Androidu. Verze pro iPhone je na cestě.",
-      },
-    ],
-  },
-
-  final: {
-    title: "Kam jedete příště?",
-    text: "Založ skupinu, pozvi partu i mámu. Zabere to míň než čekání na kafe na letišti.",
+    note: "Ukázky z vývojové verze aplikace.",
   },
 
   instagram: {
     title: "Sleduj nás na Instagramu",
-    text: "Ukázky z aplikace, hidden gems a novinky.",
+    text: "Ukázky z aplikace, tipy na cesty a novinky ze startu.",
     handle: "@vandr.world",
     cta: "Sledovat",
   },
 
-  privacyLink: "Zásady ochrany osobních údajů",
+  // Stránka pro pozvané: vandr.world/r/KOD
+  invite: {
+    title: "Kamarád tě zve na Vandr",
+    description:
+      "Vandr je sociální síť jen o cestování. Globus tvých zemí a tipy od lidí, kterým věříš. Zapiš se na waiting list.",
+    badge: "Kamarád tě zve",
+    main: "Pojď cestovat",
+    accent: "s tipy od svých lidí.",
+    subtitle:
+      "Vandr je sociální síť jen o cestování. Označíš země, které máš za sebou, a uvidíš, kam jezdí tví kamarádi a co doporučují.",
+    og: { main: "Kamarád tě zve", accent: "na Vandr." },
+    ogLine: "Sociální síť jen o cestování. Přidej se na waiting list.",
+    whatEyebrow: "Co je Vandr",
+    whatTitle: "Sociální síť jen pro cestovatele.",
+    whatText:
+      "Žádné reklamy ani influenceři. Jen tvoje cesty a tipy od lidí, které znáš: kde se dobře najíst, jak se dostat na místo a co za to stojí.",
+    stepsTitle: "Jak to funguje",
+    steps: [
+      { title: "Zapiš se", text: "Stačí e-mail. Kamarád, který tě pozval, se díky tobě posune ve frontě." },
+      { title: "Počkej na start", text: "Přijde ti uvítací e-mail a pak už jen zpráva, až spustíme. Žádný spam." },
+      { title: "Cestuj chytřeji", text: "Rozsviť si globus, sdílej tipy a sleduj, kam jedou ostatní." },
+    ],
+  },
+
   footer: "© 2026 Vandr · vandr.world",
 };
+
+// Cíl je vždy další tisícovka nad aktuálním počtem: 1 200 -> 2 000, 6 050 -> 7 000.
+export const goalFor = (n: number) => Math.floor(Math.max(0, n) / 1000) * 1000 + 1000;
+
+export const formatNumber = (n: number) => new Intl.NumberFormat("cs-CZ").format(n);
