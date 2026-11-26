@@ -8,7 +8,7 @@ import "./globals.css";
 
 const display = Bricolage_Grotesque({
   subsets: ["latin", "latin-ext"],
-  weight: ["700", "800"],
+  weight: ["800"],
   variable: "--font-display",
   display: "swap",
 });
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1F4D3A",
+  themeColor: "#A9BBA4",
   width: "device-width",
   initialScale: 1,
 };
