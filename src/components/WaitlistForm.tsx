@@ -17,10 +17,11 @@ function errorText(error: JoinError["error"], suggestion?: string) {
   return e.invalid;
 }
 
+// Zápis na waiting list pro iPhone (Android stahuje rovnou z Google Play).
 // primary: hlavní formulář nahoře, ukáže i chybu z odeslání bez JavaScriptu.
 // Bez JavaScriptu se formulář odešle klasicky (POST) a server přesměruje zpět.
 export function WaitlistForm({ id, arrow = false, primary = false }: { id: string; arrow?: boolean; primary?: boolean }) {
-  const { visit, done, variant, refCode, urlError } = useJoin();
+  const { visit, done, refCode, urlError } = useJoin();
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
   const [ownError, setError] = useState<string | null>(null);
@@ -61,8 +62,7 @@ export function WaitlistForm({ id, arrow = false, primary = false }: { id: strin
 
   return (
     <form className="join" method="post" action="/api/join" onSubmit={submit} noValidate>
-      <input type="hidden" name="variant" value={variant} />
-      {refCode && <input type="hidden" name="ref" value={refCode} />}
+            {refCode && <input type="hidden" name="ref" value={refCode} />}
       <label htmlFor={id} className="sr-only">
         {copy.emailLabel}
       </label>

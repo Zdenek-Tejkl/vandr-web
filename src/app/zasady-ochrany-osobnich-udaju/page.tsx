@@ -7,7 +7,7 @@ import { site } from "@/lib/config";
 export const metadata: Metadata = {
   title: "Zásady ochrany osobních údajů · Vandr",
   description:
-    "Jak Vandr zachází s e-mailem na waiting listu a s údaji v aplikaci.",
+    "Jak Vandr zachází s e-mailem na waiting listu pro iPhone a s údaji v aplikaci.",
   alternates: { canonical: "/zasady-ochrany-osobnich-udaju" },
 };
 
@@ -31,21 +31,22 @@ export default function PrivacyPage() {
           <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>.
         </p>
 
-        <h2>Waiting list na webu: co ukládáme a proč</h2>
+        <h2>Waiting list pro iPhone: co ukládáme a proč</h2>
         <ul>
           <li>
-            <b>E-mail</b>: hned po zápisu ti pošleme jeden uvítací e-mail s
-            odkazem pro kamarády a pak už jen zprávu, až Vandr spustíme. Když
+            <b>E-mail</b>: hned po zápisu ti pošleme jeden uvítací e-mail a pak
+            už jen zprávu, až bude Vandr v App Storu. Když
             zadáš e-mail, který už na seznamu je, pošleme uvítací e-mail znovu
             (nejvýš jednou za hodinu). K ničemu jinému ho nepoužijeme.
           </li>
           <li>
-            <b>Pozvánkový kód a kdo tě pozval</b>: kvůli pořadí ve frontě a
-            odměnám za pozvání.
+            <b>Pozvánkový kód a kdo tě pozval</b>: abychom věděli, kdo koho
+            přivedl (u zápisů z dřívějška i kvůli pořadí a odměnám).
           </li>
           <li>
-            <b>Odkud přicházíš (UTM parametry odkazu)</b>: abychom věděli, které
-            video funguje. Nejde o osobní profil.
+            <b>Odkud přicházíš (UTM parametry odkazu) a typ zařízení (iPhone,
+            Android, počítač)</b>: abychom věděli, které video funguje a kolik
+            lidí čeká na iPhone. Nejde o osobní profil.
           </li>
           <li>
             <b>Odpověď „Kam jedeš příště?“</b>: jen pokud ji vyplníš. Pomáhá nám
@@ -71,7 +72,8 @@ export default function PrivacyPage() {
 
         <h2>Jak dlouho</h2>
         <p>
-          Do spuštění Vandru a nejdéle 6 měsíců po něm, pak údaje smažeme.
+          Do vydání Vandru v App Storu a nejdéle 6 měsíců po něm, pak údaje
+          smažeme.
           Odhlášením se tvůj záznam smaže hned a celý (e-mail, pořadí, kód i
           odpověď). Kamarádi, kteří se zapsali přes tvůj odkaz, na seznamu
           zůstanou.
@@ -98,11 +100,6 @@ export default function PrivacyPage() {
 
         <h2 id="cookies">Cookies a úložiště v prohlížeči</h2>
         <ul>
-          <li>
-            <b>vandr-h</b> (funkční cookie, 30 dní): jen když testujeme dva
-            nadpisy, pamatuje si písmeno varianty, ať vidíš pořád stejný. Žádné
-            osobní údaje.
-          </li>
           <li>
             <b>Microsoft Clarity</b> (cookies _clck a _clsk a cookies
             Microsoftu): jen po tvém souhlasu. Nahrává kliknutí a posouvání po

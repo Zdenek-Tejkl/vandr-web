@@ -1,5 +1,5 @@
 import { after, NextResponse } from "next/server";
-import { emailEnabled, isVariant } from "@/lib/config";
+import { emailEnabled } from "@/lib/config";
 import { checkEmail } from "@/lib/email-check";
 import { sendWelcome } from "@/lib/email";
 import { ipHash } from "@/lib/ip";
@@ -54,7 +54,10 @@ async function join(body: Record<string, unknown>, request: Request): Promise<Ou
       utmMedium: clean(body.utm_medium),
       utmCampaign: clean(body.utm_campaign),
       utmContent: clean(body.utm_content),
-      variant: isVariant(body.variant) ? body.variant : null,
+      // Waiting list je od 26. 11. 2026 jen pro iPhone (Android stahuje z Google Play).
+      // Tabulka nemá sloupec pro zařízení, proto "ios" jde do sloupce variant
+      // (dřív písmeno A/B testu nadpisu, ten skončil). Staré zápisy mají a, b, c nebo nic.
+      variant: "ios",
       ipHash: ipHash(request.headers),
       requireConfirm: false,
       resend: mailed,

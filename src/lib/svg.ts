@@ -1,6 +1,4 @@
-// SVG jako text: pro generované obrázky (Open Graph, story) a favicony.
-import { globeGraticule, globeLand, globeVisited, globeWishlist } from "@/generated/geo";
-
+// SVG jako text: pro generované obrázky (náhled odkazu) a favicony.
 export const colors = {
   forest: "#1F4D3A",
   ember: "#E4572E",
@@ -24,10 +22,6 @@ export const catPaths = {
 
 export function catSvg(color: string, size = 100) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 100 100"><defs><mask id="c" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100"><rect width="100" height="100" fill="#fff"/><g fill="none" stroke="#000" stroke-width="4.5" stroke-linecap="round">${catPaths.cut}</g></mask></defs><g fill="${color}" mask="url(#c)"><path d="${catPaths.earLeft}"/><path d="${catPaths.earRight}"/><circle cx="50" cy="60" r="32"/></g></svg>`;
-}
-
-export function globeSvg(size = 200) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 200 200"><defs><radialGradient id="s" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></radialGradient></defs><circle cx="100" cy="100" r="96" fill="${colors.forest}"/><path d="${globeGraticule}" fill="none" stroke="${colors.paper}" stroke-opacity=".12" stroke-width=".6"/><path d="${globeLand}" fill="${colors.land}"/><path d="${globeVisited}" fill="${colors.ochre}"/><path d="${globeWishlist}" fill="none" stroke="${colors.paper}" stroke-width="1.2" stroke-dasharray="2.5 2"/><circle cx="100" cy="100" r="96" fill="url(#s)"/></svg>`;
 }
 
 export const dataUri = (svg: string) => `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;

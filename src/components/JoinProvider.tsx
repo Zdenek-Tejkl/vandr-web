@@ -1,12 +1,14 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode, type RefObject } from "react";
-import type { Variant } from "@/lib/config";
+import type { VisitPlatform } from "@/lib/config";
+import { platformOf } from "@/lib/download";
 import type { JoinError, JoinResult } from "@/lib/types";
 import { ThankYou } from "./ThankYou";
 
 export type Visit = {
-  variant: Variant;
+  // Zařízení návštěvy (ios, android, other). Do databáze jde do sloupce variant.
+  variant: VisitPlatform;
   ref: string | null;
   utm_source: string | null;
   utm_medium: string | null;
@@ -18,7 +20,6 @@ export type Visit = {
 type Ctx = {
   visit: RefObject<Visit>;
   done: (r: JoinResult) => void;
-  variant: Variant;
   refCode: string | null;
   urlError: JoinError["error"] | null;
 };
@@ -48,7 +49,15 @@ function readRedirect(): { result: JoinResult | null; error: JoinError["error"] 
   return { result: null, error: known ?? "server" };
 }
 
-function readVisit(variant: Variant, refCode?: string): Visit {
+function readPlatform(): VisitPlatform {
+  const ua = navigator.userAgent;
+  const p = platformOf(ua);
+  // iPad se hlásí jako Mac, pozná se podle dotyku.
+  if (p === "other" && /Macintosh/.test(ua) && navigator.maxTouchPoints > 1) return "ios";
+  return p;
+}
+
+function readVisit(refCode?: string): Visit {
   const q = new URLSearchParams(window.location.search);
   const get = (k: string) => q.get(k)?.slice(0, 64) || null;
   let ref = refCode || q.get("ref")?.slice(0, 12) || null;
@@ -59,7 +68,7 @@ function readVisit(variant: Variant, refCode?: string): Visit {
     // prohlížeč uvnitř aplikace může úložiště blokovat
   }
   return {
-    variant,
+    variant: readPlatform(),
     ref,
     utm_source: get("utm_source"),
     utm_medium: get("utm_medium"),
@@ -68,20 +77,12 @@ function readVisit(variant: Variant, refCode?: string): Visit {
   };
 }
 
-// Obaluje celou stránku. Po zápisu ji vymění za děkovnou obrazovku (bez vlastní URL).
-export function JoinProvider({
-  variant,
-  total,
-  refCode,
-  children,
-}: {
-  variant: Variant;
-  total: number;
-  refCode?: string;
-  children: ReactNode;
-}) {
+// Obaluje celou stránku. Po zápisu na waiting list pro iPhone ji vymění za děkovnou obrazovku
+// (bez vlastní URL). Návštěvu zapíše jednou za relaci i se zařízením, ať je vidět poměr
+// iPhone / Android / počítač.
+export function JoinProvider({ refCode, children }: { refCode?: string; children: ReactNode }) {
   const visit = useRef<Visit>({
-    variant,
+    variant: "other",
     ref: null,
     utm_source: null,
     utm_medium: null,
@@ -106,7 +107,7 @@ export function JoinProvider({
   }, []);
 
   useEffect(() => {
-    visit.current = readVisit(variant, refCode);
+    visit.current = readVisit(refCode);
     // Jedna návštěva za relaci, bez cookies.
     try {
       if (sessionStorage.getItem("vandr-view")) return;
@@ -120,7 +121,7 @@ export function JoinProvider({
       body: JSON.stringify(visit.current),
       keepalive: true,
     }).catch(() => {});
-  }, [variant, refCode]);
+  }, [refCode]);
 
   const done = useCallback((r: JoinResult) => {
     setResult(r);
@@ -128,8 +129,8 @@ export function JoinProvider({
   }, []);
 
   return (
-    <JoinContext.Provider value={{ visit, done, variant, refCode: refCode ?? null, urlError }}>
-      {result ? <ThankYou result={result} total={total} onBack={() => setResult(null)} /> : children}
+    <JoinContext.Provider value={{ visit, done, refCode: refCode ?? null, urlError }}>
+      {result ? <ThankYou result={result} onBack={() => setResult(null)} /> : children}
     </JoinContext.Provider>
   );
 }

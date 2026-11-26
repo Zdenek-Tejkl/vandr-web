@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Figtree } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { ClarityConsent } from "@/components/ClarityConsent";
-import { site } from "@/lib/config";
+import { appStoreId, site } from "@/lib/config";
 import { copy } from "@/lib/copy";
 import "./globals.css";
 
@@ -25,10 +25,12 @@ export const metadata: Metadata = {
   description: copy.description,
   keywords: [
     "vandr",
-    "sociální síť pro cestovatele",
     "aplikace na cestování",
+    "plánovač cest",
+    "cestovní deník",
     "mapa navštívených zemí",
-    "tipy na cestování od kamarádů",
+    "skryté poklady",
+    "vandr android",
   ],
   applicationName: site.name,
   alternates: { canonical: "/" },
@@ -42,6 +44,8 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image", title: copy.title, description: copy.description },
   formatDetection: { email: false, telephone: false, address: false },
+  // Safari na iPhonu ukáže nahoře lištu "Otevřít v App Store" (až bude aplikace v obchodě).
+  ...(appStoreId ? { itunes: { appId: appStoreId } } : {}),
 };
 
 export const viewport: Viewport = {
@@ -50,9 +54,17 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+// Zařízení do html[data-os] ještě před vykreslením: iPhone dostane waiting list, Android odznak
+// Google Play, počítač oboje a QR kód (třídy os-* v globals.css). Stránka tak zůstane statická
+// a nic neproblikne. iPad se hlásí jako Mac, pozná se podle dotyku. Bez skriptu verze pro počítač.
+const osScript = `try{var u=navigator.userAgent,d=document.documentElement;d.dataset.os=/iPhone|iPad|iPod/.test(u)||(/Macintosh/.test(u)&&navigator.maxTouchPoints>1)?"ios":/Android/.test(u)?"android":"other"}catch(e){}`;
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="cs" className={`${display.variable} ${body.variable}`}>
+    <html lang="cs" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: osScript }} />
+      </head>
       <body>
         {children}
         <Analytics />

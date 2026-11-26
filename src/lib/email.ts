@@ -1,32 +1,29 @@
 import "server-only";
-import { site, shareUrl } from "./config";
-import { formatNumber } from "./copy";
+import { site } from "./config";
 
 // Uvítací e-mail přes Resend (https://resend.com). Bez RESEND_API_KEY se nic neposílá.
+// Od 26. 11. 2026 je waiting list jen pro iPhone: e-mail jen potvrdí zápis a slíbí jednu
+// zprávu, až bude Vandr v App Storu. Pořadí a odkaz pro kamarády v něm už nejsou.
 
 const esc = (s: string) =>
   s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 
+// position zůstává kvůli volání z /api/join (pořadí se v e-mailu neukazuje).
 type MailParams = { position: number; code: string; unsubscribeToken: string };
 
 export function welcomeEmail(params: MailParams) {
-  const link = shareUrl(params.code);
   const q = `c=${encodeURIComponent(params.code)}&t=${encodeURIComponent(params.unsubscribeToken)}`;
   const unsubscribe = `${site.url}/odhlasit?${q}`;
   // RFC 8058: poštovní klienti odhlašují jedním klikem přes POST na tuto adresu.
   const oneClick = `${site.url}/api/unsubscribe?${q}`;
-  const pos = formatNumber(params.position);
-  const subject = `Jsi na seznamu! Tvoje pořadí: #${pos}`;
+  const subject = "Vandr na iPhone: jsi na seznamu";
 
   const text = [
-    `Ahoj, jsi na waiting listu Vandru. Tvoje pořadí: #${pos}.`,
+    "Ahoj, díky! Jsi na seznamu pro Vandr na iPhone.",
     "",
-    "Pozvi 3 kamarády a dostaneš odznak Founding Vandrák.",
-    "Každý kamarád tě posune o 10 míst dopředu.",
+    "Napíšeme ti jednou, až bude v App Storu. Nic víc.",
+    "Máš i Android? Ten už Vandr má na Google Play.",
     "",
-    `Tvůj odkaz: ${link}`,
-    "",
-    "Příště ti napíšeme, až spustíme. Nic víc.",
     "Kocour Vandr",
     "",
     `Odhlásit se: ${unsubscribe}`,
@@ -36,13 +33,12 @@ export function welcomeEmail(params: MailParams) {
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F2F4EE;padding:24px 12px"><tr><td align="center">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:480px;background:#1F4D3A;border-radius:20px;color:#F2F4EE">
 <tr><td style="padding:28px 28px 8px;font-size:28px;font-weight:800;letter-spacing:-1px">vandr</td></tr>
-<tr><td style="padding:8px 28px 0;font-size:26px;font-weight:800;line-height:1.2">Jsi na seznamu!<br><span style="color:#E3A33B">Tvoje pořadí: #${esc(pos)}</span></td></tr>
-<tr><td style="padding:16px 28px 0;font-size:16px;line-height:1.5">Pozvi 3 kamarády a dostaneš odznak <b>Founding Vandrák</b>. Každý kamarád tě posune o 10 míst dopředu.</td></tr>
-<tr><td style="padding:12px 28px 0;font-size:14px">Tvůj odkaz pro kamarády:</td></tr>
-<tr><td style="padding:4px 28px 0;font-size:16px;font-weight:700;word-break:break-all"><a href="${esc(link)}" style="color:#E3A33B">${esc(link.replace(/^https?:\/\//, ""))}</a></td></tr>
-<tr><td style="padding:24px 28px 28px;font-size:14px;line-height:1.5;opacity:.9">Příště ti napíšeme, až spustíme. Nic víc.<br>Kocour Vandr</td></tr>
+<tr><td style="padding:8px 28px 0;font-size:26px;font-weight:800;line-height:1.2">Jsi na seznamu!<br><span style="color:#E3A33B">Vandr na iPhone chystáme.</span></td></tr>
+<tr><td style="padding:16px 28px 0;font-size:16px;line-height:1.5">Napíšeme ti jednou, až bude v App Storu. Nic víc.</td></tr>
+<tr><td style="padding:12px 28px 0;font-size:14px;line-height:1.5;opacity:.9">Máš i Android? Ten už Vandr má na <a href="${esc(site.url)}" style="color:#E3A33B">Google Play</a>.</td></tr>
+<tr><td style="padding:24px 28px 28px;font-size:14px;line-height:1.5;opacity:.9">Kocour Vandr</td></tr>
 </table>
-<p style="font-size:12px;color:#4F5A52;max-width:480px;line-height:1.5">Tento e-mail ti přišel kvůli zápisu na waiting list na ${esc(site.url.replace(/^https?:\/\//, ""))}. <a href="${esc(unsubscribe)}" style="color:#1F4D3A">Odhlásit se</a></p>
+<p style="font-size:12px;color:#4F5A52;max-width:480px;line-height:1.5">Tento e-mail ti přišel kvůli zápisu na waiting list pro iPhone na ${esc(site.url.replace(/^https?:\/\//, ""))}. <a href="${esc(unsubscribe)}" style="color:#1F4D3A">Odhlásit se</a></p>
 </td></tr></table></body></html>`;
 
   return { subject, text, html, unsubscribe, oneClick };

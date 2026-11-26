@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Logo } from "@/components/Brand";
-import { formatNumber } from "@/lib/copy";
 import { confirmEmail } from "@/lib/waitlist";
 
 export const metadata: Metadata = {
@@ -16,13 +15,11 @@ export default async function ConfirmPage({ searchParams }: PageProps<"/potvrdit
   const code = typeof q.c === "string" ? q.c.slice(0, 12) : "";
   const token = typeof q.t === "string" ? q.t : "";
 
-  let position: number | null = null;
   let ok = false;
   if (code && UUID.test(token)) {
     try {
       const r = await confirmEmail(code, token);
       ok = Boolean(r);
-      position = r?.position ?? null;
     } catch (e) {
       console.error("confirm failed", e);
     }
@@ -37,8 +34,7 @@ export default async function ConfirmPage({ searchParams }: PageProps<"/potvrdit
         {ok ? (
           <>
             <h1>E-mail je potvrzený.</h1>
-            {position && <p className="doc-big">#{formatNumber(position)}</p>}
-            <p>Díky! Tvoje místo ve frontě je jisté. Napíšeme ti, až spustíme.</p>
+            <p>Díky! Napíšeme ti, až bude Vandr v App Storu.</p>
           </>
         ) : (
           <>
