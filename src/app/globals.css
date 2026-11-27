@@ -1,10 +1,5 @@
-/* Vandr: stránka ke stažení aplikace. Mobil na prvním místě.
-   Vzhled od 26. 11. 2026 podle reelu, který poslal majitel („Takovýhle design chci na web i do
-   aplikace"): tmavá lesní zeleň, poloprůhledné karty jako sklo nad leteckou mapou, okrový akcent,
-   šalvějová prezentační plocha v úvodu, tenké písmo a velká čísla. Barvy Vandru zůstávají:
-   lesní zelená je základ, okr akcent. Kontrast textu hlídá WCAG AA (čísla u tokenů). */
+/* Vandr: stránka ke stažení aplikace. Mobil na prvním místě, vzhled podle návrhu webu a brand manuálu. */
 :root {
-  /* značka (používají i textové stránky, pozvánka a děkovná obrazovka) */
   --forest: #1f4d3a;
   --ember: #e4572e;
   --ochre: #e3a33b;
@@ -16,34 +11,9 @@
   --paper-muted: #dce3da;
   --paper-dim: #c9d3c8;
 
-  /* tmavé rozhraní */
-  --night: #0b1a13;
-  --deep: #10241a;
-  --glass: rgba(22, 48, 35, 0.62);
-  --glass-hi: rgba(236, 242, 232, 0.07);
-  --edge: rgba(236, 242, 232, 0.13);
-  --edge-hi: rgba(236, 242, 232, 0.22);
-  --text: #eef2ea; /* na --deep 14:1 */
-  --text-2: #b7c4ba; /* na skle 8:1 */
-  --text-3: #93a598; /* na skle 5.7:1, jen malé popisky */
-  --gold: #e2b357; /* na skle 7.6:1, s --ink jako text tlačítka 8.6:1 */
-  --gold-hi: #f3d48e;
-  --leaf: #9fd49a;
-
-  /* šalvějová prezentační plocha */
-  --sage: #a9bba4;
-  --sage-hi: #c6d3c1;
-  --sage-lo: #8fa58b;
-  --sage-ink: #0f2419; /* na --sage 8:1 */
-  --sage-text: #2b4234; /* na --sage 5.3:1 */
-
-  --radius: 24px;
-  --radius-sm: 16px;
-  --display: var(--font-body), "Segoe UI", system-ui, sans-serif;
-  --brand: var(--font-display), "Arial Black", system-ui, sans-serif;
+  --display: var(--font-display), "Arial Black", system-ui, sans-serif;
   --body: var(--font-body), "Segoe UI", system-ui, sans-serif;
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 *,
@@ -54,22 +24,16 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  background: var(--night);
 }
 
 body {
   margin: 0;
-  background:
-    radial-gradient(1200px 700px at 85% 40%, rgba(47, 107, 81, 0.22), transparent 70%),
-    radial-gradient(900px 600px at 10% 80%, rgba(226, 179, 87, 0.06), transparent 70%),
-    var(--night);
-  color: var(--text);
+  background: var(--forest);
+  color: var(--paper);
   font-family: var(--body);
   font-size: 16px;
-  line-height: 1.55;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  overflow-x: clip;
-  min-height: 100vh;
 }
 
 h1,
@@ -77,19 +41,8 @@ h2,
 h3 {
   font-family: var(--display);
   margin: 0;
-  line-height: 1.06;
+  line-height: 1.08;
   text-wrap: balance;
-}
-
-h1,
-h2 {
-  font-weight: 300;
-  letter-spacing: -0.025em;
-}
-
-h3 {
-  font-weight: 500;
-  letter-spacing: -0.01em;
 }
 
 p {
@@ -101,7 +54,7 @@ a {
 }
 
 :focus-visible {
-  outline: 3px solid var(--gold);
+  outline: 3px solid var(--ochre);
   outline-offset: 2px;
 }
 
@@ -129,29 +82,19 @@ a {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding-inline: 16px;
+  padding-inline: 20px;
 }
 
 .eyebrow {
-  color: var(--gold);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.2em;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .eyebrow-light {
-  color: var(--gold);
-}
-
-/* Sklo: poloprůhledná tmavá karta s tenkým světlým okrajem (základní prvek celého vzhledu). */
-.glass {
-  border: 1px solid var(--edge);
-  border-radius: var(--radius);
-  background: linear-gradient(160deg, rgba(236, 242, 232, 0.06), rgba(236, 242, 232, 0) 45%), var(--glass);
-  box-shadow: inset 0 1px 0 rgba(236, 242, 232, 0.06), 0 20px 50px rgba(0, 0, 0, 0.28);
-  -webkit-backdrop-filter: blur(18px) saturate(1.2);
-  backdrop-filter: blur(18px) saturate(1.2);
+  color: var(--paper-dim);
 }
 
 /* ---- Značka ---- */
@@ -165,14 +108,14 @@ a {
 }
 
 .logo svg {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
 }
 
 .logo-word {
-  font-family: var(--brand);
+  font-family: var(--display);
   font-weight: 800;
-  font-size: 26px;
+  font-size: 28px;
   line-height: 1;
   letter-spacing: -1px;
 }
@@ -186,19 +129,16 @@ a {
   line-height: 1.2;
   padding: 3px 9px;
   border-radius: 99px;
-  background: var(--gold);
+  background: var(--ochre);
   color: var(--ink);
   white-space: nowrap;
 }
 
-/* Karty na pozvánce: stejné sklo jako na hlavní stránce. */
 .card {
-  border: 1px solid var(--edge);
-  border-radius: var(--radius);
-  background: var(--glass);
-  color: var(--text);
-  -webkit-backdrop-filter: blur(18px);
-  backdrop-filter: blur(18px);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  color: var(--ink);
 }
 
 /* ---- Tlačítka a formulář ---- */
@@ -208,26 +148,24 @@ a {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: 56px;
-  padding: 0 26px;
+  min-height: 58px;
+  padding: 0 24px;
   border: 0;
-  border-radius: 99px;
-  background: linear-gradient(180deg, var(--gold-hi), var(--gold) 55%, #d29f3f);
+  border-radius: 16px;
+  background: var(--ember);
   color: var(--ink);
   font-family: var(--body);
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 19px;
+  font-weight: 700;
   line-height: 1.2;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 8px 24px rgba(226, 179, 87, 0.22);
-  transition: filter 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  transition: filter 0.15s ease, transform 0.1s ease;
 }
 
 .btn:hover {
-  filter: brightness(1.05);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 10px 30px rgba(226, 179, 87, 0.32);
+  filter: brightness(1.06);
 }
 
 .btn:active {
@@ -249,49 +187,48 @@ a {
   background: var(--forest);
   color: var(--paper);
   font-size: 17px;
-  box-shadow: none;
 }
 
 .btn-ochre {
   min-height: 44px;
   padding: 0 16px;
+  border-radius: 12px;
+  background: var(--ochre);
   font-size: 15px;
 }
 
 .btn-outline {
   min-height: 52px;
   padding: 0 18px;
-  border: 1px solid var(--forest);
+  border: 2px solid var(--forest);
+  border-radius: 14px;
   background: transparent;
   color: var(--forest);
   font-size: 16px;
-  box-shadow: none;
 }
 
 .btn-sm {
   min-height: 40px;
   padding: 0 16px;
+  border-radius: 12px;
   font-size: 15px;
 }
 
 .btn-ghost-dark {
   background: transparent;
-  color: var(--text);
-  box-shadow: inset 0 0 0 1px var(--edge-hi);
+  color: var(--paper);
+  box-shadow: inset 0 0 0 2px rgba(242, 244, 238, 0.5);
 }
 
-/* ---- Horní lišta: plovoucí skleněná pilulka, logo a tlačítko ke stažení pořád po ruce ---- */
+/* ---- Horní lišta: logo a tlačítko ke stažení pořád po ruce ---- */
 
 .top {
   position: sticky;
   top: 0;
   z-index: 30;
-  padding-top: 10px;
-}
-
-/* Hlavní stránka: šalvěj pokračuje i pod plovoucí lištou. */
-main > .hero:first-child {
-  margin-top: -66px;
+  background: rgba(31, 77, 58, 0.94);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 .top-in {
@@ -299,86 +236,45 @@ main > .hero:first-child {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  min-height: 56px;
-  padding: 0 8px 0 16px;
-  border: 1px solid var(--edge);
-  border-radius: 99px;
-  background: rgba(11, 26, 19, 0.72);
-  color: var(--text);
-  -webkit-backdrop-filter: blur(16px) saturate(1.3);
-  backdrop-filter: blur(16px) saturate(1.3);
-  box-shadow: 0 10px 30px rgba(11, 26, 19, 0.25);
-}
-
-.top .wrap.top-in {
-  width: calc(100% - 24px);
-  max-width: 1160px;
+  min-height: 60px;
 }
 
 .top-logo {
   display: inline-flex;
-  color: var(--text);
+  color: var(--paper);
   text-decoration: none;
 }
 
 .top .btn {
   min-height: 40px;
-  padding: 0 16px;
+  padding: 0 14px;
   font-size: 15px;
 }
 
-/* ---- 1. Hlavní blok: šalvějová prezentační plocha ---- */
+/* ---- 1. Hlavní blok ---- */
 
 .hero {
-  position: relative;
-  padding-top: 96px;
+  padding-top: 18px;
   overflow: hidden;
-  isolation: isolate;
-  color: var(--sage-ink);
-  background:
-    linear-gradient(180deg, transparent 72%, var(--sage)),
-    radial-gradient(60% 50% at 18% 12%, var(--sage-hi), transparent 70%),
-    radial-gradient(45% 40% at 88% 38%, var(--sage-lo), transparent 70%),
-    radial-gradient(40% 40% at 60% 30%, rgba(236, 242, 232, 0.35), transparent 70%),
-    var(--sage);
-}
-
-/* Velké rozmazané slovo za vším, jako „VINORA" v reelu. Jen ozdoba. */
-.hero-mark {
-  position: absolute;
-  z-index: -1;
-  left: 50%;
-  top: 70px;
-  transform: translateX(-50%);
-  color: rgba(236, 242, 232, 0.28);
-  font-family: var(--brand);
-  font-size: clamp(120px, 34vw, 420px);
-  font-weight: 800;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-  white-space: nowrap;
-  filter: blur(6px);
-  pointer-events: none;
-  user-select: none;
 }
 
 .hero-grid {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 30px;
 }
 
 .hero-copy {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
 }
 
 .hero h1 {
-  font-size: clamp(42px, 12vw, 64px);
-  font-weight: 300;
-  letter-spacing: -0.035em;
-  line-height: 1;
+  /* "pro cestovatele." se musí vejít na jeden řádek i na úzkém telefonu. */
+  font-size: clamp(30px, 9.7vw, 58px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
 }
 
 .hero h1 span,
@@ -388,19 +284,15 @@ main > .hero:first-child {
 
 .hero h1 em {
   font-style: normal;
-  font-weight: 500;
-  color: var(--forest);
+  color: var(--ochre);
+  white-space: nowrap;
 }
 
 .sub {
   max-width: 34em;
-  color: var(--text-2);
+  color: var(--paper-muted);
   font-size: 18px;
-  line-height: 1.5;
-}
-
-.hero .sub {
-  color: var(--sage-text);
+  line-height: 1.45;
 }
 
 /* Tlačítka ke stažení */
@@ -411,50 +303,94 @@ main > .hero:first-child {
   gap: 12px;
   width: 100%;
   max-width: 460px;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .cta-note {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: var(--text-2);
+  color: var(--paper-dim);
   font-size: 14px;
 }
 
 .cta-note svg {
   flex: none;
-  color: var(--gold);
+  color: var(--ochre);
 }
 
-.hero .cta-note,
-.hero .iphone-link,
-.hero .iphone-line {
-  color: var(--sage-text);
+.soon {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 8px 14px;
+  border-radius: 99px;
+  background: var(--ochre);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 700;
 }
 
-.hero .cta-note svg,
-.hero .iphone-line svg {
-  color: var(--forest);
+.stores {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.store {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 54px;
+  padding: 6px 16px;
+  border: 1px solid rgba(242, 244, 238, 0.3);
+  border-radius: 14px;
+  background: var(--ink);
+  color: var(--paper);
+  text-decoration: none;
+  transition: filter 0.15s ease;
+}
+
+a.store:hover {
+  filter: brightness(1.25);
+}
+
+.store-small {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  opacity: 0.8;
+}
+
+.store-name {
+  font-family: var(--display);
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.store-soon {
+  opacity: 0.6;
+  cursor: default;
 }
 
 /* Telefon s obrazovkou aplikace */
 
 .phone {
   padding: 7px;
-  border-radius: 36px;
-  background: #0d1a13;
-  box-shadow:
-    inset 0 0 0 1px rgba(236, 242, 232, 0.12),
-    0 30px 60px rgba(15, 36, 25, 0.35),
-    0 8px 18px rgba(15, 36, 25, 0.2);
+  border-radius: 34px;
+  background: var(--ink);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
 }
 
 .phone img {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 29px;
+  border-radius: 28px;
 }
 
 /* Na mobilu jeden telefon, který vykukuje zpod tlačítek (láká scrollovat). */
@@ -462,14 +398,11 @@ main > .hero:first-child {
   position: relative;
   display: flex;
   justify-content: center;
-  height: 360px;
-  /* telefony se dole rozplynou do šalvěje místo ostrého střihu */
-  -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent);
-  mask-image: linear-gradient(180deg, #000 78%, transparent);
+  height: 330px;
 }
 
 .phone-front {
-  width: min(64vw, 270px);
+  width: min(66vw, 280px);
   height: fit-content;
 }
 
@@ -477,532 +410,13 @@ main > .hero:first-child {
   display: none;
 }
 
-/* Skleněné štítky kolem telefonu */
-.float {
-  position: absolute;
-  z-index: 3;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 10px 8px 12px;
-  border: 1px solid var(--edge-hi);
-  border-radius: 99px;
-  background: rgba(16, 36, 26, 0.8);
-  color: var(--text);
-  font-size: 13px;
-  font-weight: 500;
-  white-space: nowrap;
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 14px 30px rgba(15, 36, 25, 0.3);
-}
-
-.float i {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--leaf);
-}
-
-.float b {
-  padding: 3px 10px;
-  border-radius: 99px;
-  background: var(--gold);
-  color: var(--ink);
-  font-weight: 600;
-}
-
-.float-a {
-  left: 4%;
-  top: 70px;
-}
-
-.float-b {
-  right: 4%;
-  top: 170px;
-  flex-direction: column;
-  gap: 0;
-  padding: 12px 18px;
-  border-radius: 20px;
-  line-height: 1;
-}
-
-.float-b b {
-  padding: 0;
-  background: none;
-  color: var(--gold);
-  font-size: 34px;
-  font-weight: 300;
-}
-
-.float-b small {
-  margin-top: 4px;
-  color: var(--text-2);
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-/* ---- Ukázka: tmavé zařízení s mapou a grafy na rozhraní šalvěje a noci ---- */
-
-.atlas {
-  position: relative;
-  padding-top: 64px;
-  background: linear-gradient(180deg, var(--sage) 0, #9cb097 260px, var(--night) 260px);
-}
-
-.atlas::before {
-  /* měkký přechod šalvěje do noci pod zařízením */
-  content: "";
-  position: absolute;
-  inset: 200px 0 auto;
-  height: 160px;
-  background: linear-gradient(180deg, #9cb097, var(--night));
-  z-index: 0;
-}
-
-.atlas > * {
-  position: relative;
-  z-index: 1;
-}
-
-.atlas-head {
-  display: grid;
-  gap: 10px;
-  color: var(--sage-ink);
-  margin-bottom: 28px;
-}
-
-.atlas-head .eyebrow {
-  color: var(--forest);
-}
-
-.atlas-head h2 {
-  font-size: clamp(32px, 8.4vw, 56px);
-}
-
-.atlas-sub {
-  max-width: 34em;
-  color: var(--sage-text);
-  font-size: 17px;
-}
-
-.device {
-  padding: 10px;
-  border-radius: 34px;
-  background: linear-gradient(180deg, #0f2219, #0a1711);
-  box-shadow:
-    inset 0 0 0 1px rgba(236, 242, 232, 0.1),
-    0 50px 100px rgba(11, 26, 19, 0.45),
-    0 14px 30px rgba(11, 26, 19, 0.3);
-}
-
-.device-grid {
-  display: grid;
-  gap: 10px;
-}
-
-.device .glass {
-  border-radius: 22px;
-  padding: 18px;
-  box-shadow: inset 0 1px 0 rgba(236, 242, 232, 0.05);
-}
-
-.device h3 {
-  font-size: 18px;
-  font-weight: 400;
-}
-
-.card-sub {
-  margin-top: 2px;
-  color: var(--text-3);
-  font-size: 13px;
-}
-
-/* mapa */
-.map {
-  position: relative;
-  aspect-ratio: 1000 / 620;
-  padding: 0 !important;
-  overflow: hidden;
-  background: #173d24;
-}
-
-.map-svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.map-search {
-  position: absolute;
-  left: 12px;
-  top: 12px;
-  display: none;
-  align-items: center;
-  gap: 8px;
-  width: min(62%, 380px);
-  padding: 9px 14px;
-  border: 1px solid var(--edge);
-  border-radius: 99px;
-  background: rgba(11, 26, 19, 0.7);
-  color: var(--text-2);
-  font-size: 12px;
-  white-space: nowrap;
-  overflow: hidden;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-}
-
-.pill {
-  position: absolute;
-  transform: translate(-50%, calc(-100% - 16px));
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 11px;
-  border: 1px solid var(--edge);
-  border-radius: 99px;
-  background: rgba(11, 26, 19, 0.78);
-  color: var(--text-2);
-  font-size: 11px;
-  white-space: nowrap;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-}
-
-.pill b {
-  color: var(--text);
-  font-weight: 600;
-}
-
-.pill i {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--leaf);
-}
-
-.pill-gold {
-  border-color: rgba(255, 255, 255, 0.3);
-  background: var(--gold);
-  color: #3a2c0c;
-  font-weight: 500;
-  box-shadow: 0 6px 20px rgba(226, 179, 87, 0.35);
-}
-
-.pill-gold b {
-  color: var(--ink);
-}
-
-.pill-wide {
-  display: none;
-}
-
-/* Pevnost je vpravo nahoře u Kotoru, štítek proto pod bodem, ať se nepřekrývají. */
-.pill-end {
-  transform: translate(-75%, 18px);
-}
-
-.map-layers {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  display: none;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.map-layers li {
-  padding: 6px 14px;
-  border-radius: 99px;
-  background: rgba(11, 26, 19, 0.8);
-  color: var(--text);
-  font-size: 12px;
-}
-
-.map-layers li.on {
-  background: var(--gold);
-  color: var(--ink);
-  font-weight: 600;
-}
-
-.map-scale {
-  position: absolute;
-  left: 12px;
-  bottom: 10px;
-  padding-top: 2px;
-  border-top: 1px solid var(--text-2);
-  color: var(--text);
-  font-size: 11px;
-  width: 60px;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
-}
-
-/* rok v číslech */
-.tiles {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-top: 14px;
-}
-
-.tile {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 0;
-  padding: 12px;
-  border: 1px solid var(--edge);
-  border-radius: 18px;
-  background: var(--glass-hi);
-  overflow: hidden;
-}
-
-.tile-label {
-  color: var(--text-2);
-  font-size: 12px;
-}
-
-.tile-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 6px;
-}
-
-.big {
-  font-size: 30px;
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  font-variant-numeric: tabular-nums;
-}
-
-.tile small {
-  color: var(--text-2);
-  font-size: 12px;
-}
-
-.tag {
-  padding: 3px 9px;
-  border-radius: 99px;
-  background: rgba(226, 179, 87, 0.14);
-  color: var(--gold);
-  font-size: 11px;
-  font-style: normal;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.tag-center {
-  align-self: center;
-}
-
-.spark {
-  display: block;
-  width: 100%;
-  height: 44px;
-  margin-top: auto;
-}
-
-.spark-dots {
-  background-image: radial-gradient(rgba(236, 242, 232, 0.22) 1px, transparent 1.2px);
-  background-size: 12px 12px;
-  border-radius: 8px;
-}
-
-.tile-gauge {
-  align-items: stretch;
-}
-
-.gauge {
-  display: block;
-  width: 100%;
-  max-width: 180px;
-  margin: 0 auto;
-}
-
-.gauge-num {
-  fill: var(--text);
-  font-family: var(--body);
-  font-size: 28px;
-  font-weight: 300;
-}
-
-/* země podle kontinentů */
-.continents-body {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin-top: 12px;
-}
-
-.rings {
-  flex: none;
-  width: 132px;
-  height: 132px;
-}
-
-.rings-total {
-  fill: var(--text);
-  font-family: var(--body);
-  font-size: 30px;
-  font-weight: 300;
-}
-
-.rings-unit {
-  fill: var(--text-3);
-  font-family: var(--body);
-  font-size: 9px;
-  letter-spacing: 0.18em;
-}
-
-.legend {
-  display: grid;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  color: var(--text-2);
-  font-size: 13px;
-}
-
-.legend li {
-  display: grid;
-  grid-template-columns: 10px auto;
-  column-gap: 8px;
-  align-items: center;
-}
-
-.legend b {
-  grid-column: 2;
-  color: var(--text);
-  font-size: 22px;
-  font-weight: 300;
-  line-height: 1.1;
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-
-.dot-0 {
-  background: var(--gold);
-}
-
-.dot-1 {
-  background: var(--leaf);
-}
-
-.dot-2 {
-  background: var(--text-2);
-}
-
-/* sloupcový graf */
-.months-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.chip-ghost {
-  padding: 6px 12px;
-  border: 1px solid var(--edge);
-  border-radius: 99px;
-  color: var(--text-2);
-  font-size: 12px;
-}
-
-.bars {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 8px;
-  margin-top: 16px;
-}
-
-.bars-axis {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 140px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  color: var(--text-3);
-  font-size: 10px;
-  line-height: 1;
-  text-align: right;
-}
-
-.bars-list {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 4px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.bars-list li {
-  display: grid;
-  justify-items: center;
-  gap: 6px;
-}
-
-.bar-track {
-  position: relative;
-  display: block;
-  width: min(100%, 16px);
-  height: 140px;
-  border-radius: 99px;
-  background: rgba(236, 242, 232, 0.05);
-}
-
-.bar {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 99px;
-  background: linear-gradient(180deg, #f4f6f1, #aab5ac);
-  transform-origin: bottom;
-}
-
-.hi .bar {
-  background: linear-gradient(180deg, var(--gold-hi), var(--gold) 60%, #b98a33);
-  box-shadow: 0 0 18px rgba(226, 179, 87, 0.45);
-}
-
-.bar-label {
-  color: var(--text-3);
-  font-size: 10px;
-}
-
-.hi .bar-label {
-  color: var(--gold);
-}
-
-.atlas-note {
-  margin-top: 12px;
-  color: var(--text-3);
-  font-size: 13px;
-  text-align: center;
-}
-
 /* ---- Tři čísla ---- */
 
 .facts {
   position: relative;
-  padding-block: 40px 8px;
+  z-index: 1;
+  background: #183d2e;
+  border-top: 1px solid rgba(242, 244, 238, 0.12);
 }
 
 .facts-list {
@@ -1010,308 +424,126 @@ main > .hero:first-child {
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
   margin: 0 auto;
+  padding-block: 18px;
   list-style: none;
   text-align: center;
 }
 
-.facts-list li {
-  padding: 18px 6px;
-  border-top: 1px solid var(--edge);
-}
-
 .facts-list b {
   display: block;
-  color: var(--gold);
-  font-size: clamp(26px, 7vw, 60px);
-  font-weight: 200;
-  white-space: nowrap;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  font-variant-numeric: tabular-nums;
+  color: var(--ochre);
+  font-family: var(--display);
+  font-size: clamp(24px, 7vw, 40px);
+  font-weight: 800;
+  line-height: 1.1;
 }
 
 .facts-list span {
   display: block;
-  margin-top: 6px;
-  color: var(--text-2);
+  color: var(--paper-muted);
   font-size: 13px;
   line-height: 1.3;
 }
 
-/* ---- Společné pro sekce ---- */
+/* ---- 2. Jak to funguje ---- */
 
-.story,
-.pillars,
-.flow,
-.planet,
+.steps,
 .screens,
 .faq {
-  position: relative;
+  background: var(--paper);
+  color: var(--ink);
 }
 
-.story h2,
-.pillars h2,
-.flow h2,
+.steps {
+  padding-block: 52px 16px;
+}
+
+.steps h2,
 .screens h2,
-.faq h2,
-.planet h2,
-.final h2 {
-  margin-top: 10px;
-  font-size: clamp(32px, 8.6vw, 56px);
+.faq h2 {
+  margin-top: 8px;
+  color: var(--forest);
+  font-size: clamp(30px, 8.4vw, 44px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
-/* ---- Příběh z Balkánu ---- */
-
-.story {
-  padding-block: 64px 40px;
-}
-
-.story-in {
+.steps-list {
   display: grid;
-  gap: 32px;
-}
-
-.story-copy {
-  display: grid;
-  gap: 14px;
-}
-
-.story-copy p {
-  color: var(--text-2);
-  font-size: 18px;
-  line-height: 1.6;
-}
-
-.story-copy p:last-child {
-  color: var(--text);
-}
-
-.story-chat {
-  display: grid;
-  gap: 10px;
-  align-content: start;
-  max-width: 420px;
-  width: 100%;
-  justify-self: center;
-  padding: 14px;
-  border-radius: 30px;
-}
-
-.story-photo {
-  position: relative;
-  height: 180px;
-  border-radius: 20px;
-  background:
-    radial-gradient(circle at 78% 26%, #f6d58a 0 8%, transparent 9%),
-    linear-gradient(180deg, #8fb7a6 0%, #c9dccf 46%, #2f6b51 47%, #1f4d3a 68%, #2b6a5f 69%, #173f38 100%);
-  overflow: hidden;
-}
-
-.story-photo span {
-  position: absolute;
-  left: 10px;
-  bottom: 10px;
-  padding: 5px 12px;
-  border-radius: 99px;
-  background: var(--gold);
-  color: var(--ink);
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.bubble {
-  justify-self: start;
-  max-width: 86%;
-  padding: 10px 14px;
-  border: 1px solid var(--edge);
-  border-radius: 18px 18px 18px 6px;
-  background: var(--glass-hi);
-  color: var(--text);
-  font-size: 15px;
-  line-height: 1.4;
-}
-
-.bubble b {
-  display: block;
-  color: var(--leaf);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.bubble-me {
-  justify-self: end;
-  border-color: transparent;
-  border-radius: 18px 18px 6px 18px;
-  background: var(--gold);
-  color: var(--ink);
-}
-
-.bubble-me b {
-  color: #4a3810;
-}
-
-.story-reacts {
-  justify-self: end;
-  color: var(--text-2);
-  font-size: 14px;
-}
-
-/* ---- Tři hlavní věci ---- */
-
-.pillars {
-  padding-block: 40px 64px;
-}
-
-.pillars-list {
-  display: grid;
-  gap: 48px;
-  margin: 32px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.pillar {
-  display: grid;
-  gap: 0;
-  justify-items: center;
-}
-
-.pillar .phone {
-  width: min(64vw, 270px);
-  max-height: 440px;
-  overflow: hidden;
-  padding-bottom: 0;
-  border-radius: 36px 36px 0 0;
-}
-
-.pillar .phone img {
-  border-radius: 29px 29px 0 0;
-}
-
-.pillar-text {
-  position: relative;
-  display: grid;
-  gap: 10px;
-  width: 100%;
-  max-width: 480px;
-  margin-top: -24px;
-  padding: 22px 22px 22px 70px;
-}
-
-.step-n {
-  position: absolute;
-  left: 18px;
-  top: 20px;
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border: 1px solid rgba(226, 179, 87, 0.5);
-  border-radius: 50%;
-  color: var(--gold);
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.pillar h3 {
-  font-size: 24px;
-}
-
-.pillar p {
-  color: var(--text-2);
-  font-size: 16px;
-  line-height: 1.55;
-}
-
-.ticks {
-  display: grid;
-  gap: 10px;
-  margin: 4px 0 0;
-  padding: 0;
-  list-style: none;
-  color: var(--text);
-  font-size: 15px;
-}
-
-.ticks li {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.ticks svg {
-  flex: none;
-  margin-top: 2px;
-  color: var(--gold);
-}
-
-/* ---- Jak to jde ---- */
-
-.flow {
-  padding-block: 48px;
-}
-
-.flow-list {
-  display: grid;
-  gap: 10px;
+  gap: 36px;
   margin: 28px 0 0;
   padding: 0;
   list-style: none;
 }
 
-.flow-list li {
+.step {
   display: grid;
-  grid-template-columns: 52px 1fr;
-  column-gap: 14px;
-  align-items: center;
-  padding: 16px 18px;
-  border-radius: 22px;
+  gap: 18px;
+  justify-items: center;
 }
 
-.flow-n {
-  grid-row: span 2;
-  color: var(--gold);
-  font-size: 44px;
-  font-weight: 200;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
+/* V krocích stačí horní část obrazovky, ať stránka není nekonečná. */
+.step .phone {
+  width: min(64vw, 260px);
+  max-height: 380px;
+  overflow: hidden;
+  padding-bottom: 0;
+  border-radius: 34px 34px 0 0;
+  box-shadow: 0 18px 36px rgba(28, 30, 26, 0.16);
 }
 
-.flow-list b {
+.step .phone img {
+  border-radius: 28px 28px 0 0;
+}
+
+.step-text {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  padding: 18px 18px 18px 64px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+  margin-top: -18px;
+}
+
+.step-n {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--ochre);
+  color: var(--ink);
+  font-family: var(--display);
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 800;
 }
 
-.flow-list li > span:last-child {
-  color: var(--text-2);
-  font-size: 15px;
+.step h3 {
+  color: var(--forest);
+  font-size: 21px;
+  font-weight: 800;
 }
 
-/* ---- Profil s planetou ---- */
+.step p {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+/* ---- 3. Profil s planetou ---- */
 
 .planet {
-  padding-top: 56px;
+  padding-top: 52px;
   overflow: hidden;
 }
 
-.planet::before {
-  /* zlatá záře za telefonem, jako zvýrazněná oblast na mapě */
-  content: "";
-  position: absolute;
-  right: -10%;
-  bottom: -20%;
-  width: 70vw;
-  max-width: 700px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(226, 179, 87, 0.16), transparent 65%);
-  pointer-events: none;
-}
-
 .planet-in {
-  position: relative;
   display: grid;
   gap: 28px;
   justify-items: center;
@@ -1323,34 +555,62 @@ main > .hero:first-child {
   width: 100%;
 }
 
+.planet h2,
+.final h2 {
+  font-size: clamp(32px, 9vw, 52px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.ticks {
+  display: grid;
+  gap: 10px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.ticks li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.ticks svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--ochre);
+}
+
 .planet-phone {
-  width: min(64vw, 280px);
+  width: min(66vw, 280px);
   max-height: 400px;
   overflow: hidden;
   padding-bottom: 0;
-  border-radius: 36px 36px 0 0;
+  border-radius: 34px 34px 0 0;
 }
 
 .planet-phone img {
-  border-radius: 29px 29px 0 0;
+  border-radius: 28px 28px 0 0;
 }
 
-/* ---- Další obrazovky: na mobilu posuvný pás ---- */
+/* ---- 4. Další obrazovky: na mobilu posuvný pás ---- */
 
 .screens {
-  padding-block: 64px 36px;
-  border-top: 1px solid var(--edge);
+  padding-block: 52px 36px;
 }
 
 .screens-list {
   display: flex;
   gap: 16px;
-  margin: 28px 0 0;
-  padding: 4px 16px 18px;
+  margin: 24px 0 0;
+  padding: 4px 20px 18px;
   list-style: none;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: 16px;
+  scroll-padding-inline: 20px;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
@@ -1367,32 +627,35 @@ main > .hero:first-child {
 
 .screens figure {
   display: grid;
-  gap: 14px;
+  gap: 12px;
   margin: 0;
 }
 
+.screens .phone {
+  box-shadow: 0 14px 28px rgba(28, 30, 26, 0.16);
+}
+
 .screens figcaption {
-  color: var(--text-2);
+  color: var(--muted);
   font-size: 15px;
   line-height: 1.4;
 }
 
 .screens figcaption b {
   display: block;
-  color: var(--text);
+  color: var(--ink);
   font-size: 17px;
-  font-weight: 500;
 }
 
 .screens-note {
-  color: var(--text-3);
+  color: var(--muted);
   font-size: 13px;
 }
 
-/* ---- Otázky ---- */
+/* ---- 5. Otázky ---- */
 
 .faq {
-  padding-block: 32px 56px;
+  padding-block: 20px 56px;
 }
 
 .faq-in {
@@ -1407,7 +670,9 @@ main > .hero:first-child {
 }
 
 .faq details {
-  border-radius: 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
 }
 
 .faq summary {
@@ -1415,11 +680,11 @@ main > .hero:first-child {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  min-height: 60px;
-  padding: 10px 18px;
-  color: var(--text);
+  min-height: 56px;
+  padding: 10px 16px;
+  color: var(--forest);
   font-size: 17px;
-  font-weight: 500;
+  font-weight: 700;
   cursor: pointer;
   list-style: none;
 }
@@ -1430,8 +695,7 @@ main > .hero:first-child {
 
 .faq summary svg {
   flex: none;
-  color: var(--gold);
-  transition: transform 0.25s var(--ease);
+  transition: transform 0.15s ease;
 }
 
 .faq details[open] summary svg {
@@ -1439,21 +703,18 @@ main > .hero:first-child {
 }
 
 .faq details p {
-  padding: 0 18px 18px;
-  color: var(--text-2);
+  padding: 0 16px 16px;
+  color: var(--muted);
   font-size: 16px;
-  line-height: 1.55;
+  line-height: 1.5;
 }
 
-/* ---- Poslední výzva ---- */
+/* ---- 6. Poslední výzva ---- */
 
 .final {
-  position: relative;
-  padding-top: 64px;
+  padding-top: 56px;
   /* místo pro lištu dole na mobilu */
   padding-bottom: 76px;
-  border-top: 1px solid var(--edge);
-  background: radial-gradient(800px 400px at 50% 0, rgba(226, 179, 87, 0.08), transparent 70%);
 }
 
 .final-in {
@@ -1476,24 +737,20 @@ main > .hero:first-child {
 
 .sticky {
   position: fixed;
-  left: 10px;
-  right: 10px;
-  bottom: calc(10px + env(safe-area-inset-bottom));
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 40;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 8px 8px 8px 18px;
-  border: 1px solid var(--edge);
-  border-radius: 99px;
-  background: rgba(11, 26, 19, 0.82);
-  color: var(--text);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
-  transform: translateY(140%);
-  transition: transform 0.4s var(--ease);
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.25);
+  transform: translateY(110%);
+  transition: transform 0.22s ease;
 }
 
 .sticky-on {
@@ -1503,7 +760,7 @@ main > .hero:first-child {
 .sticky-text {
   min-width: 0;
   overflow: hidden;
-  color: var(--text-2);
+  color: var(--paper-dim);
   font-size: 13px;
   line-height: 1.25;
   text-overflow: ellipsis;
@@ -1512,171 +769,29 @@ main > .hero:first-child {
 
 .sticky-text b {
   display: block;
-  color: var(--text);
-  font-family: var(--brand);
+  color: var(--paper);
+  font-family: var(--display);
   font-size: 17px;
 }
 
 .sticky .btn {
   flex: none;
-  min-height: 44px;
+  min-height: 46px;
   padding: 0 18px;
   font-size: 16px;
 }
 
-/* ---- Pohyb: pomalé přiblížení a zaostření při scrollu, jen CSS ----
-   Prohlížeč bez scroll-driven animací ukáže všechno hned a bez pohybu.
-   Kdo má v systému omezený pohyb, nedostane nic z toho. */
-
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(28px);
-    filter: blur(6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-    filter: none;
-  }
-}
-
-@keyframes zoom-in {
-  from {
-    opacity: 0.4;
-    transform: scale(0.94);
-    filter: blur(8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-    filter: none;
-  }
-}
-
-@keyframes focus-in {
-  from {
-    opacity: 0;
-    transform: scale(1.05);
-    filter: blur(10px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-    filter: none;
-  }
-}
-
-@keyframes drift {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-8px);
-  }
-}
-
-@keyframes pulse {
-  0% {
-    opacity: 0.9;
-    transform: scale(0.6);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1.8);
-  }
-}
-
-@keyframes grow {
-  from {
-    transform: scaleY(0);
-  }
-  to {
-    transform: none;
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hero-copy,
-  .hero-visual {
-    animation: focus-in 0.9s var(--ease) both;
-  }
-
-  .hero-visual {
-    animation-delay: 0.15s;
-  }
-
-  .float-a {
-    animation: drift 4s ease-in-out 1.4s infinite alternate;
-  }
-
-  .float-b {
-    animation: drift 5s ease-in-out 1.8s infinite alternate-reverse;
-  }
-
-  .map-pulse {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: pulse 2.4s ease-out infinite;
-  }
-
-  .map-glow {
-    animation: drift 3s ease-in-out infinite alternate;
-  }
-
-  @supports (animation-timeline: view()) {
-    .reveal {
-      animation: rise linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 70%;
-    }
-
-    .reveal-zoom {
-      animation: zoom-in linear both;
-      animation-timeline: view();
-      animation-range: entry 0% cover 35%;
-    }
-
-    .bar {
-      animation: grow linear both;
-      animation-timeline: view();
-      animation-range: entry 20% cover 45%;
-    }
-  }
-}
-
 @media (min-width: 640px) {
+  .steps-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .step .phone {
+    width: 100%;
+    max-width: 250px;
+  }
   .screens-list li {
     flex-basis: 220px;
-  }
-
-  .pill-wide,
-  .map-layers,
-  .map-search {
-    display: flex;
-  }
-
-  .pill {
-    font-size: 12px;
-  }
-
-  .device {
-    padding: 14px;
-    border-radius: 40px;
-  }
-
-  .device-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  .map,
-  .year {
-    grid-column: 1 / -1;
-  }
-
-  .tiles {
-    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -1684,316 +799,88 @@ main > .hero:first-child {
   .wrap {
     padding-inline: 40px;
   }
-
-  .top {
-    padding-top: 16px;
-  }
-
-  main > .hero:first-child {
-    margin-top: -80px;
-  }
-
   .top-in {
-    min-height: 64px;
-    padding: 0 10px 0 22px;
+    min-height: 72px;
   }
-
   .hero {
-    padding-top: 120px;
+    padding-top: 36px;
   }
-
-  .hero-mark {
-    top: 40px;
-  }
-
   .hero-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     align-items: center;
-    gap: 24px;
+    gap: 40px;
   }
-
   .hero-copy {
-    gap: 26px;
-    padding-block: 32px 96px;
+    gap: 22px;
+    padding-block: 28px 64px;
   }
-
   .hero h1 {
-    font-size: clamp(56px, 5.2vw, 76px);
+    font-size: clamp(54px, 5.6vw, 76px);
   }
-
   .sub {
-    font-size: 20px;
+    font-size: 21px;
   }
-
   .hero-visual {
-    height: 620px;
+    height: 600px;
     justify-content: flex-end;
     align-self: end;
   }
-
   .phone-front {
     position: absolute;
-    right: 40px;
-    bottom: -120px;
-    width: 300px;
+    right: 20px;
+    bottom: -110px;
+    width: 290px;
     z-index: 2;
   }
-
   .phone-back {
     display: block;
     position: absolute;
-    right: 270px;
-    bottom: -200px;
+    right: 250px;
+    bottom: -190px;
     width: 250px;
     transform: rotate(-7deg);
-    filter: saturate(0.9);
+    opacity: 0.96;
   }
-
-  .float-a {
-    left: auto;
-    right: 250px;
-    top: 120px;
-    font-size: 14px;
+  .facts-list {
+    padding-block: 26px;
   }
-
-  .float-b {
-    right: -10px;
-    top: 260px;
-  }
-
-  .atlas {
-    padding-top: 96px;
-    background: linear-gradient(180deg, var(--sage) 0, #9cb097 340px, var(--night) 340px);
-  }
-
-  .atlas::before {
-    inset: 280px 0 auto;
-    height: 240px;
-  }
-
-  .atlas-head {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
-    align-items: end;
-    column-gap: 48px;
-    margin-bottom: 40px;
-  }
-
-  .atlas-head .eyebrow {
-    grid-column: 1 / -1;
-  }
-
-  .atlas-sub {
-    font-size: 19px;
-  }
-
-  .device {
-    padding: 16px;
-    border-radius: 44px;
-  }
-
-  .device-grid {
-    grid-template-columns: 1fr 1.45fr 1.15fr;
-    grid-template-areas:
-      "map map year"
-      "continents months year";
-    gap: 14px;
-  }
-
-  .map {
-    grid-area: map;
-  }
-
-  .year {
-    grid-area: year;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .year .tiles {
-    flex: 1;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: 1fr;
-  }
-
-  .continents {
-    grid-area: continents;
-  }
-
-  .months {
-    grid-area: months;
-  }
-
-  .device .glass {
-    padding: 22px;
-  }
-
-  .device h3 {
-    font-size: 20px;
-  }
-
-  .map-search {
-    left: 18px;
-    top: 18px;
-    font-size: 13px;
-  }
-
-  .pill {
-    font-size: 13px;
-    padding: 6px 13px;
-  }
-
-  .pill-end {
-    transform: translate(-75%, 18px);
-  }
-
-  .year .spark {
-    height: 96px;
-  }
-
-  .year .gauge {
-    max-width: 220px;
-    margin-block: auto;
-  }
-
-  .map-layers {
-    right: 16px;
-    bottom: 16px;
-  }
-
-  .map-layers li {
-    font-size: 13px;
-  }
-
-  .big {
-    font-size: 36px;
-  }
-
-  .facts {
-    padding-block: 72px 16px;
-  }
-
   .facts-list span {
     font-size: 16px;
   }
-
-  .story {
-    padding-block: 96px 72px;
+  .steps {
+    padding-block: 88px 32px;
   }
-
-  .story-in {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-    gap: 72px;
-    align-items: center;
-  }
-
-  .pillars {
-    padding-block: 48px 104px;
-  }
-
-  .pillars-list {
-    gap: 72px;
-    margin-top: 56px;
-  }
-
-  .pillar {
-    grid-template-columns: 300px minmax(0, 1fr);
-    justify-items: start;
-    align-items: center;
-    gap: 64px;
-  }
-
-  .pillar:nth-child(even) {
-    grid-template-columns: minmax(0, 1fr) 300px;
-  }
-
-  .pillar:nth-child(even) .phone {
-    order: 2;
-  }
-
-  .pillar:nth-child(even) .pillar-text {
-    justify-self: end;
-  }
-
-  .pillar .phone {
-    width: 280px;
-    max-height: 560px;
-    border-radius: 36px;
-    padding-bottom: 7px;
-  }
-
-  .pillar .phone img {
-    border-radius: 29px;
-  }
-
-  .pillar-text {
-    margin-top: 0;
-    max-width: 540px;
-    padding: 32px 32px 32px 86px;
-  }
-
-  .step-n {
-    left: 26px;
-    top: 30px;
-    width: 40px;
-    height: 40px;
-  }
-
-  .pillar h3 {
-    font-size: 30px;
-    font-weight: 400;
-  }
-
-  .ticks {
-    font-size: 16px;
-  }
-
-  .flow {
-    padding-block: 96px;
-  }
-
-  .flow-list {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
+  .steps-list {
+    gap: 32px;
     margin-top: 44px;
   }
-
-  .flow-list li {
-    grid-template-columns: 1fr;
-    row-gap: 12px;
-    align-content: start;
-    padding: 26px;
+  .step .phone {
+    max-width: 270px;
+    max-height: 430px;
   }
-
-  .flow-n {
-    grid-row: auto;
-    font-size: 64px;
-  }
-
   .planet {
-    padding-top: 96px;
+    padding-top: 88px;
   }
-
   .planet-in {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: end;
     gap: 64px;
   }
-
   .planet-copy {
     gap: 20px;
-    padding-bottom: 96px;
+    padding-bottom: 88px;
   }
-
+  .ticks {
+    font-size: 18px;
+  }
   .planet-phone {
     width: 300px;
     max-height: 520px;
   }
-
   .screens {
-    padding-block: 96px 48px;
+    padding-block: 88px 48px;
   }
-
   .screens-list {
     max-width: 1200px;
     margin-inline: auto;
@@ -2001,69 +888,57 @@ main > .hero:first-child {
     justify-content: space-between;
     overflow: visible;
   }
-
   .screens-list li {
     flex: 1 1 0;
     max-width: 210px;
   }
-
   .faq {
-    padding-block: 48px 104px;
+    padding-block: 32px 96px;
   }
-
   .faq-in {
     grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
     gap: 48px;
   }
-
   .final {
-    padding-top: 104px;
+    padding-top: 96px;
     padding-bottom: 0;
   }
-
   .final-in {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     gap: 64px;
     margin-bottom: 48px;
   }
-
   .final-copy {
     gap: 20px;
   }
-
-  /* QR potřebuje světlé pole kvůli čtečkám, proto světlé sklo. */
   .qr-card {
     display: grid;
     justify-items: center;
     gap: 14px;
-    width: 240px;
+    width: 230px;
     padding: 22px;
-    border-color: rgba(255, 255, 255, 0.5);
-    background: rgba(242, 244, 238, 0.94);
+    border-radius: 24px;
+    background: var(--paper);
     color: var(--ink);
     text-align: center;
   }
-
   .qr {
     width: 160px;
     height: 160px;
-    border-radius: 12px;
+    border-radius: 10px;
   }
-
   .qr-card p {
     color: var(--muted);
     font-size: 14px;
     line-height: 1.35;
   }
-
   .qr-card b {
     display: block;
     color: var(--forest);
+    font-family: var(--display);
     font-size: 18px;
-    font-weight: 600;
   }
-
   /* Na počítači je tlačítko v horní liště, spodní lišta není potřeba. */
   .sticky {
     display: none;
@@ -2081,10 +956,9 @@ main > .hero:first-child {
   max-width: 580px;
   margin-top: 12px;
   padding: 16px;
-  border: 1px solid var(--edge);
-  border-radius: var(--radius);
-  background: var(--glass);
-  color: var(--text);
+  border: 1px solid rgba(242, 244, 238, 0.25);
+  border-radius: 20px;
+  color: var(--paper);
   text-align: left;
   text-decoration: none;
 }
@@ -2095,8 +969,8 @@ main > .hero:first-child {
   flex: none;
   width: 48px;
   height: 48px;
-  border-radius: 16px;
-  background: var(--gold);
+  border-radius: 14px;
+  background: var(--ochre);
   color: var(--ink);
 }
 
@@ -2111,27 +985,25 @@ main > .hero:first-child {
 
 .ig-text b {
   font-size: 17px;
-  font-weight: 500;
 }
 
 .ig-text span {
-  color: var(--text-2);
+  opacity: 0.85;
 }
 
 .ig-cta {
   flex: 1 0 100%;
   padding: 11px 16px;
-  border: 1px solid var(--edge-hi);
   border-radius: 99px;
-  color: var(--text);
+  background: var(--paper);
+  color: var(--forest);
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   text-align: center;
-  transition: background 0.2s ease;
 }
 
 .ig:hover .ig-cta {
-  background: var(--glass-hi);
+  background: #fff;
 }
 
 .ig-light {
@@ -2141,12 +1013,7 @@ main > .hero:first-child {
   color: var(--ink);
 }
 
-.ig-light .ig-text span {
-  color: var(--muted);
-}
-
 .ig-light .ig-cta {
-  border-color: transparent;
   background: var(--forest);
   color: var(--paper);
 }
@@ -2170,20 +1037,20 @@ main > .hero:first-child {
   gap: 14px;
   margin-top: 28px;
   padding-block: 28px;
-  border-top: 1px solid var(--edge);
+  border-top: 1px solid rgba(242, 244, 238, 0.18);
   font-size: 14px;
 }
 
 .foot-copy {
   order: 3;
-  color: var(--text-3);
+  color: #a5b0a7;
   font-size: 12px;
 }
 
 .foot-privacy {
   order: 2;
-  color: var(--text-2);
-  text-underline-offset: 3px;
+  color: var(--paper-dim);
+  text-underline-offset: 2px;
 }
 
 .socials {
@@ -2196,15 +1063,15 @@ main > .hero:first-child {
   display: flex;
   align-items: center;
   min-height: 44px;
-  padding: 0 18px;
-  border: 1px solid var(--edge-hi);
+  padding: 0 16px;
+  border: 1px solid rgba(242, 244, 238, 0.4);
   border-radius: 99px;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
 }
 
 .socials a:hover {
-  color: var(--gold);
+  color: var(--ochre);
 }
 
 @media (min-width: 1024px) {
@@ -2365,7 +1232,6 @@ main > .hero:first-child {
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;
-    animation: none !important;
   }
 }
 
@@ -2394,7 +1260,7 @@ main > .hero:first-child {
   font-family: var(--display);
   font-size: clamp(22px, 5.5vw, 30px);
   line-height: 1.15;
-  color: var(--text);
+  color: var(--paper);
 }
 
 .invite-side {
@@ -2417,7 +1283,7 @@ main > .hero:first-child {
   padding-left: 22px;
   display: grid;
   gap: 6px;
-  color: var(--text-2);
+  color: var(--muted);
 }
 
 .invite-code {
@@ -2426,7 +1292,7 @@ main > .hero:first-child {
   align-items: center;
   gap: 10px;
   padding-top: 14px;
-  border-top: 1px solid var(--edge);
+  border-top: 1px solid var(--line);
 }
 
 .invite-code-label {
@@ -2435,7 +1301,7 @@ main > .hero:first-child {
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--text-3);
+  color: var(--muted);
 }
 
 .invite-code-value {
@@ -2444,7 +1310,7 @@ main > .hero:first-child {
   font-size: 24px;
   font-weight: 700;
   letter-spacing: 0.06em;
-  color: var(--gold);
+  color: var(--ink);
 }
 
 .invite-qr {
@@ -2484,6 +1350,295 @@ main > .hero:first-child {
   margin-top: 22px;
 }
 
+/* ---- Příběh z Balkánu ---- */
+
+.story {
+  background: var(--paper);
+  color: var(--ink);
+  padding-block: 56px 48px;
+}
+
+.story-in {
+  display: grid;
+  gap: 32px;
+}
+
+.story-copy {
+  display: grid;
+  gap: 14px;
+}
+
+.story h2,
+.pillars h2 {
+  color: var(--forest);
+  font-size: clamp(30px, 8.4vw, 46px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.story-copy p {
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.story-copy p:last-child {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.story-chat {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  max-width: 400px;
+  width: 100%;
+  justify-self: center;
+  padding: 18px;
+  border-radius: 28px;
+  background: var(--forest);
+  transform: rotate(-1.5deg);
+  box-shadow: 0 24px 48px rgba(28, 30, 26, 0.22);
+}
+
+.story-photo {
+  position: relative;
+  height: 170px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 78% 26%, #f6d58a 0 9%, transparent 10%),
+    linear-gradient(180deg, #8fc1d8 0%, #cfe6ee 48%, #2f6b51 49%, #1f4d3a 70%, #3b7a8f 71%, #2b5f73 100%);
+  overflow: hidden;
+}
+
+.story-photo span {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  padding: 4px 10px;
+  border-radius: 99px;
+  background: rgba(28, 30, 26, 0.7);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.bubble {
+  justify-self: start;
+  max-width: 86%;
+  padding: 10px 14px;
+  border-radius: 18px 18px 18px 6px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.bubble b {
+  display: block;
+  color: var(--forest);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.bubble-me {
+  justify-self: end;
+  border-radius: 18px 18px 6px 18px;
+  background: var(--ochre);
+}
+
+.bubble-me b {
+  color: var(--ink);
+}
+
+.story-reacts {
+  justify-self: end;
+  color: var(--paper-dim);
+  font-size: 14px;
+}
+
+/* ---- Tři hlavní věci ---- */
+
+.pillars {
+  background: var(--paper);
+  color: var(--ink);
+  padding-block: 24px 56px;
+}
+
+.pillars-list {
+  display: grid;
+  gap: 44px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pillar {
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+}
+
+.pillar .phone {
+  width: min(66vw, 270px);
+  max-height: 440px;
+  overflow: hidden;
+  padding-bottom: 0;
+  border-radius: 34px 34px 0 0;
+  box-shadow: 0 18px 36px rgba(28, 30, 26, 0.16);
+}
+
+.pillar .phone img {
+  border-radius: 28px 28px 0 0;
+}
+
+.pillar-text {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  max-width: 460px;
+  margin-top: -18px;
+  padding: 20px 20px 20px 66px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #fff;
+}
+
+.pillar h3 {
+  color: var(--forest);
+  font-size: 23px;
+  font-weight: 800;
+}
+
+.pillar p {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.ticks-dark {
+  color: var(--ink);
+  font-size: 15px;
+}
+
+.ticks-dark svg {
+  color: var(--land);
+}
+
+/* ---- Jak to jde ---- */
+
+.flow {
+  padding-block: 52px;
+}
+
+.flow h2 {
+  margin-top: 8px;
+  font-size: clamp(30px, 8.4vw, 44px);
+}
+
+.flow-list {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.flow-list li {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  column-gap: 14px;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(242, 244, 238, 0.08);
+}
+
+.flow-n {
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--ochre);
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.flow-list b {
+  font-size: 18px;
+}
+
+.flow-list li > span:last-child {
+  color: var(--paper-muted);
+  font-size: 15px;
+}
+
+@media (min-width: 1024px) {
+  .story {
+    padding-block: 96px 72px;
+  }
+
+  .story-in {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 72px;
+    align-items: center;
+  }
+
+  .pillars {
+    padding-block: 32px 96px;
+  }
+
+  .pillar {
+    grid-template-columns: 300px minmax(0, 1fr);
+    justify-items: start;
+    align-items: center;
+    gap: 56px;
+  }
+
+  .pillar:nth-child(even) {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+
+  .pillar:nth-child(even) .phone {
+    order: 2;
+  }
+
+  .pillar .phone {
+    width: 280px;
+    max-height: 560px;
+  }
+
+  .pillar-text {
+    margin-top: 0;
+    max-width: 520px;
+  }
+
+  .flow {
+    padding-block: 88px;
+  }
+
+  .flow-list {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .flow-list li {
+    grid-template-columns: 1fr;
+    row-gap: 10px;
+    align-content: start;
+    padding: 22px;
+  }
+
+  .flow-n {
+    grid-row: auto;
+  }
+}
 
 /* Administrace (/admin) */
 .admin-wide { max-width: 1100px; }

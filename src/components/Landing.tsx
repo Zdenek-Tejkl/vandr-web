@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { downloadPath, iosWaitlist, site, stores } from "@/lib/config";
 import { copy } from "@/lib/copy";
-import { Atlas } from "./Atlas";
 import { Logo } from "./Brand";
 import { DownloadButton, IphoneWaitlist, PlayBadge, StickyCta } from "./Download";
 import { CheckIcon, ChevronIcon } from "./Icons";
@@ -45,12 +44,8 @@ export function Landing({ refCode }: { refCode?: string } = {}) {
       </header>
 
       <main>
-        {/* 1. Hlavní blok: co to je a tlačítko ke stažení, bez scrollování.
-            Šalvějové rozmazané pozadí a telefon jako zařízení na prezentační ploše (styl z reelu). */}
+        {/* 1. Hlavní blok: co to je a tlačítko ke stažení, bez scrollování */}
         <section className="hero">
-          <span className="hero-mark" aria-hidden="true">
-            vandr
-          </span>
           <div className="wrap hero-grid">
             <div className="hero-copy">
               <h1>
@@ -84,28 +79,18 @@ export function Landing({ refCode }: { refCode?: string } = {}) {
               <Phone
                 screen="souhrn"
                 alt=""
-                sizes="(min-width: 1024px) 290px, 64vw"
+                sizes="(min-width: 1024px) 280px, 64vw"
                 priority
                 className="phone-front"
               />
-              <span className="float float-a">
-                <i /> {copy.atlas.places.gem.name}
-                <b>{copy.atlas.places.gem.tag}</b>
-              </span>
-              <span className="float float-b">
-                <b>{copy.atlas.continents.total}</b>
-                <small>{copy.atlas.continents.unit}</small>
-              </span>
             </div>
             <p className="sr-only">{copy.hero.alt}</p>
           </div>
         </section>
 
-        <Atlas />
-
         {/* Tři čísla, která platí */}
         <section className="facts" aria-label="Vandr v číslech">
-          <ul className="wrap facts-list reveal">
+          <ul className="wrap facts-list">
             {copy.facts.map((f) => (
               <li key={f.label}>
                 <b>{f.n}</b>
@@ -118,14 +103,14 @@ export function Landing({ refCode }: { refCode?: string } = {}) {
         {/* 2. Příběh: proč Vandr vznikl */}
         <section className="story" aria-labelledby="story-title">
           <div className="wrap story-in">
-            <div className="story-copy reveal">
+            <div className="story-copy">
               <p className="eyebrow">{copy.story.eyebrow}</p>
               <h2 id="story-title">{copy.story.title}</h2>
               {copy.story.paragraphs.map((t) => (
                 <p key={t}>{t}</p>
               ))}
             </div>
-            <div className="story-chat glass reveal" aria-hidden="true">
+            <div className="story-chat" aria-hidden="true">
               <div className="story-photo">
                 <span>📍 Kotor, Černá Hora</span>
               </div>
@@ -150,19 +135,19 @@ export function Landing({ refCode }: { refCode?: string } = {}) {
             <h2 id="pillars-title">{copy.pillars.title}</h2>
             <ol className="pillars-list">
               {copy.pillars.items.map((s, i) => (
-                <li key={s.screen} className="pillar reveal">
+                <li key={s.screen} className="pillar">
                   <Phone
                     screen={s.screen}
                     alt={`${s.title} ${s.text}`}
                     sizes="(min-width: 1024px) 270px, 62vw"
                   />
-                  <div className="pillar-text glass">
+                  <div className="pillar-text">
                     <span className="step-n" aria-hidden="true">
                       {i + 1}
                     </span>
                     <h3>{s.title}</h3>
                     <p>{s.text}</p>
-                    <ul className="ticks">
+                    <ul className="ticks ticks-dark">
                       {s.points.map((pt) => (
                         <li key={pt}>
                           <CheckIcon size={18} /> {pt}
@@ -183,7 +168,7 @@ export function Landing({ refCode }: { refCode?: string } = {}) {
             <h2 id="flow-title">{copy.steps.title}</h2>
             <ol className="flow-list">
               {copy.steps.items.map((s, i) => (
-                <li key={s.title} className="glass reveal">
+                <li key={s.title}>
                   <span className="flow-n" aria-hidden="true">
                     {i + 1}
                   </span>
@@ -198,7 +183,7 @@ export function Landing({ refCode }: { refCode?: string } = {}) {
         {/* 5. Profil s planetou */}
         <section className="planet" aria-labelledby="planet-title">
           <div className="wrap planet-in">
-            <div className="planet-copy reveal">
+            <div className="planet-copy">
               <p className="eyebrow eyebrow-light">{copy.planet.eyebrow}</p>
               <h2 id="planet-title">{copy.planet.title}</h2>
               <p className="sub">{copy.planet.text}</p>
@@ -214,7 +199,7 @@ export function Landing({ refCode }: { refCode?: string } = {}) {
               screen="profil"
               alt={copy.planet.alt}
               sizes="(min-width: 1024px) 280px, 64vw"
-              className="planet-phone reveal-zoom"
+              className="planet-phone"
             />
           </div>
         </section>
@@ -250,7 +235,7 @@ export function Landing({ refCode }: { refCode?: string } = {}) {
             <h2 id="faq-title">{copy.faq.title}</h2>
             <div className="faq-list">
               {copy.faq.items.map((f) => (
-                <details key={f.q} className="glass">
+                <details key={f.q}>
                   <summary>
                     {f.q} <ChevronIcon />
                   </summary>
@@ -276,7 +261,7 @@ export function Landing({ refCode }: { refCode?: string } = {}) {
                 </div>
               </div>
             </div>
-            <div className="qr-card glass os-only-desktop">
+            <div className="qr-card os-only-desktop">
               <Qr value={`${site.url}${downloadPath}?utm_source=qr`} label={copy.download.qrAlt} />
               <p>
                 <b>{copy.download.qrTitle}</b>
@@ -286,7 +271,7 @@ export function Landing({ refCode }: { refCode?: string } = {}) {
           </div>
           {/* Waiting list pro iPhone: na iPhonu i na počítači, na Androidu ne. */}
           <div className="wrap os-hide-android" id="iphone">
-            <div className="iphone-card glass">
+            <div className="iphone-card">
               <IphoneWaitlist id="email-final" ask />
             </div>
           </div>

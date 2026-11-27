@@ -66,50 +66,6 @@ export const copy = {
     { n: "0", label: "reklam" },
   ],
 
-  // Ukázka z aplikace jako „palubní deska“ nad mapou (návrh podle reelu, majitel 26. 11. 2026).
-  // Čísla jsou demo data, stránka to pod ukázkou říká (note).
-  atlas: {
-    eyebrow: "Ukázka z aplikace",
-    title: "Celá cesta na jedné mapě.",
-    text: "Trasa, skryté poklady i parta. A po návratu tvůj svět v číslech.",
-    search: "Hledej místa, poklady a kamarády",
-    places: {
-      gem: { name: "Kotor", tag: "skrytý poklad" },
-      day: { name: "Perast", tag: "den 3" },
-      tip: { name: "Budva", tag: "Jadran" },
-      fort: { name: "Pevnost", tag: "1 350 schodů" },
-    },
-    layers: ["Poklady", "Trasa", "Parta", "Fotky"],
-    scale: "2 km",
-    continents: {
-      title: "Země podle kontinentů",
-      sub: "Navštívené země",
-      total: "24",
-      unit: "zemí",
-      items: [
-        { name: "Evropa", pct: 58 },
-        { name: "Asie", pct: 25 },
-        { name: "Afrika", pct: 17 },
-      ],
-    },
-    months: {
-      title: "Cesty po měsících",
-      sub: "Dny na cestách, letos",
-      labels: ["Led", "Úno", "Bře", "Dub", "Kvě", "Čvn", "Čvc", "Srp", "Zář", "Říj", "Lis", "Pro"],
-      values: [2, 0, 4, 3, 6, 5, 12, 16, 7, 3, 2, 5],
-      max: 20,
-      highlight: 7,
-    },
-    year: {
-      title: "Tvůj rok na cestách",
-      km: { label: "Kilometry", value: "18 420", unit: "km", tag: "+2 140" },
-      gems: { label: "Skryté poklady", value: "37", tag: "od kamarádů" },
-      photos: { label: "Fotky v reportech", value: "248", tag: "6 reportů" },
-      level: { label: "Na Světoběžníka", value: 68, tag: "Tulák" },
-    },
-    note: "Ukázka s demo daty.",
-  },
-
   story: {
     eyebrow: "Jak to začalo",
     title: "Balkán, jedna skupina a celá rodina u telefonu.",
